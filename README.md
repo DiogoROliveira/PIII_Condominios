@@ -29,7 +29,7 @@ Este projeto foi desenvolvido no âmbito da Unidade Curricular de **Projeto III*
    DB_PASSWORD=
    ```
 
-## 3. Migrar as Tabelas
+3. Migrar as Tabelas
 
 - Após efetuar alterações na base de dados, para criar o ficheiro de migração utiliza-se o comando:
   ```bash
