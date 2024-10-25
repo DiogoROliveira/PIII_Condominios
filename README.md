@@ -6,7 +6,7 @@ Este projeto tem como objetivo criar uma plataforma online para gestão de recla
 ## Contexto Académico
 Este projeto foi desenvolvido no âmbito da Unidade Curricular de **Projeto III** em parceria com o **Instituto Politécnico de Viana do Castelo (IPVC)** e a empresa **FTKode**.
 
-# Coordenadores
+## Coordenadores
 - Prof. Jorge Ribeiro
 - Eng. Miguel Guerra
 
