@@ -31,11 +31,14 @@ Este projeto foi desenvolvido no âmbito da Unidade Curricular de **Projeto III*
 
 ## 3. Migrar as Tabelas
 
-Após configurar corretamente o arquivo `.env`, você precisa criar as tabelas no banco de dados. Para isso, execute o seguinte comando:
-
-```bash
-php artisan migrate
-```
+- Após efetuar alterações na base de dados, para criar o ficheiro de migração utiliza-se o comando:
+  ```bash
+  php artisan make:migration MigrationName
+  ```
+- Para correr migrações feitas utiliza-se o seguinte comando:
+  ```bash
+   php artisan migrate
+  ```
 
 ## Como Correr a Aplicação Localmente
 
