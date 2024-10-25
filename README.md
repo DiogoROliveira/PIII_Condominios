@@ -18,15 +18,15 @@ Este projeto foi desenvolvido no âmbito da Unidade Curricular de **Projeto III*
 
 1. **Criar a Base de Dados**: Antes de dar deploy à aplicação, certifique-se de que a base de dados está criada no seu servidor MySQL.
    
-2. **Configuração do Ficheiro `.env`**: No diretório raiz do projeto, existe um ficheiro `.env` onde deverá configurar as variáveis de ambiente. Abaixo estão as principais variáveis relacionadas com o banco de dados que devem ser ajustadas:
+2. **Configuração do Ficheiro `.env`**: No diretório raiz do projeto, existe um ficheiro `.env` onde deverá configurar as variáveis de ambiente. Abaixo estão as principais variáveis relacionadas com a base de dados que devem ser ajustadas:
    
    ```bash
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
    DB_PORT=3306
    DB_DATABASE=nome_da_base_de_dados
-   DB_USERNAME=seu_usuario
-   DB_PASSWORD=sua_senha
+   DB_USERNAME=root
+   DB_PASSWORD=
    ```
 
 ## 3. Migrar as Tabelas
