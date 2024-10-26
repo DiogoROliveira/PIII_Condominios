@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
 
 class User extends Authenticatable
 {
@@ -13,6 +14,17 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
+
+    // Many-to-Many (User <-> Role)
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
+    }
+
+    public function hasRole($roleName)
+    {
+        return $this->roles()->where('name', $roleName)->exists();
+    }
 
     /**
      * The attributes that are mass assignable.
