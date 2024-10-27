@@ -12,6 +12,7 @@
                     {{ __("You're logged in as admin!") }}
                     <hr>
                     <p><a href="{{ route('admin.condominiums') }}" class="btn btn-primary">Condominums</a></p>
+                    <p><a href="{{ route('admin.blocks') }}" class="btn btn-primary">Blocks</a></p>
                 </div>
             </div>
         </div>

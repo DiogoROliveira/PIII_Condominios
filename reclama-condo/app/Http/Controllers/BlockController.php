@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Block;
+use Illuminate\Http\Request;
+use App\Models\Condominium;
+use Illuminate\Support\Facades\Validator;
+
+class BlockController extends Controller
+{
+    public function index()
+    {
+        $blocks = Block::orderBy('condominium_id', 'asc')
+            ->orderBy('block', 'asc')
+            ->get();
+        $total = Block::count();
+
+        return view('admin.blocks.home', compact('blocks', 'total'));
+    }
+
+    public function create()
+    {
+        $condominiums = Condominium::get();
+        return view('admin.blocks.create', compact('condominiums'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'condominium_id' => 'required|exists:condominia,id',
+            'block' => 'required|string|max:255',
+            'number_of_units' => 'required|integer|min:1',
+        ]);
+
+        Block::create([
+            'condominium_id' => $request->condominium_id,
+            'block' => $request->block,
+            'number_of_units' => $request->number_of_units,
+        ]);
+
+        return redirect()->route('admin.blocks')->with('success', 'Block created successfully.');
+    }
+
+    public function edit($id)
+    {
+        $block = Block::find($id);
+        $condominiums = Condominium::get();
+        return view('admin.blocks.edit', compact('block', 'condominiums'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'condominium_id' => 'required|exists:condominia,id',
+            'block' => 'required|string|max:255',
+            'number_of_units' => 'required|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.blocks.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $block = Block::find($id);
+        $block->update($validator->validated());
+
+        session()->flash('success', 'Block updated successfully.');
+        return redirect()->route('admin.blocks');
+    }
+
+    public function destroy($id)
+    {
+        $block = Block::findOrFail($id);
+        $block->delete();
+
+        session()->flash('success', 'Block deleted successfully.');
+        return redirect()->route('admin.blocks');
+    }
+}
