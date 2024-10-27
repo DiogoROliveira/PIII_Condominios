@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in as admin!") }}
                     <hr>
-                    <p><a href="{{ route('admin.condominiums') }}">Condominums</a></p>
+                    <p><a href="{{ route('admin.condominiums') }}" class="btn btn-primary">Condominums</a></p>
                 </div>
             </div>
         </div>
