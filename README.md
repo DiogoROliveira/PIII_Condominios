@@ -40,6 +40,14 @@ Este projeto foi desenvolvido no âmbito da Unidade Curricular de **Projeto III*
    php artisan migrate
   ```
 
+## Dados Padrão
+ - Roles: Admin, User
+ - Users:
+   - Email: admin@example.com =>
+     Password: admin123
+   - Email: user@example.com =>
+     Password: normaluser
+
 ## Como Correr a Aplicação Localmente
 
 Para rodar o projeto em um ambiente local, execute o seguinte comando:
