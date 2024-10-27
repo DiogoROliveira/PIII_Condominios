@@ -14,15 +14,17 @@ return new class extends Migration
         Schema::create('condominia', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('postal_code');
-            $table->string('phone');
-            $table->string('email');
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('postal_code')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
-            $table->unsignedInteger('admin_id');
-            $table->integer('number_of_blocks');
+            $table->unsignedBigInteger('admin_id');
+            $table->integer('number_of_blocks')->nullable();
+
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

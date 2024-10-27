@@ -12,14 +12,25 @@ return new class extends Migration
      */
     public function up(): void
     {
+
+        Schema::create('roles', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedInteger('role_id')->default(2);
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -37,9 +48,14 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
+        DB::table('roles')->insert([
+            ['name' => 'admin', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'user', 'created_at' => now(), 'updated_at' => now()]
+        ]);
+
         DB::table('users')->insert([
-            ['name' => 'Admin', 'email' => 'admin@example.com', 'password' => '$2y$12$MT/QJ5bIf1hODwqAWbh/GuG/adIofFteSMvoSNI3y8eUc5MTnqAzW', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'User', 'email' => 'user@example.com', 'password' => '$2y$12$hCN/YF3RSfZy6kGQTdJZLuJi4x2BiD220xx0KnJUu/lF5JhaDcD3m', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Admin', 'email' => 'admin@example.com', 'password' => '$2y$12$MT/QJ5bIf1hODwqAWbh/GuG/adIofFteSMvoSNI3y8eUc5MTnqAzW', 'role_id' => 1,  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'User', 'email' => 'user@example.com', 'password' => '$2y$12$hCN/YF3RSfZy6kGQTdJZLuJi4x2BiD220xx0KnJUu/lF5JhaDcD3m', 'role_id' => 2, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 
@@ -51,5 +67,6 @@ return new class extends Migration
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('roles');
     }
 };

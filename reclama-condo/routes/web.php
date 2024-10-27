@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CondominiumController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -20,4 +21,10 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-route::get('admin/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'admin'])->name('admin.dashboard');
+// Admin Routes
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+    route::get('admin/dashboard/condominiums', [CondominiumController::class, 'index'])->name('admin.condominiums');
+});
