@@ -23,7 +23,18 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-route::get('admin/dashboard', [HomeController::class, 'index'])->middleware(['auth', 'admin'])->name('admin.dashboard');
+// Admin Routes
+
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+    route::get('admin/dashboard/condominiums', [CondominiumController::class, 'index'])->name('admin.condominiums');
+    route::get('admin/dashboard/condominiums/create', [CondominiumController::class, 'create'])->name('admin.condominiums.create');
+    route::post('admin/dashboard/condominiums/create', [CondominiumController::class, 'store'])->name('admin.condominiums.store');
+    route::get('admin/dashboard/condominiums/{id}/edit', [CondominiumController::class, 'edit'])->name('admin.condominiums.edit');
+    route::put('admin/dashboard/condominiums/{id}', [CondominiumController::class, 'update'])->name('admin.condominiums.update');
+    route::delete('admin/dashboard/condominiums/{id}', [CondominiumController::class, 'destroy'])->name('admin.condominiums.destroy');
+});
 
 Route::middleware(['auth', 'admin'])->group(function () {
     route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');

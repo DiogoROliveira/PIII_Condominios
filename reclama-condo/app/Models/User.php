@@ -15,15 +15,10 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
-    // Many-to-Many (User <-> Role)
-    public function roles()
+    // Many-to-One (User <-> Role)
+    public function role()
     {
-        return $this->belongsToMany(Role::class, 'user_roles');
-    }
-
-    public function hasRole($roleName)
-    {
-        return $this->roles()->where('name', $roleName)->exists();
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**
