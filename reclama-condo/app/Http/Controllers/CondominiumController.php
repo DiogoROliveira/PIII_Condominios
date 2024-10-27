@@ -60,6 +60,40 @@ class CondominiumController extends Controller
     public function edit($id)
     {
         $condominium = Condominium::find($id);
-        return view('admin.condominiums.edit', compact('condominium'));
+        $users = User::where('role_id', 1)->get();
+        return view('admin.condominiums.edit', compact('condominium', 'users'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'admin_id' => 'required|exists:users,id',
+            'email' => 'nullable|email',
+            'number_of_blocks' => 'nullable|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('admin.condominiums.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $condominium = Condominium::find($id);
+        $condominium->update($validator->validated());
+
+        session()->flash('success', 'Condominium updated successfully.');
+        return redirect()->route('admin.condominiums');
+    }
+
+
+    public function destroy($id)
+    {
+        $condominium = Condominium::findOrFail($id);
+        $condominium->delete();
+
+        session()->flash('success', 'Condominium deleted successfully.');
+        return redirect()->route('admin.condominiums');
     }
 }
