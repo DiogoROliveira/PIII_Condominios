@@ -35,8 +35,11 @@ class ComplaintController extends Controller
         // Get all complaint types for the dropdown
         $complaintTypes = ComplaintType::all();
 
+        // Determine the correct route for the breadcrumb
+        $breadcrumbRoute = auth()->user()->isAdmin() ? 'admin.complaints' : 'complaints.index';
+
         // Return the view for creating a complaint
-        return view('complaints.create', compact('complaintTypes'));
+        return view('complaints.create', compact('complaintTypes', 'breadcrumbRoute'));
     }
 
     public function store(Request $request) 
@@ -55,8 +58,11 @@ class ComplaintController extends Controller
             'status' => 'Pending',
         ]);
 
-        // Redireciona para a página de reclamações com uma mensagem de sucesso
-        return redirect()->route('complaints.create')->with('success', 'Complaint created successfully!');
+        if (auth()->user()->isAdmin()) {
+            return redirect()->route('admin.complaints')->with('success', 'Complaint created successfully!');
+        } else {
+            return redirect()->route('complaints.index')->with('success', 'Complaint created successfully!');
+        }
     }
 
     public function edit($id) 
