@@ -5,6 +5,10 @@ use App\Http\Controllers\BlockController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ComplaintController;
+use App\Http\Controllers\ComplaintTypeController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -43,4 +47,27 @@ Route::middleware(['auth', 'admin'])->group(function () {
     route::get('admin/dashboard/blocks/{id}/edit', [BlockController::class, 'edit'])->name('admin.blocks.edit');
     route::put('admin/dashboard/blocks/{id}', [BlockController::class, 'update'])->name('admin.blocks.update');
     route::delete('admin/dashboard/blocks/{id}', [BlockController::class, 'destroy'])->name('admin.blocks.destroy');
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
+    Route::get('admin/dashboard/complaint-types', [ComplaintTypeController::class, 'index'])->name('admin.complaint-types');
+    Route::get('admin/dashboard/complaint-types/create', [ComplaintTypeController::class, 'create'])->name('admin.complaint-types.create');
+    Route::post('admin/dashboard/complaint-types', [ComplaintTypeController::class, 'store'])->name('admin.complaint-types.store');
+    Route::get('admin/dashboard/complaint-types/{id}/edit', [ComplaintTypeController::class, 'edit'])->name('admin.complaint-types.edit');
+    Route::put('admin/dashboard/complaint-types/{id}', [ComplaintTypeController::class, 'update'])->name('admin.complaint-types.update');
+    Route::delete('admin/dashboard/complaint-types/{id}', [ComplaintTypeController::class, 'destroy'])->name('admin.complaint-types.destroy');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard/complaints/create', [ComplaintController::class, 'create'])->name('complaints.create');
+    Route::get('dashboard/complaints', [ComplaintController::class, 'index_user'])->name('complaints.index');
+    Route::post('dashboard/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
+    
+    Route::middleware(['admin'])->group(function () {
+        Route::get('admin/dashboard/complaints', [ComplaintController::class, 'index_admin'])->name('admin.complaints');
+        Route::get('admin/dashboard/complaints/{id}/edit', [ComplaintController::class, 'edit'])->name('admin.complaints.edit');
+        Route::put('admin/dashboard/complaints/{id}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
+        Route::delete('admin/dashboard/complaints/{id}', [ComplaintController::class, 'destroy'])->name('admin.complaints.destroy');
+    });
 });

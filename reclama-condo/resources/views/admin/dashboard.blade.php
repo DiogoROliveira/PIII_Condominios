@@ -13,6 +13,8 @@
                     <hr>
                     <p><a href="{{ route('admin.condominiums') }}" class="btn btn-primary">Condominums</a></p>
                     <p><a href="{{ route('admin.blocks') }}" class="btn btn-primary">Blocks</a></p>
+                    <p><a href="{{ route('admin.complaint-types') }}" class="btn btn-primary">Complaint Types</a></p>
+                    <p><a href="{{ route('admin.complaints') }}" class="btn btn-primary">Complaints</a></p>
                 </div>
             </div>
         </div>
