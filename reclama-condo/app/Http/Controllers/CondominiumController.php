@@ -79,7 +79,7 @@ class CondominiumController extends Controller
             'state' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'email' => 'nullable|email',
-            'number_of_blocks' => 'required|integer|min:1',
+            'number_of_blocks' => 'nullable|integer|min:1',
         ]);
 
         if ($validator->fails()) {
