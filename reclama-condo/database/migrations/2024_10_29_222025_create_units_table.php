@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blocks', function (Blueprint $table) {
+        Schema::create('units', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('block');
-            $table->unsignedInteger('condominium_id');
-            $table->integer('number_of_units');
+            $table->unsignedInteger('block_id');
+            $table->string('unit_number');
+            $table->enum('status', ['occupied', 'vacant', 'reserved', 'in repair'])->default('vacant');
             $table->timestamps();
 
-            $table->foreign('condominium_id')->references('id')->on('condominiums')->onDelete('cascade');
+            $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blocks');
+        Schema::dropIfExists('units');
     }
 };

@@ -10,7 +10,7 @@ class Condominium extends Model
 
     use HasFactory;
 
-    protected $table = 'condominia';
+    protected $table = 'condominiums';
 
     protected $fillable = [
         'name',
@@ -27,5 +27,10 @@ class Condominium extends Model
     public function admin()
     {
         return $this->belongsTo(User::class, 'admin_id');
+    }
+
+    public function blocks()
+    {
+        return $this->hasMany(Block::class, 'condominium_id');
     }
 }

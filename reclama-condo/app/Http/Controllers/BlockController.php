@@ -28,10 +28,18 @@ class BlockController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'condominium_id' => 'required|exists:condominia,id',
+            'condominium_id' => 'required|exists:condominiums,id',
             'block' => 'required|string|max:255',
             'number_of_units' => 'required|integer|min:1',
         ]);
+
+
+        $condominium = Condominium::findOrFail($request->condominium_id);
+
+        if ($condominium->blocks->count() >= $condominium->number_of_blocks) {
+            return redirect()->back()->withErrors(['error' => 'Maximum number of blocks reached for this condominium.']);
+        }
+
 
         Block::create([
             'condominium_id' => $request->condominium_id,
@@ -41,6 +49,7 @@ class BlockController extends Controller
 
         return redirect()->route('admin.blocks')->with('success', 'Block created successfully.');
     }
+
 
     public function edit($id)
     {
@@ -77,5 +86,11 @@ class BlockController extends Controller
 
         session()->flash('success', 'Block deleted successfully.');
         return redirect()->route('admin.blocks');
+    }
+
+    public function getBlocks($id)
+    {
+        $blocks = Block::where('condominium_id', $id)->get();
+        return response()->json($blocks);
     }
 }

@@ -48,4 +48,23 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const condominiumSelect = document.getElementById('condominium_id');
+            const blockSelect = document.getElementById('block');
+
+            // Ativar ou desativar o campo de bloco
+            condominiumSelect.addEventListener('change', function() {
+                if (this.value) {
+                    blockSelect.removeAttribute('disabled');
+                } else {
+                    blockSelect.setAttribute('disabled', 'disabled');
+                }
+            });
+
+            // Adicione mais lógica aqui se necessário para carregar blocos baseados no condomínio selecionado
+        });
+    </script>
+
 </x-app-layout>
