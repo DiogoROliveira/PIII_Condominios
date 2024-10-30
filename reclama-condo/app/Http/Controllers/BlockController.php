@@ -61,7 +61,7 @@ class BlockController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'condominium_id' => 'required|exists:condominia,id',
+            'condominium_id' => 'required|exists:condominiums,id',
             'block' => 'required|string|max:255',
             'number_of_units' => 'required|integer|min:1',
         ]);

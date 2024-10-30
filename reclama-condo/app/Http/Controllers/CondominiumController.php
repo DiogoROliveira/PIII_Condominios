@@ -28,6 +28,10 @@ class CondominiumController extends Controller
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'admin_id' => 'required|exists:users,id',
+            'postal_code' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
             'email' => 'nullable|email',
             'number_of_blocks' => 'required|integer|min:1',
         ]);
@@ -70,8 +74,12 @@ class CondominiumController extends Controller
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'admin_id' => 'required|exists:users,id',
+            'postal_code' => 'nullable|string|max:255',
+            'phone' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
             'email' => 'nullable|email',
-            'number_of_blocks' => 'nullable|integer|min:1',
+            'number_of_blocks' => 'required|integer|min:1',
         ]);
 
         if ($validator->fails()) {

@@ -33,7 +33,7 @@
                                     <th scope="col">Address</th>
                                     <th scope="col">City</th>
                                     <th scope="col">State</th>
-                                    <th scope="col">Zip Code</th>
+                                    <th scope="col">Postal Code</th>
                                     <th scope="col">Admin</th>
                                     <th scope="col">Blocks</th>
                                     <th scope="col">Created At</th>
@@ -48,7 +48,7 @@
                                     <td>{{ $condominium->address }}</td>
                                     <td>{{ $condominium->city ?? 'N/A' }}</td>
                                     <td>{{ $condominium->state ?? 'N/A' }}</td>
-                                    <td>{{ $condominium->zip_code ?? 'N/A' }}</td>
+                                    <td>{{ $condominium->postal_code ?? 'N/A' }}</td>
                                     <td>{{ $condominium->admin->name }} ({{ $condominium->admin->email }})</td>
                                     <td>{{ $condominium->number_of_blocks }}</td>
                                     <td>{{ $condominium->created_at->format('d/m/Y') }}</td>

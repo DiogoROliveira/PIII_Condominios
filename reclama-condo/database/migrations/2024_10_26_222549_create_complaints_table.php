@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('complaint_type_id')->constrained('complaint_types')->onDelete('cascade');
             $table->string('title');
             $table->text('description');
-            $table->string('status')->default('Pending')->change();
+            $table->string('status')->default('Pending');
             $table->timestamps();
         });
     }
