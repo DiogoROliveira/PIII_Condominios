@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
         $userRole = \App\Models\Role::where('name', 'user')->first();
 
         if ($userRole) {
-            $user->roles()->attach($userRole);
+            $user->role()->associate($userRole);
         }
 
         Auth::login($user);
