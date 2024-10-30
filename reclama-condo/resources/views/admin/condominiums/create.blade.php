@@ -51,8 +51,8 @@
                             </div>
                             <!-- Zip Code -->
                             <div class="col-md-4">
-                                <label for="zip_code" class="form-label">Zip Code</label>
-                                <input type="text" name="zip_code" id="zip_code" class="form-control" placeholder="Zip Code (optional)">
+                                <label for="postal_code" class="form-label">Zip Code</label>
+                                <input type="text" name="postal_code" id="postal_code" class="form-control" placeholder="Zip Code (optional)">
                             </div>
                         </div>
 

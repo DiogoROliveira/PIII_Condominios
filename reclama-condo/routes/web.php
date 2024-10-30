@@ -8,8 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ComplaintTypeController;
 use App\Http\Controllers\UnitController;
-
-
+use App\Http\Controllers\TenantController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,6 +57,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     route::get('admin/dashboard/units/{id}/edit', [UnitController::class, 'edit'])->name('admin.units.edit');
     route::put('admin/dashboard/units/{id}', [UnitController::class, 'update'])->name('admin.units.update');
     route::delete('admin/dashboard/units/{id}', [UnitController::class, 'destroy'])->name('admin.units.destroy');
+
+    // Tenant Routes
+    route::get('admin/dashboard/tenants', [TenantController::class, 'index'])->name('admin.tenants');
+    route::get('admin/dashboard/tenants/create', [TenantController::class, 'create'])->name('admin.tenants.create');
+    route::post('admin/dashboard/tenants/create', [TenantController::class, 'store'])->name('admin.tenants.store');
+    route::get('admin/dashboard/tenants/{id}/edit', [TenantController::class, 'edit'])->name('admin.tenants.edit');
+    route::put('admin/dashboard/tenants/{id}', [TenantController::class, 'update'])->name('admin.tenants.update');
+    route::delete('admin/dashboard/tenants/{id}', [TenantController::class, 'destroy'])->name('admin.tenants.destroy');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
