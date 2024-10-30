@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Condominiums') }}
+            {{ __('Tenants') }}
         </h2>
 
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Condominiums</li>
+                <li class="breadcrumb-item active" aria-current="page">Tenants</li>
             </ol>
         </nav>
 
@@ -21,8 +21,8 @@
                     <x-alert-messages />
 
                     <div class="d-flex align-items-center justify-content-between">
-                        <h1 class="mb-0">Condominiums List</h1>
-                        <a href="{{route('admin.condominiums.create')}}" class="btn btn-primary">Add Condominium</a>
+                        <h1 class="mb-0">Tenants List</h1>
+                        <a href="{{route('admin.tenants.create')}}" class="btn btn-primary">Add Tenant</a>
                     </div>
                     <div class="table-responsive mt-4">
                         <table class="table table-bordered table-hover align-middle">
@@ -30,38 +30,42 @@
                                 <tr>
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">City</th>
-                                    <th scope="col">State</th>
-                                    <th scope="col">Postal Code</th>
-                                    <th scope="col">Admin</th>
-                                    <th scope="col">Blocks</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Unit Number</th>
+                                    <th scope="col">Block</th>
+                                    <th scope="col">Condominium</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Lease Start</th>
+                                    <th scope="col">Lease End</th>
                                     <th scope="col">Created At</th>
+                                    <th scope="col">Notes</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($condominiums as $condominium)
+                                @forelse ($tenants as $tenant)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $condominium->name }}</td>
-                                    <td>{{ $condominium->address }}</td>
-                                    <td>{{ $condominium->city ?? 'N/A' }}</td>
-                                    <td>{{ $condominium->state ?? 'N/A' }}</td>
-                                    <td>{{ $condominium->postal_code ?? 'N/A' }}</td>
-                                    <td>{{ $condominium->admin->name }} ({{ $condominium->admin->email }})</td>
-                                    <td>{{ $condominium->number_of_blocks }}</td>
-                                    <td>{{ $condominium->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $tenant->user->name }}</td>
+                                    <td>{{ $tenant->user->email }}</td>
+                                    <td>{{ $tenant->unit->unit_number ?? 'N/A' }}</td>
+                                    <td>{{ $tenant->unit->block->block ?? 'N/A' }}</td>
+                                    <td>{{ $tenant->unit->block->condominium->name ?? 'N/A' }}</td>
+                                    <td>{{ strtoupper($tenant->status) }} </td>
+                                    <td>{{ $tenant->lease_start_date ?? 'N/A' }}</td>
+                                    <td>{{ $tenant->lease_end_date ?? 'N/A' }}</td>
+                                    <td>{{ $tenant->created_at->format('d/m/Y') }}</td>
+                                    <td>{{ $tenant->notes ?? 'N/A' }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('admin.condominiums.edit', $condominium->id) }}" class="btn btn-sm btn-warning me-1">Edit</a>
-                                        <form action="{{ route('admin.condominiums.destroy', $condominium->id) }}" method="POST" class="d-inline-block">
+                                        <a href="{{ route('admin.tenants.edit', $tenant->id) }}" class="btn btn-sm btn-warning me-1">Edit</a>
+                                        <form action="{{ route('admin.tenants.destroy', $tenant->id) }}" method="POST" class="d-inline-block">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button"
                                                 class="btn btn-sm btn-danger"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#deleteModal"
-                                                data-condominium-id="{{ $condominium->id }}">
+                                                data-tenant-id="{{ $tenant->id }}">
                                                 Delete
                                             </button>
 
@@ -70,13 +74,13 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="10" class="text-center">No condominiums available.</td>
+                                    <td colspan="12" class="text-center">No tenants available.</td>
                                 </tr>
                                 @endforelse
                             </tbody>
                         </table>
 
-                        <h4 class="mt-4">Total Condominiums: {{ $condominiums->count() }}</h4>
+                        <h4 class="mt-4">Total tenants: {{ $tenants->count() }}</h4>
 
                         <!-- Delete Confirmation Modal -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -87,7 +91,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to delete this condominium?
+                                        Are you sure you want to delete this tenant?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary btn-fill" data-bs-dismiss="modal">Cancel</button>
@@ -118,8 +122,8 @@
 
             deleteModal.addEventListener('show.bs.modal', function(event) {
                 const button = event.relatedTarget;
-                const condominiumId = button.getAttribute('data-condominium-id');
-                const action = `/admin/dashboard/condominiums/${condominiumId}`;
+                const tenantId = button.getAttribute('data-tenant-id');
+                const action = `/admin/dashboard/tenants/${tenantId}`;
                 deleteForm.setAttribute('action', action);
             });
         });

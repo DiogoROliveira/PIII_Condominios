@@ -14,6 +14,7 @@
                     <p><a href="{{ route('admin.condominiums') }}" class="btn btn-primary">Condominiumns</a></p>
                     <p><a href="{{ route('admin.blocks') }}" class="btn btn-primary">Blocks</a></p>
                     <p><a href="{{ route('admin.units') }}" class="btn btn-primary">Units</a></p>
+                    <p><a href="{{ route('admin.tenants') }}" class="btn btn-primary">Tenants</a></p>
                     <p><a href="{{ route('admin.complaint-types') }}" class="btn btn-primary">Complaint Types</a></p>
                     <p><a href="{{ route('admin.complaints') }}" class="btn btn-primary">Complaints</a></p>
                 </div>

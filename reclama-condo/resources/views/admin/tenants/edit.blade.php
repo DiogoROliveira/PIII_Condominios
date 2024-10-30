@@ -1,0 +1,98 @@
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit Tenant') }}
+        </h2>
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.tenants') }}">Tenants</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Edit</li>
+            </ol>
+        </nav>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h1 class="mb-4">Edit Tenant</h1>
+                    <hr class="mb-4" />
+                    <x-alert-messages />
+
+                    <form action="{{ route('admin.tenants.update', $tenant->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="row g-3 mb-4">
+                            <!-- User Selection -->
+                            <div class="col-md-6">
+                                <label for="user_id" class="form-label">Tenant</label>
+                                <select name="user_id" id="user_id" class="form-select">
+                                    <option value="" disabled>Select a Tenant</option>
+                                    @foreach ($users as $user)
+                                    <option value="{{ $user->id }}" {{ $tenant->user_id == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }} ({{ $user->email }})
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Unit Selection -->
+                            <div class="col-md-6">
+                                <label for="unit_id" class="form-label">Unit</label>
+                                <select name="unit_id" id="unit_id" class="form-select">
+                                    <option value="" disabled>Select a Unit</option>
+                                    @foreach ($units as $unit)
+                                    <option value="{{ $unit->id }}" {{ $tenant->unit_id == $unit->id ? 'selected' : '' }}>
+                                        {{ $unit->unit_number }} - Block {{ $unit->block->block ?? '' }} ({{ $unit->block->condominium->name ?? '' }})
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <!-- Lease Start Date -->
+                            <div class="col-md-6">
+                                <label for="lease_start_date" class="form-label">Lease Start Date</label>
+                                <input type="date" name="lease_start_date" id="lease_start_date" class="form-control"
+                                    value="{{ old('lease_start_date', $tenant->lease_start_date ? $tenant->lease_start_date : '') }}">
+                            </div>
+
+                            <!-- Lease End Date -->
+                            <div class="col-md-6">
+                                <label for="lease_end_date" class="form-label">Lease End Date</label>
+                                <input type="date" name="lease_end_date" id="lease_end_date" class="form-control"
+                                    value="{{ old('lease_end_date', $tenant->lease_end_date ? $tenant->lease_end_date : '') }}">
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <!-- Status -->
+                            <div class="col-md-6">
+                                <label for="status" class="form-label">Status</label>
+                                <select name="status" id="status" class="form-select">
+                                    <option value="active" {{ $tenant->status == 'active' ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive" {{ $tenant->status == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                    <option value="pending" {{ $tenant->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                                    <option value="terminated" {{ $tenant->status == 'terminated' ? 'selected' : '' }}>Terminated</option>
+                                </select>
+                            </div>
+
+                            <!-- Notes -->
+                            <div class="col-md-6">
+                                <label for="notes" class="form-label">Notes</label>
+                                <textarea name="notes" id="notes" class="form-control" rows="3">{{ old('notes', $tenant->notes) }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</x-app-layout>
