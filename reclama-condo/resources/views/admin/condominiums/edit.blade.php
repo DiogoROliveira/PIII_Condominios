@@ -54,11 +54,11 @@
                                 <input type="text" name="state" id="state" class="form-control"
                                     value="{{ old('state', $condominium->state) }}" placeholder="State (optional)">
                             </div>
-                            <!-- Zip Code -->
+                            <!-- Postal Code -->
                             <div class="col-md-4">
-                                <label for="postal_code" class="form-label">Zip Code</label>
+                                <label for="postal_code" class="form-label">Postal Code</label>
                                 <input type="text" name="postal_code" id="postal_code" class="form-control"
-                                    value="{{ old('posta_code', $condominium->postal_code) }}" placeholder="Zip Code (optional)">
+                                    value="{{ old('postal_code', $condominium->postal_code) }}" placeholder="Postal Code (optional)">
                             </div>
                         </div>
 

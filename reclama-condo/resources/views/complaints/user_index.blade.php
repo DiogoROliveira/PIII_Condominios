@@ -54,13 +54,11 @@
                             </div>
                         @endif
 
-                    @if ($complaints->isEmpty())
-                        <p class="text-gray-500">You have not submitted any complaints yet.</p>
-                    @else
+                    
 
                     <div class="d-flex align-items-center justify-content-between">
-                        <h3 class="text-lg font-medium mb-4">Your Complaints</h3>
-                        <a href="{{ route('complaints.create') }}" class="btn btn-primary">Create Complaint</a>
+                        <h1 class="mb-0">Complaints List</h1>
+                        <a href="{{ route('complaints.create') }}" class="btn btn-primary">Add Complaint</a>
                     </div>
                         <div class="table-responsive mt-6">
                             <table class="table table-bordered table-hover align-middle">
@@ -74,7 +72,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($complaints as $complaint)
+                                    @forelse ($complaints as $complaint)
                                         <tr>
                                             <td>{{ $complaint->id }}</td>
                                             <td>{{ $complaint->complaintType->name }}</td>
@@ -82,11 +80,15 @@
                                             <td>{{ $complaint->description }}</td>
                                             <td>{{ $complaint->status }}</td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">No complaints available.</td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
-                    @endif
+                    
                 </div>
             </div>
         </div>
