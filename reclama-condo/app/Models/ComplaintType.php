@@ -9,7 +9,7 @@ class ComplaintType extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name']; // Adicione os campos que você deseja preencher em massa
+    protected $fillable = ['name'];
 
     public function admin()
     {

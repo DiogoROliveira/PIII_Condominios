@@ -17,7 +17,7 @@ class ComplaintTypeController extends Controller
 
     public function create()
     {
-        return view('admin.complaint_types.create'); // Crie esta view depois
+        return view('admin.complaint_types.create');
     }
 
     public function store(Request $request)
@@ -40,11 +40,11 @@ class ComplaintTypeController extends Controller
             return redirect()->route('admin.complaint-types.create')->withInput(); // Retorna os dados antigos
         }
     }
-    
+
     public function edit($id)
     {
         $complaintType = ComplaintType::findOrFail($id);
-        return view('admin.complaint_types.edit', compact('complaintType')); // Crie esta view depois
+        return view('admin.complaint_types.edit', compact('complaintType'));
     }
 
     public function update(Request $request, $id)

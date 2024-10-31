@@ -38,7 +38,7 @@ class CondominiumController extends Controller
 
 
 
-        // Custom validation rule to ensure the user is an admin
+
         $validator->after(function ($validator) use ($request) {
             $user = User::find($request->admin_id);
             if ($user && $user->role_id !== 1) {

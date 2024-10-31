@@ -19,7 +19,7 @@ class ComplaintController extends Controller
         return view('admin.complaints.home', compact('complaints'));
     }
 
-    public function index_user() 
+    public function index_user()
     {
         // Recupera as reclamações do usuário logado
         $complaints = Complaint::with('complaintType')
@@ -30,19 +30,19 @@ class ComplaintController extends Controller
         return view('complaints.user_index', compact('complaints'));
     }
 
-    public function create() 
+    public function create()
     {
-        // Get all complaint types for the dropdown
+        // Recupera todos os tipos de reclamação
         $complaintTypes = ComplaintType::all();
 
-        // Determine the correct route for the breadcrumb
+        // Define o caminho da rota de acordo com o tipo de user
         $breadcrumbRoute = auth()->user()->isAdmin() ? 'admin.complaints' : 'complaints.index';
 
-        // Return the view for creating a complaint
+        // Retorna a view para criar uma nova reclamação
         return view('complaints.create', compact('complaintTypes', 'breadcrumbRoute'));
     }
 
-    public function store(Request $request) 
+    public function store(Request $request)
     {
         $request->validate([
             'complaint_type_id' => 'required|exists:complaint_types,id',
@@ -65,11 +65,11 @@ class ComplaintController extends Controller
         }
     }
 
-    public function edit($id) 
+    public function edit($id)
     {
         // Recupera a reclamação pelo ID
         $complaint = Complaint::findOrFail($id);
-        
+
         // Lista de status disponíveis
         $statuses = ['Pending', 'In Progress', 'Solved'];
 
@@ -77,7 +77,7 @@ class ComplaintController extends Controller
         return view('admin.complaints.edit', compact('complaint', 'statuses'));
     }
 
-    public function update(Request $request, $id) 
+    public function update(Request $request, $id)
     {
         // Valida a solicitação
         $request->validate([
@@ -93,7 +93,7 @@ class ComplaintController extends Controller
         return redirect()->route('admin.complaints')->with('success', 'Complaint status updated successfully!');
     }
 
-    public function destroy($id) 
+    public function destroy($id)
     {
         // Recupera a reclamação pelo ID
         $complaint = Complaint::findOrFail($id);
@@ -103,5 +103,4 @@ class ComplaintController extends Controller
 
         return redirect()->route('admin.complaints')->with('success', 'Complaint deleted successfully!');
     }
-
 }

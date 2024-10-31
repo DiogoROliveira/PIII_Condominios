@@ -20,31 +20,7 @@
                     <h1 class="mb-4">Edit Complaint</h1>
                     <hr class="mb-4" />
 
-                    <div class="mt-5">
-                        <!-- Display Validation Errors -->
-                        @if ($errors->any())
-                        <div class="alert alert-danger d-flex align-items-center" role="alert">
-                            <svg class="bi me-2" width="16" height="16" role="img" aria-label="Danger:">
-                                <use xlink:href="#exclamation-triangle-fill" />
-                            </svg>
-                            <div>
-                                {{ $errors->first() }}
-                            </div>
-                        </div>
-                        @endif
-
-                        <!-- Success Message -->
-                        @if (session()->has('success'))
-                        <div class="alert alert-success d-flex align-items-center p-3" role="alert">
-                            <svg class="bi me-2" width="16" height="16" role="img" aria-label="Success:">
-                                <use xlink:href="#check-circle-fill" />
-                            </svg>
-                            <div>
-                                {{ session('success') }}
-                            </div>
-                        </div>
-                        @endif
-                    </div>
+                    <x-alert-messages />
 
                     <form action="{{ route('admin.complaints.update', $complaint->id) }}" method="POST">
                         @csrf

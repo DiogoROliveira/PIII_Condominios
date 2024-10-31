@@ -60,7 +60,7 @@
 
                         <h4 class="mt-4">Total Blocks: {{ $blocks->count() }}</h4>
 
-                        <!-- Delete Confirmation Modal -->
+                        <!-- delete modal -->
                         <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">

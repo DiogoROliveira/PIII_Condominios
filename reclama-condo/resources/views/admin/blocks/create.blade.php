@@ -55,7 +55,7 @@
             const condominiumSelect = document.getElementById('condominium_id');
             const blockSelect = document.getElementById('block');
 
-            // Ativar ou desativar o campo de bloco
+            // enable block select if a condominium is selected
             condominiumSelect.addEventListener('change', function() {
                 if (this.value) {
                     blockSelect.removeAttribute('disabled');
@@ -64,7 +64,6 @@
                 }
             });
 
-            // Adicione mais lógica aqui se necessário para carregar blocos baseados no condomínio selecionado
         });
     </script>
 
