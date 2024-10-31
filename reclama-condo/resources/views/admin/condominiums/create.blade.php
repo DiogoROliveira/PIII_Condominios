@@ -49,10 +49,10 @@
                                 <label for="state" class="form-label">State</label>
                                 <input type="text" name="state" id="state" class="form-control" placeholder="State (optional)">
                             </div>
-                            <!-- Zip Code -->
+                            <!-- Postal Code -->
                             <div class="col-md-4">
-                                <label for="postal_code" class="form-label">Zip Code</label>
-                                <input type="text" name="postal_code" id="postal_code" class="form-control" placeholder="Zip Code (optional)">
+                                <label for="postal_code" class="form-label">Postal Code</label>
+                                <input type="text" name="postal_code" id="postal_code" class="form-control" placeholder="Postal Code (optional)">
                             </div>
                         </div>
 
