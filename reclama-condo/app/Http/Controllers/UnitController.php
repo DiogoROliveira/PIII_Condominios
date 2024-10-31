@@ -51,8 +51,8 @@ class UnitController extends Controller
             return redirect()->back()->withErrors(['error' => 'Unit number cannot be greater than the number of units in this block.']);
         }
 
-        if (Unit::where('unit_number', $request->unit_number)->exists()) {
-            return redirect()->back()->withErrors(['error' => 'Unit already exists.']);
+        if ($block->units()->where('unit_number', $request->unit_number)->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Unit already exists in this block.']);
         }
 
         Unit::create([
