@@ -17,6 +17,8 @@
                     <p><a href="{{ route('admin.tenants') }}" class="btn btn-primary">Tenants</a></p>
                     <p><a href="{{ route('admin.complaint-types') }}" class="btn btn-primary">Complaint Types</a></p>
                     <p><a href="{{ route('admin.complaints') }}" class="btn btn-primary">Complaints</a></p>
+                    <p><a href="{{ route('admin.users') }}" class="btn btn-primary">Users</a></p>
+                    <p><a href="{{ route('admin.register') }}" class="btn btn-primary">Register Admin</a></p>
                 </div>
             </div>
         </div>

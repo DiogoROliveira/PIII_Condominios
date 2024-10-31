@@ -9,6 +9,8 @@ use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ComplaintTypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\Auth\RegisteredAdminController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -65,6 +67,18 @@ Route::middleware(['auth', 'admin'])->group(function () {
     route::get('admin/dashboard/tenants/{id}/edit', [TenantController::class, 'edit'])->name('admin.tenants.edit');
     route::put('admin/dashboard/tenants/{id}', [TenantController::class, 'update'])->name('admin.tenants.update');
     route::delete('admin/dashboard/tenants/{id}', [TenantController::class, 'destroy'])->name('admin.tenants.destroy');
+
+    // User Routes
+    route::get('admin/dashboard/users', [UserController::class, 'index'])->name('admin.users');
+    route::get('admin/dashboard/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    route::post('admin/dashboard/users/create', [UserController::class, 'store'])->name('admin.users.store');
+    route::get('admin/dashboard/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
+    route::put('admin/dashboard/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
+    route::delete('admin/dashboard/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+    // Admin Register
+    route::get('admin/dashboard/register-admin', [RegisteredAdminController::class, 'create'])->name('admin.register');
+    route::post('admin/dashboard/register-admin', [RegisteredAdminController::class, 'store'])->name('admin.register.store');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
