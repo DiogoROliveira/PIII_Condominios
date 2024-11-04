@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\Condominium;
 use App\Models\Block;
+use App\Models\Tenant;
 
 class UnitController extends Controller
 {
@@ -104,6 +105,10 @@ class UnitController extends Controller
 
     public function destroy($id)
     {
+        if (Tenant::where('unit_id', $id)->exists()) {
+            return redirect()->back()->withErrors(['error' => 'Unit is assigned to a tenant.']);
+        }
+
         Unit::findOrFail($id)->delete();
         return redirect()->route('admin.units')->with('success', 'Unit deleted successfully.');
     }

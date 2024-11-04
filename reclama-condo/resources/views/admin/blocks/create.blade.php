@@ -18,6 +18,7 @@
                 <div class="p-6 text-gray-900">
                     <h1 class="mb-4">Create Block</h1>
                     <hr class="mb-4" />
+
                     <x-alert-messages />
 
                     <form action="{{ route('admin.blocks.store') }}" method="POST">

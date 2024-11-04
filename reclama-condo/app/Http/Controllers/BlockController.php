@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Block;
 use Illuminate\Http\Request;
 use App\Models\Condominium;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Validator;
 
 class BlockController extends Controller
@@ -81,11 +82,12 @@ class BlockController extends Controller
 
     public function destroy($id)
     {
-        $block = Block::findOrFail($id);
-        $block->delete();
+        if (Unit::where('block_id', $id)->exists()) {
+            return redirect()->route('admin.blocks')->with('error', 'Block cannot be deleted because it has units.');
+        }
 
-        session()->flash('success', 'Block deleted successfully.');
-        return redirect()->route('admin.blocks');
+        Block::findOrFail($id)->delete();
+        return redirect()->route('admin.blocks')->with('success', 'Block deleted successfully.');
     }
 
     public function getBlocks($id)

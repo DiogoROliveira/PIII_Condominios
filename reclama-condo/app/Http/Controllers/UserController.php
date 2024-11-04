@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Tenant;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -75,6 +76,14 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        if ($id == auth()->user()->id) {
+            return redirect()->route('admin.users')->with('error', 'You cannot delete your own account this way.');
+        }
+
+        if (Tenant::where('user_id', $id)->exists()) {
+            return redirect()->route('admin.users')->with('error', 'You cannot delete an account that is assigned to a tenant.');
+        }
+
         User::findOrFail($id)->delete();
         return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
     }

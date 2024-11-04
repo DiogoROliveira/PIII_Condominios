@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Block;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
@@ -98,10 +99,11 @@ class CondominiumController extends Controller
 
     public function destroy($id)
     {
-        $condominium = Condominium::findOrFail($id);
-        $condominium->delete();
+        if (Block::where('condominium_id', $id)->exists()) {
+            return redirect()->route('admin.condominiums')->with('error', 'Condominium cannot be deleted because it has blocks.');
+        }
 
-        session()->flash('success', 'Condominium deleted successfully.');
-        return redirect()->route('admin.condominiums');
+        Condominium::findOrFail($id)->delete();
+        return redirect()->route('admin.condominiums')->with('success', 'Condominium deleted successfully.');
     }
 }

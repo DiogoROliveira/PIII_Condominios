@@ -33,4 +33,15 @@
         </div>
     </div>
     @endif
+
+    @if (session()->has('error'))
+    <div class="alert alert-danger d-flex align-items-center p-3" role="alert">
+        <svg class="bi me-2" width="16" height="16" role="img" aria-label="Danger:">
+            <use xlink:href="#exclamation-triangle-fill" />
+        </svg>
+        <div>
+            {{ session('error') }}
+        </div>
+    </div>
+    @endif
 </div>
