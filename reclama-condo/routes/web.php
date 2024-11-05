@@ -101,5 +101,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('admin/dashboard/complaints/{id}/edit', [ComplaintController::class, 'edit'])->name('admin.complaints.edit');
         Route::put('admin/dashboard/complaints/{id}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
         Route::delete('admin/dashboard/complaints/{id}', [ComplaintController::class, 'destroy'])->name('admin.complaints.destroy');
+        Route::get('admin/dashboard/complaints/{id}/download', [ComplaintController::class, 'download'])->name('admin.complaints.download');
     });
 });

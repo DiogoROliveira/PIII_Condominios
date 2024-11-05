@@ -22,7 +22,7 @@
                     <x-alert-messages />
                 </div>
                 <div class="me-4 ms-4 mb-4">
-                    <form action="{{ route('complaints.store') }}" method="POST">
+                    <form action="{{ route('complaints.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-4">
@@ -54,6 +54,19 @@
                             @enderror
                         </div>
 
+                        <div class="mb-4">
+                            <label for="attachments" class="form-label">Attachments</label>
+                            <input type="file" name="attachments[]" id="attachments" class="form-control" multiple onchange="handleFileSelect(event)">
+                            @error('attachments')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+
+                            <!-- Preview area for selected files -->
+                            <ul id="file-list" class="mt-3 list-unstyled">
+                                <!-- JavaScript will populate this area -->
+                            </ul>
+                        </div>
+
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Submit Complaint</button>
                         </div>
@@ -62,4 +75,64 @@
             </div>
         </div>
     </div>
+
+    <!-- JavaScript to handle file selection and removal -->
+    <script>
+        const fileList = document.getElementById('file-list');
+        const fileInput = document.getElementById('attachments');
+
+        function handleFileSelect(event) {
+            fileList.innerHTML = ''; // Clear previous file list
+            const files = Array.from(event.target.files); // Convert FileList to array for easier manipulation
+
+            files.forEach((file, index) => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('d-flex', 'align-items-center', 'mb-2', 'justify-content-between');
+
+                // Display the file name with dotted line separator
+                const fileName = document.createElement('span');
+                fileName.innerText = file.name;
+                fileName.classList.add('file-name');
+
+                // Create "X" button to remove the file
+                const removeButton = document.createElement('button');
+                removeButton.classList.add('btn', 'btn-sm', 'btn-danger', 'remove-button');
+                removeButton.innerText = 'X';
+                removeButton.onclick = function() {
+                    files.splice(index, 1); // Remove the file from the array
+                    fileInput.files = createFileList(files); // Update the input files
+                    handleFileSelect({
+                        target: {
+                            files: fileInput.files
+                        }
+                    }); // Refresh the file list display
+                };
+
+                listItem.appendChild(fileName);
+                listItem.appendChild(removeButton);
+                fileList.appendChild(listItem);
+            });
+        }
+
+        // Helper function to create a new FileList
+        function createFileList(files) {
+            const dataTransfer = new DataTransfer();
+            files.forEach(file => dataTransfer.items.add(file));
+            return dataTransfer.files;
+        }
+    </script>
+
+    <style>
+        #file-list .file-name {
+            flex-grow: 1;
+            border-bottom: 1px dotted #ccc;
+            padding-right: 10px;
+            margin-right: 10px;
+            display: inline-block;
+        }
+
+        #file-list .remove-button {
+            white-space: nowrap;
+        }
+    </style>
 </x-app-layout>

@@ -21,6 +21,7 @@ class ComplaintTypesSeeder extends Seeder
             ['name' => 'Parking Issues'],
             ['name' => 'Property Damage'],
             ['name' => 'General Inquiries'],
+            ['name' => 'Other'],
         ]);
     }
 }

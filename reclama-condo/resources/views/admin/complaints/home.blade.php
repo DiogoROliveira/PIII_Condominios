@@ -33,6 +33,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Attachments</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -45,6 +46,16 @@
                                     <td>{{ $complaint->title }}</td>
                                     <td>{{ $complaint->description }}</td>
                                     <td>{{ $complaint->status }}</td>
+                                    <td class="text-center">
+                                        @if ($complaint->attachments->isNotEmpty())
+                                        {{ $complaint->attachments->count()}}
+                                        <a href="{{ route('admin.complaints.download', $complaint->id) }}">
+                                            <i class="fa-solid fa-download ms-1"></i>
+                                        </a>
+                                        @else
+                                        N/A
+                                        @endif
+                                    </td>
                                     <td class="text-center" style="width: 135px;">
                                         <a href="{{ route('admin.complaints.edit', $complaint->id) }}" class="btn btn-sm btn-warning me-1">Edit</a>
                                         <button type="button"

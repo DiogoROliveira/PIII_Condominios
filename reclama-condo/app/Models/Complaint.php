@@ -28,4 +28,9 @@ class Complaint extends Model
     {
         return $this->belongsTo(ComplaintType::class);
     }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachment::class);
+    }
 }
