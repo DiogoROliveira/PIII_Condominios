@@ -1,16 +1,10 @@
+@extends('layouts.admin')
+
+@section('title', 'Edit Tenant')
+
+@section('content')
+
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Tenant') }}
-        </h2>
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('admin.tenants') }}">Tenants</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Edit</li>
-            </ol>
-        </nav>
-    </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -89,6 +83,7 @@
 
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <a href="{{ route('admin.tenants') }}" class="btn btn-secondary">Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -96,3 +91,5 @@
         </div>
     </div>
 </x-app-layout>
+
+@endsection
