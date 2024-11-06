@@ -32,6 +32,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Response</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,6 +43,7 @@
                                     <td>{{ $complaint->title }}</td>
                                     <td>{{ $complaint->description }}</td>
                                     <td>{{ $complaint->status }}</td>
+                                    <td>{{ $complaint->response ?? 'N/A' }}</td>
                                 </tr>
                                 @empty
                                 <tr>

@@ -100,6 +100,7 @@ class ComplaintController extends Controller
         $complaint = Complaint::findOrFail($id);
         $complaint->update([
             'status' => $request->status,
+            'response' => $request->response,
         ]);
 
         return redirect()->route('admin.complaints')->with('success', 'Complaint status updated successfully!');

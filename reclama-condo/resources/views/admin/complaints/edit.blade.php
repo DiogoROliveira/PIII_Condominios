@@ -60,6 +60,14 @@
                             </div>
                         </div>
 
+                        <div class="row g-3 mb-4">
+                            <!-- Response -->
+                            <div class="col-md-12">
+                                <label for="response" class="form-label">Response</label>
+                                <textarea id="response" class="form-control" rows="4" name="response">{{ $complaint->response ?? '' }}</textarea>
+                            </div>
+                        </div>
+
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Update</button>
                             <a href="{{ route('admin.complaints') }}" class="btn btn-secondary">Cancel</a>

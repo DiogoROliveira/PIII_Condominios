@@ -15,6 +15,7 @@ class Complaint extends Model
         'description',
         'complaint_type_id',
         'status',
+        'response',
     ];
 
 

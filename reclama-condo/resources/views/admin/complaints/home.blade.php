@@ -25,6 +25,7 @@
                                     <th>Description</th>
                                     <th>Status</th>
                                     <th>Attachments</th>
+                                    <th>Response</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -47,6 +48,7 @@
                                         N/A
                                         @endif
                                     </td>
+                                    <td>{{ $complaint->response ?? 'N/A' }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.complaints.edit', $complaint->id) }}" class="btn btn-sm btn-warning me-1">
                                             <i class="fas fa-edit"></i>
