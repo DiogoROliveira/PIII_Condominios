@@ -95,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard/complaints/create', [ComplaintController::class, 'create'])->name('complaints.create');
     Route::get('dashboard/complaints', [ComplaintController::class, 'index_user'])->name('complaints.index');
     Route::post('dashboard/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
+    Route::get('dashboard/complaints/{id}/download', [ComplaintController::class, 'download'])->name('complaints.download');
     Route::get('dashboard/complaints/{id}', [ComplaintController::class, 'show'])->name('complaints.show');
 
     Route::middleware(['admin'])->group(function () {
