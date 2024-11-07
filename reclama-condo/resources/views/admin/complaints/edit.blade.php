@@ -68,6 +68,27 @@
                             </div>
                         </div>
 
+                        <div class="mb-4">
+                            <label class="form-label">Attachments</label>
+                            @if ($complaint->attachments->isNotEmpty())
+                                <ul class="list-unstyled mt-3">
+                                    @foreach ($complaint->attachments as $attachment)
+                                        <li class="d-flex align-items-center mb-2 justify-content-between">
+                                            <!-- Exibe o nome do arquivo -->
+                                            <span class="file-name" style="flex-grow: 1; border-bottom: 1px dotted #ccc; padding-right: 10px;">
+                                                {{ $attachment->name ?? 'Unnamed Attachment' }}
+                                            </span>
+                                            
+                                            <!-- Botão de download -->
+                                            <a href="{{ route('complaints.download', ['id' => $complaint->id, 'attachment' => $attachment->id]) }}" <i class="fa-solid fa-download ms-1" style="color: #414243"></i></a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @else
+                                <p>No attachments available</p>
+                            @endif
+                        </div>
+
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">Update</button>
                             <a href="{{ route('admin.complaints') }}" class="btn btn-secondary">Cancel</a>

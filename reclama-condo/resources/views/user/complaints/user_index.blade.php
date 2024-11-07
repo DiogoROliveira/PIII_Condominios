@@ -32,6 +32,7 @@
                                     <th scope="col">Title</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Attachments</th>
                                     <th scope="col">Response</th>
                                     <th scope="col" class="text-center">Actions</th>
                                 </tr>
@@ -44,9 +45,19 @@
                                     <td>{{ $complaint->title }}</td>
                                     <td>{{ $complaint->description }}</td>
                                     <td>{{ $complaint->status }}</td>
+                                    <td class="text-center">
+                                        @if ($complaint->attachments->isNotEmpty())
+                                        {{ $complaint->attachments->count() }}
+                                        <a href="{{ route('complaints.download', $complaint->id) }}">
+                                            <i class="fa-solid fa-download ms-1" style="color: #414243"></i>
+                                        </a>
+                                        @else
+                                        N/A
+                                        @endif
+                                    </td>
                                     <td>{{ $complaint->response ?? 'N/A' }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('complaints.show', $complaint->id) }}" class="btn btn-primary btn-sm">Ver Detalhes</a>
+                                        <a href="{{ route('complaints.show', $complaint->id) }}" class="btn btn-primary btn-sm"><i class="fa-regular fa-file-lines"></i></i></a>
                                     </td>
                                 </tr>
                                 @empty
