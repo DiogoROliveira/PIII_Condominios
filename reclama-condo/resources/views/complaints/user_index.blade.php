@@ -33,6 +33,7 @@
                                     <th scope="col">Description</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Response</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,6 +45,9 @@
                                     <td>{{ $complaint->description }}</td>
                                     <td>{{ $complaint->status }}</td>
                                     <td>{{ $complaint->response ?? 'N/A' }}</td>
+                                    <td>
+                                        <a href="{{ route('complaints.show', $complaint->id) }}" class="btn btn-primary btn-sm">Ver Detalhes</a>
+                                    </td>
                                 </tr>
                                 @empty
                                 <tr>

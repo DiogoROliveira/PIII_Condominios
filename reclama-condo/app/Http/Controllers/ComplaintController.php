@@ -7,6 +7,8 @@ use App\Models\Complaint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Notifications\ComplaintCreatedNotification;
+use App\Notifications\ComplaintUpdatedNotification;
 
 class ComplaintController extends Controller
 {
@@ -69,6 +71,7 @@ class ComplaintController extends Controller
             }
         }
 
+        auth()->user()->notify(new ComplaintCreatedNotification($complaint));
 
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.complaints')->with('success', 'Complaint created successfully!');
@@ -102,6 +105,8 @@ class ComplaintController extends Controller
             'status' => $request->status,
             'response' => $request->response,
         ]);
+
+        $complaint->user->notify(new ComplaintUpdatedNotification($complaint));
 
         return redirect()->route('admin.complaints')->with('success', 'Complaint status updated successfully!');
     }
@@ -144,4 +149,14 @@ class ComplaintController extends Controller
 
         return response()->download($zipFilePath)->deleteFileAfterSend();
     }
+
+    public function show($id)
+    {
+        $complaint = Complaint::where('id', $id)
+                            ->where('user_id', auth()->id())
+                            ->firstOrFail();
+
+        return view('complaints.show', compact('complaint'));
+    }
+
 }
