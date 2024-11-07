@@ -29,7 +29,7 @@ class ComplaintController extends Controller
             ->get();
 
         // Retorna a vista específica para o usuário, passando as reclamações
-        return view('complaints.user_index', compact('complaints'));
+        return view('user.complaints.user_index', compact('complaints'));
     }
 
     public function create()
@@ -41,7 +41,7 @@ class ComplaintController extends Controller
         $breadcrumbRoute = auth()->user()->isAdmin() ? 'admin.complaints' : 'complaints.index';
 
         // Retorna a view para criar uma nova reclamação
-        return view('complaints.create', compact('complaintTypes', 'breadcrumbRoute'));
+        return view('user.complaints.create', compact('complaintTypes', 'breadcrumbRoute'));
     }
 
     public function store(Request $request)
@@ -153,10 +153,9 @@ class ComplaintController extends Controller
     public function show($id)
     {
         $complaint = Complaint::where('id', $id)
-                            ->where('user_id', auth()->id())
-                            ->firstOrFail();
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
 
-        return view('complaints.show', compact('complaint'));
+        return view('user.complaints.show', compact('complaint'));
     }
-
 }

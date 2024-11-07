@@ -22,25 +22,13 @@
 </head>
 
 <body class="font-sans antialiased">
-
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul>
-            <!-- Logout Button -->
-            <li class="nav-item">
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                    @csrf
-                </form>
-                <a href="#" class="nav-link text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </a>
-            </li>
-        </ul>
-    </nav>
-
-
-
     <div class="min-h-screen bg-gray-100">
+
+
+        @if (Auth::user()->role_id !== 1)
         @include('layouts.navigation')
+        @endif
+
 
         <!-- Page Heading -->
         @isset($header)

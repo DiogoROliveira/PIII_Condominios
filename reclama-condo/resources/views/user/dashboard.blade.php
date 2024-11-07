@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -11,7 +12,7 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
                     <hr>
-                    <p><a href="{{ route('complaints.index') }}" class="btn btn-primary">Complaints</a></p>
+                    <p><a href="{{ route('complaints.index') }}" class="btn btn-primary mt-3">Complaints</a></p>
                 </div>
             </div>
         </div>
