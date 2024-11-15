@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
-@section('title', 'Condominiums')
+@section('title')
+{{ __('Condominiums') }}
+@endsection
 
 @section('content')
 <div class="py-12">
@@ -11,22 +13,22 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h1 class="card-title" style="font-size: 2rem">Condominiums DataTable</h1>
+                        <h1 class="card-title" style="font-size: 2rem">{{ __('Condominiums DataTable') }}</h1>
                     </div>
                     <div class="card-body">
                         <table id="condominiumsTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Address</th>
-                                    <th>City</th>
-                                    <th>State</th>
-                                    <th>Postal Code</th>
-                                    <th>Admin</th>
-                                    <th>Blocks</th>
-                                    <th>Created At</th>
-                                    <th class="text-center">Actions</th>
+                                    <th>{{ __('Name') }}</th>
+                                    <th>{{ __('Address') }}</th>
+                                    <th>{{ __('City') }}</th>
+                                    <th>{{ __('State') }}</th>
+                                    <th>{{ __('Postal Code') }}</th>
+                                    <th>{{ __('Admin') }}</th>
+                                    <th>{{ __('Blocks') }}</th>
+                                    <th>{{ __('Created At') }}</th>
+                                    <th class="text-center">{{ __('Actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,9 +37,9 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $condominium->name }}</td>
                                     <td>{{ $condominium->address }}</td>
-                                    <td>{{ $condominium->city ?? 'N/A' }}</td>
-                                    <td>{{ $condominium->state ?? 'N/A' }}</td>
-                                    <td>{{ $condominium->postal_code ?? 'N/A' }}</td>
+                                    <td>{{ $condominium->city ?? __('N/A') }}</td>
+                                    <td>{{ $condominium->state ?? __('N/A') }}</td>
+                                    <td>{{ $condominium->postal_code ?? __('N/A') }}</td>
                                     <td>{{ $condominium->admin->name }} ({{ $condominium->admin->email }})</td>
                                     <td>{{ $condominium->number_of_blocks }}</td>
                                     <td>{{ $condominium->created_at->format('d/m/Y') }}</td>
@@ -54,7 +56,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.condominiums.create') }}" class="btn btn-primary ms-auto">Add Condominium</a>
+                        <a href="{{ route('admin.condominiums.create') }}" class="btn btn-primary ms-auto">{{ __('Add Condominium') }}</a>
                     </div>
                 </div>
 
@@ -63,20 +65,20 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                                <h5 class="modal-title" id="deleteModalLabel">{{ __('Confirm Delete') }}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you want to delete this condominium?
+                                {{ __('Are you sure you want to delete this condominium?') }}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
                                 <form id="deleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">{{ __('Delete') }}</button>
                                 </form>
                             </div>
                         </div>

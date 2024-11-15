@@ -11,6 +11,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\Auth\RegisteredAdminController;
 use App\Http\Controllers\UserController;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
