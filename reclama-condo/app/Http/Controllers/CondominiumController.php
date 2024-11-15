@@ -37,13 +37,10 @@ class CondominiumController extends Controller
             'number_of_blocks' => 'required|integer|min:1',
         ]);
 
-
-
-
         $validator->after(function ($validator) use ($request) {
             $user = User::find($request->admin_id);
             if ($user && $user->role_id !== 1) {
-                $validator->errors()->add('admin_id', 'The selected user must be an admin.');
+                $validator->errors()->add('admin_id', __('The selected user must be an admin.'));
             }
         });
 
@@ -54,10 +51,10 @@ class CondominiumController extends Controller
 
         $condominium = Condominium::create($request->all());
         if ($condominium) {
-            session()->flash('success', 'Condominium created successfully.');
+            session()->flash('success', __('Condominium created successfully.'));
             return redirect()->route('admin.condominiums');
         } else {
-            session()->flash('error', 'Failed to create condominium.');
+            session()->flash('error', __('Failed to create condominium.'));
             return redirect()->route('admin.condominiums');
         }
     }
@@ -92,7 +89,7 @@ class CondominiumController extends Controller
         $condominium = Condominium::find($id);
         $condominium->update($validator->validated());
 
-        session()->flash('success', 'Condominium updated successfully.');
+        session()->flash('success', __('Condominium updated successfully.'));
         return redirect()->route('admin.condominiums');
     }
 
@@ -100,10 +97,10 @@ class CondominiumController extends Controller
     public function destroy($id)
     {
         if (Block::where('condominium_id', $id)->exists()) {
-            return redirect()->route('admin.condominiums')->with('error', 'Condominium cannot be deleted because it has blocks.');
+            return redirect()->route('admin.condominiums')->with('error', __('Condominium cannot be deleted because it has blocks.'));
         }
 
         Condominium::findOrFail($id)->delete();
-        return redirect()->route('admin.condominiums')->with('success', 'Condominium deleted successfully.');
+        return redirect()->route('admin.condominiums')->with('success', __('Condominium deleted successfully.'));
     }
 }

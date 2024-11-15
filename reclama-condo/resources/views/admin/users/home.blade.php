@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
-@section('title', 'Users')
+@section('title')
+{{ __('Users') }}
+@endsection
 
 @section('content')
 <div class="py-12">
@@ -11,18 +13,18 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h1 class="card-title" style="font-size: 2rem">Users DataTable</h1>
+                        <h1 class="card-title" style="font-size: 2rem">{{__('Users DataTable')}}</h1>
                     </div>
                     <div class="card-body">
                         <table id="usersTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Created At</th>
-                                    <th class="text-center">Actions</th>
+                                    <th>{{__('Name')}}</th>
+                                    <th>{{__('Email')}}</th>
+                                    <th>{{__('Role')}}</th>
+                                    <th>{{__('Created At')}}</th>
+                                    <th class="text-center">{{__('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,7 +47,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">Add User</a>
+                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">{{__('Add User')}}</a>
                     </div>
                 </div>
 
@@ -54,20 +56,20 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                                <h5 class="modal-title" id="deleteModalLabel">{{__('Confirm Delete')}}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you want to delete this user?
+                                {{__('Are you sure you want to delete this user?')}}'
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Cancel')}}</button>
                                 <form id="deleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">{{__('Delete')}}</button>
                                 </form>
                             </div>
                         </div>

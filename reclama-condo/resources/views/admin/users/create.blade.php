@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
-@section('title', 'Create User')
+@section('title')
+{{ __('Create User') }}
+@endsection
 
 @section('content')
 <x-app-layout>
@@ -10,7 +12,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <h1 class="mb-4">Create User</h1>
+                    <h1 class="mb-4">{{__('Create User')}}</h1>
                     <hr class="mb-1" />
                     <x-alert-messages />
 
@@ -18,7 +20,7 @@
                     <form method="POST" action="{{ route('admin.users.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">{{__('Name')}}</label>
                             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                             @error('name')
                             <small class="text-danger">{{ $message }}</small>
@@ -26,7 +28,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label">{{__('Email')}}</label>
                             <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
                             @error('email')
                             <small class="text-danger">{{ $message }}</small>
@@ -34,9 +36,9 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="role_id" class="form-label">Role</label>
+                            <label for="role_id" class="form-label">{{__('Role')}}</label>
                             <select class="form-select" id="role_id" name="role_id" required>
-                                <option value="">Select Role</option>
+                                <option value="">{{__('Select Role')}}</option>
                                 @foreach($roles as $role)
                                 <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
                                     {{ $role->name }}
@@ -49,7 +51,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label">{{__('Password')}}</label>
                             <input type="password" class="form-control" id="password" name="password" required>
                             @error('password')
                             <small class="text-danger">{{ $message }}</small>
@@ -57,17 +59,24 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="password_confirmation" class="form-label">Confirm Password</label>
+                            <label for="password_confirmation" class="form-label">{{__('Confirm Password')}}</label>
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create User</button>
-                        <a href="{{ route('admin.users') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">{{__('Create User')}}</button>
+                        <a href="{{ route('admin.users') }}" class="btn btn-secondary">{{__('Cancel')}}</a>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 </x-app-layout>
 
 @endsection

@@ -4,10 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\URL;
 
-class Admin
+class Localization
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,7 @@ class Admin
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-        if (!Auth::check() || Auth::user()->role->name !== 'admin') {
-            return redirect()->route('home')->with('eror', __('Access denied. You must be an admin to access this page.'));
-        }
-
+        app()->setLocale(session('localization', config('app.locale')));
 
         return $next($request);
     }

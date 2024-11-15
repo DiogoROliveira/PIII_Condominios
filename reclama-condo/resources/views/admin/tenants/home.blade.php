@@ -1,34 +1,37 @@
 @extends('layouts.admin')
 
-@section('title', 'Tenants')
+@section('title')
+{{ __('Tenants') }}
+@endsection
 
 @section('content')
 <div class="py-12">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
+
                 <x-alert-messages />
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h1 class="card-title" style="font-size: 2rem">Tenants DataTable</h1>
+                        <h1 class="card-title" style="font-size: 2rem">{{__('Tenants DataTable')}}</h1>
                     </div>
                     <div class="card-body">
                         <table id="tenantsTable" class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Unit Number</th>
-                                    <th>Block</th>
-                                    <th>Condominium</th>
-                                    <th>Status</th>
-                                    <th>Lease Start</th>
-                                    <th>Lease End</th>
-                                    <th>Created At</th>
-                                    <th>Notes</th>
-                                    <th class="text-center">Actions</th>
+                                    <th>{{__('Name')}}</th>
+                                    <th>{{__('Email')}}</th>
+                                    <th>{{__('Unit Number')}}</th>
+                                    <th>{{__('Block')}}</th>
+                                    <th>{{__('Condominium')}}</th>
+                                    <th>{{__('Status')}}</th>
+                                    <th>{{__('Lease Start')}}</th>
+                                    <th>{{__('Lease End')}}</th>
+                                    <th>{{__('Created At')}}</th>
+                                    <th>{{__('Notes')}}</th>
+                                    <th class="text-center">{{__('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,14 +40,14 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $tenant->user->name }}</td>
                                     <td>{{ $tenant->user->email }}</td>
-                                    <td>{{ $tenant->unit->unit_number ?? 'N/A' }}</td>
-                                    <td>{{ $tenant->unit->block->block ?? 'N/A' }}</td>
-                                    <td>{{ $tenant->unit->block->condominium->name ?? 'N/A' }}</td>
+                                    <td>{{ $tenant->unit->unit_number ?? __('N/A') }}</td>
+                                    <td>{{ $tenant->unit->block->block ?? __('N/A') }}</td>
+                                    <td>{{ $tenant->unit->block->condominium->name ?? __('N/A') }}</td>
                                     <td>{{ strtoupper($tenant->status) }}</td>
-                                    <td>{{ $tenant->lease_start_date ?? 'N/A' }}</td>
-                                    <td>{{ $tenant->lease_end_date ?? 'N/A' }}</td>
+                                    <td>{{ $tenant->lease_start_date ?? __('N/A') }}</td>
+                                    <td>{{ $tenant->lease_end_date ?? __('N/A') }}</td>
                                     <td>{{ $tenant->created_at->format('d/m/Y') }}</td>
-                                    <td>{{ $tenant->notes ?? 'N/A' }}</td>
+                                    <td>{{ $tenant->notes ?? __('N/A') }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.tenants.edit', $tenant->id) }}" class="btn btn-sm btn-warning me-1">
                                             <i class="fas fa-edit"></i>
@@ -57,7 +60,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.tenants.create') }}" class="btn btn-primary">Add Tenant</a>
+                        <a href="{{ route('admin.tenants.create') }}" class="btn btn-primary">{{__('Add Tenant')}}</a>
                     </div>
                 </div>
 
@@ -66,20 +69,20 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                                <h5 class="modal-title" id="deleteModalLabel">{{__('Confirm Delete')}}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you want to delete this tenant?
+                                {{__('Are you sure you want to delete this tenant?')}}'
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Cancel')}}</button>
                                 <form id="deleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">{{__('Delete')}}</button>
                                 </form>
                             </div>
                         </div>

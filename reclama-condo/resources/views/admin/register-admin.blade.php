@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
-@section('title', 'Condominiums')
+@section('title')
+{{ __('Register Admin') }}
+@endsection
 
 @section('content')
 <x-app-layout>
@@ -9,7 +11,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h1 class="mb-4">Register Admin</h1>
+                    <h1 class="mb-4">{{__('Register Admin')}}</h1>
                     <hr class="mb-1" />
                     <x-alert-messages />
                     <form method="POST" action="{{ route('admin.register') }}">
@@ -63,5 +65,12 @@
         </div>
     </div>
 </x-app-layout>
+
+<!-- jQuery -->
+<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 
 @endsection

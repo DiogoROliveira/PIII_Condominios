@@ -37,7 +37,7 @@ class TenantController extends Controller
 
         $unit = Unit::findOrFail($request->unit_id);
         if ($unit->status != 'vacant') {
-            return redirect()->back()->withErrors(['error' => 'Unit is not vacant.']);
+            return redirect()->back()->withErrors(['error' => __('Unit is not vacant.')]);
         }
 
         if ($request->status == 'active') {
@@ -59,7 +59,7 @@ class TenantController extends Controller
             'notes' => $request->notes
         ]);
 
-        return redirect()->route('admin.tenants')->with('success', 'Tenant created successfully.');
+        return redirect()->route('admin.tenants')->with('success', __('Tenant created successfully.'));
     }
 
     public function edit($id)
@@ -86,7 +86,7 @@ class TenantController extends Controller
 
 
         if ($unit->status != 'vacant' && $tenant->unit_id != $unit->id) {
-            return redirect()->back()->withErrors(['error' => 'Unit is not vacant.']);
+            return redirect()->back()->withErrors(['error' => __('Unit is not vacant.')]);
         }
 
 
@@ -124,13 +124,13 @@ class TenantController extends Controller
             'notes' => $request->notes
         ]);
 
-        return redirect()->route('admin.tenants')->with('success', 'Tenant updated successfully.');
+        return redirect()->route('admin.tenants')->with('success', __('Tenant updated successfully.'));
     }
 
 
     public function destroy($id)
     {
         Tenant::findOrFail($id)->delete();
-        return redirect()->route('admin.tenants')->with('success', 'Tenant deleted successfully.');
+        return redirect()->route('admin.tenants')->with('success', __('Tenant deleted successfully.'));
     }
 }

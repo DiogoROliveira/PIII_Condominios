@@ -40,7 +40,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('admin.users')->with('success', 'User created successfully.');
+        return redirect()->route('admin.users')->with('success', __('User created successfully.'));
     }
 
     public function edit($id)
@@ -71,20 +71,20 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users')->with('success', 'User updated successfully.');
+        return redirect()->route('admin.users')->with('success', __('User updated successfully.'));
     }
 
     public function destroy($id)
     {
         if ($id == auth()->user()->id) {
-            return redirect()->route('admin.users')->with('error', 'You cannot delete your own account this way.');
+            return redirect()->route('admin.users')->with('error', __('You cannot delete your own account this way.'));
         }
 
         if (Tenant::where('user_id', $id)->exists()) {
-            return redirect()->route('admin.users')->with('error', 'You cannot delete an account that is assigned to a tenant.');
+            return redirect()->route('admin.users')->with('error', __('You cannot delete an account that is assigned to a tenant.'));
         }
 
         User::findOrFail($id)->delete();
-        return redirect()->route('admin.users')->with('success', 'User deleted successfully.');
+        return redirect()->route('admin.users')->with('success', __('User deleted successfully.'));
     }
 }

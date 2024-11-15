@@ -12,7 +12,7 @@
                 <div class="p-6 text-gray-900">
                     {{ __("You're logged in!") }}
                     <hr>
-                    <p><a href="{{ route('complaints.index') }}" class="btn btn-primary mt-3">Complaints</a></p>
+                    <p><a href="{{ route('complaints.index') }}" class="btn btn-primary mt-3">{{__('Complaints')}}</a></p>
                 </div>
             </div>
         </div>

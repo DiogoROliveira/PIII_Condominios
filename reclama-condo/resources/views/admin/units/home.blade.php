@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
-@section('title', 'Units')
+@section('title')
+{{ __('Units') }}
+@endsection
 
 @section('content')
 <div class="py-12">
@@ -11,7 +13,7 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h1 class="card-title" style="font-size: 2rem">Units DataTable</h1>
+                        <h1 class="card-title" style="font-size: 2rem">{{__('Units DataTable')}}</h1>
 
                     </div>
                     <div class="card-body">
@@ -19,12 +21,12 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Condominium</th>
-                                    <th>Block</th>
-                                    <th>Unit Number</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
-                                    <th class="text-center">Actions</th>
+                                    <th>{{__('Condominium')}}</th>
+                                    <th>{{__('Block')}}</th>
+                                    <th>{{__('Unit Number')}}</th>
+                                    <th>{{__('Status')}}</th>
+                                    <th>{{__('Created At')}}</th>
+                                    <th class="text-center">{{__('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -48,7 +50,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.units.create') }}" class="btn btn-primary ms-auto">Add Unit</a>
+                        <a href="{{ route('admin.units.create') }}" class="btn btn-primary ms-auto">{{__('Add Unit')}}</a>
                     </div>
                 </div>
 
@@ -57,20 +59,20 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                                <h5 class="modal-title" id="deleteModalLabel">{{__('Confirm Delete')}}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Are you sure you want to delete this unit?
+                                {{__('Are you sure you want to delete this unit?')}}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Cancel')}}</button>
                                 <form id="deleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn btn-danger">{{__('Delete')}}</button>
                                 </form>
                             </div>
                         </div>

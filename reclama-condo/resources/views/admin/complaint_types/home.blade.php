@@ -35,8 +35,8 @@
                                         <a href="{{ route('admin.complaint-types.edit', $complaintType->id) }}" class="btn btn-sm btn-warning me-1">
                                             <i class="fas fa-edit"></i> {{__('Edit')}}
                                         </a>
-                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-complaint-type-id="{{ $complaintType->id }}">
-                                            <i class="fas fa-trash-alt"></i> {{__('Delete')}}
+                                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteModal" data-complaint-type-id="{{ $complaintType->id }}">
+                                            <i class="fas fa-trash-alt"></i>{{__('Delete')}}
                                         </button>
                                     </td>
                                 </tr>
@@ -57,13 +57,15 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="deleteModalLabel">{{__('Confirm Delete')}}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="modal-body">
                                 {{__('Are you sure you want to delete this complaint type?')}}
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{__('Cancel')}}</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Cancel')}}</button>
                                 <form id="deleteForm" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -78,7 +80,6 @@
     </div>
 </div>
 
-<!-- DataTables and JavaScript -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -87,6 +88,7 @@
 <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+
 
 <script>
     $(document).ready(function() {

@@ -74,9 +74,9 @@ class ComplaintController extends Controller
         auth()->user()->notify(new ComplaintCreatedNotification($complaint));
 
         if (auth()->user()->isAdmin()) {
-            return redirect()->route('admin.complaints')->with('success', 'Complaint created successfully!');
+            return redirect()->route('admin.complaints')->with('success', __('Complaint created successfully!'));
         } else {
-            return redirect()->route('complaints.index')->with('success', 'Complaint created successfully!');
+            return redirect()->route('complaints.index')->with('success', __('Complaint created successfully!'));
         }
     }
 
@@ -108,7 +108,7 @@ class ComplaintController extends Controller
 
         $complaint->user->notify(new ComplaintUpdatedNotification($complaint));
 
-        return redirect()->route('admin.complaints')->with('success', 'Complaint status updated successfully!');
+        return redirect()->route('admin.complaints')->with('success', __('Complaint status updated successfully!'));
     }
 
     public function destroy($id)
@@ -119,7 +119,7 @@ class ComplaintController extends Controller
         // Exclui a reclamação
         $complaint->delete();
 
-        return redirect()->route('admin.complaints')->with('success', 'Complaint deleted successfully!');
+        return redirect()->route('admin.complaints')->with('success', __('Complaint deleted successfully!'));
     }
 
     public function download($id)
@@ -128,7 +128,7 @@ class ComplaintController extends Controller
         $complaint = Complaint::with('attachments')->findOrFail($id);
 
         if ($complaint->attachments->isEmpty()) {
-            return redirect()->back()->with('error', 'No attachments found for this complaint.');
+            return redirect()->back()->with('error', __('No attachments found for this complaint.'));
         }
 
         $zip = new \ZipArchive();
@@ -141,7 +141,7 @@ class ComplaintController extends Controller
                 if (file_exists($filePath)) {
                     $zip->addFile($filePath, basename($attachment->path));
                 } else {
-                    return redirect()->back()->withErrors(['error' => 'File not found: ' . $attachment->path]);
+                    return redirect()->back()->withErrors(['error' => __('File not found: ') . $attachment->path]);
                 }
             }
             $zip->close();

@@ -6,9 +6,9 @@
 
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item"><a href="{{ route($breadcrumbRoute) }}">Complaints</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create</li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">{{__('Dashboard')}}</a></li>
+                <li class="breadcrumb-item"><a href="{{ route($breadcrumbRoute) }}">{{__('Complaints')}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{__('Create')}}</li>
             </ol>
         </nav>
     </x-slot>
@@ -17,7 +17,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <h1 class="mb-4">Create Complaint</h1>
+                    <h1 class="mb-4">{{__('Create Complaint')}}</h1>
                     <hr class="mb-4" />
                     <x-alert-messages />
                 </div>
@@ -26,11 +26,11 @@
                         @csrf
 
                         <div class="mb-4">
-                            <label for="complaint_type_id" class="form-label">Complaint Type</label>
+                            <label for="complaint_type_id" class="form-label">{{__('Complaint Type')}}</label>
                             <select name="complaint_type_id" id="complaint_type_id" class="form-select" required>
-                                <option value="">Select a complaint type</option>
+                                <option value="">{{__('Select a complaint type')}}</option>
                                 @foreach ($complaintTypes as $type)
-                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                <option value="{{ $type->id }}">{{ __($type->name) }}</option>
                                 @endforeach
                             </select>
                             @error('complaint_type_id')
@@ -39,7 +39,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="title" class="form-label">Title</label>
+                            <label for="title" class="form-label">{{__('Title')}}</label>
                             <input type="text" name="title" id="title" class="form-control" required>
                             @error('title')
                             <span class="text-danger">{{ $message }}</span>
@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="description" class="form-label">Description</label>
+                            <label for="description" class="form-label">{{__('Description')}}</label>
                             <textarea name="description" id="description" rows="4" class="form-control" required></textarea>
                             @error('description')
                             <span class="text-danger">{{ $message }}</span>
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="attachments" class="form-label">Attachments</label>
+                            <label for="attachments" class="form-label">{{__('Attachments')}}</label>
                             <input type="file" name="attachments[]" id="attachments" class="form-control" multiple onchange="handleFileSelect(event)">
                             @error('attachments')
                             <span class="text-danger">{{ $message }}</span>
@@ -68,7 +68,7 @@
                         </div>
 
                         <div class="text-end">
-                            <button type="submit" class="btn btn-primary">Submit Complaint</button>
+                            <button type="submit" class="btn btn-primary">{{__('Submit Complaint')}}</button>
                         </div>
                     </form>
                 </div>

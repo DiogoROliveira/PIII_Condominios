@@ -63,7 +63,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                {{__('Are you sure you want to delete this block?')}}'
+                                {{__('Are you sure you want to delete this block?')}}
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Cancel')}}</button>

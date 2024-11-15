@@ -33,10 +33,10 @@ class ComplaintTypeController extends Controller
 
         // Verifica se a criação foi bem-sucedida
         if ($complaintType) {
-            session()->flash('success', 'Complaint Type created successfully.');
+            session()->flash('success', __('Complaint Type created successfully.'));
             return redirect()->route('admin.complaint-types');
         } else {
-            session()->flash('error', 'Failed to create complaint type.');
+            session()->flash('error', __('Failed to create complaint type.'));
             return redirect()->route('admin.complaint-types.create')->withInput(); // Retorna os dados antigos
         }
     }
@@ -56,7 +56,7 @@ class ComplaintTypeController extends Controller
         $complaintType = ComplaintType::find($id);
 
         if (!$complaintType) {
-            session()->flash('error', 'Complaint Type not found.');
+            session()->flash('error', __('Complaint Type not found.'));
             return redirect()->route('admin.complaint-types');
         }
 
@@ -64,7 +64,7 @@ class ComplaintTypeController extends Controller
             'name' => $request->name,
         ]);
 
-        session()->flash('success', 'Complaint Type updated successfully.');
+        session()->flash('success', __('Complaint Type updated successfully.'));
         return redirect()->route('admin.complaint-types');
     }
 
@@ -73,7 +73,7 @@ class ComplaintTypeController extends Controller
         $complaint_types = ComplaintType::findOrFail($id);
         $complaint_types->delete();
 
-        session()->flash('success', 'Complaint Type deleted successfully.');
+        session()->flash('success', __('Complaint Type deleted successfully.'));
         return redirect()->route('admin.complaint-types');
     }
 }

@@ -45,15 +45,15 @@ class UnitController extends Controller
         $block = Block::findOrFail($request->block_id);
 
         if ($block->units->count() >= $block->number_of_units) {
-            return redirect()->back()->withErrors(['error' => 'Maximum number of units reached for this block.']);
+            return redirect()->back()->withErrors(['error' => __('Maximum number of units reached for this block.')]);
         }
 
         if ($request->unit_number > $block->number_of_units) {
-            return redirect()->back()->withErrors(['error' => 'Unit number cannot be greater than the number of units in this block.']);
+            return redirect()->back()->withErrors(['error' => __('Unit number cannot be greater than the number of units in this block.')]);
         }
 
         if ($block->units()->where('unit_number', $request->unit_number)->exists()) {
-            return redirect()->back()->withErrors(['error' => 'Unit already exists in this block.']);
+            return redirect()->back()->withErrors(['error' => __('Unit already exists in this block.')]);
         }
 
         Unit::create([
@@ -62,7 +62,7 @@ class UnitController extends Controller
             'status' => $request->status
         ]);
 
-        return redirect()->route('admin.units')->with('success', 'Unit created successfully.');
+        return redirect()->route('admin.units')->with('success', __('Unit created successfully.'));
     }
 
     public function edit($id)
@@ -85,11 +85,11 @@ class UnitController extends Controller
         $block = Block::findOrFail($request->block_id);
 
         if ($block->number_of_units < $request->unit_number) {
-            return redirect()->back()->withErrors(['error' => 'Unit number cannot be greater than the number of units in this block.']);
+            return redirect()->back()->withErrors(['error' => __('Unit number cannot be greater than the number of units in this block.')]);
         }
 
         if (Unit::where('unit_number', $request->unit_number)->where('id', '!=', $id)->exists()) {
-            return redirect()->back()->withErrors(['error' => 'Unit already exists.']);
+            return redirect()->back()->withErrors(['error' => __('Unit already exists.')]);
         }
 
         $unit = Unit::findOrFail($id);
@@ -100,16 +100,16 @@ class UnitController extends Controller
             'status' => $request->status
         ]);
 
-        return redirect()->route('admin.units')->with('success', 'Unit updated successfully.');
+        return redirect()->route('admin.units')->with('success', __('Unit updated successfully.'));
     }
 
     public function destroy($id)
     {
         if (Tenant::where('unit_id', $id)->exists()) {
-            return redirect()->back()->withErrors(['error' => 'Unit is assigned to a tenant.']);
+            return redirect()->back()->withErrors(['error' => __('Unit is assigned to a tenant.')]);
         }
 
         Unit::findOrFail($id)->delete();
-        return redirect()->route('admin.units')->with('success', 'Unit deleted successfully.');
+        return redirect()->route('admin.units')->with('success', __('Unit deleted successfully.'));
     }
 }

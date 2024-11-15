@@ -38,7 +38,7 @@ class BlockController extends Controller
         $condominium = Condominium::findOrFail($request->condominium_id);
 
         if ($condominium->blocks->count() >= $condominium->number_of_blocks) {
-            return redirect()->back()->withErrors(['error' => 'Maximum number of blocks reached for this condominium.']);
+            return redirect()->back()->withErrors(['error' => __('Maximum number of blocks reached for this condominium.')]);
         }
 
 
@@ -48,7 +48,7 @@ class BlockController extends Controller
             'number_of_units' => $request->number_of_units,
         ]);
 
-        return redirect()->route('admin.blocks')->with('success', 'Block created successfully.');
+        return redirect()->route('admin.blocks')->with('success', __('Block created successfully.'));
     }
 
 
@@ -76,18 +76,18 @@ class BlockController extends Controller
         $block = Block::find($id);
         $block->update($validator->validated());
 
-        session()->flash('success', 'Block updated successfully.');
+        session()->flash('success', __('Block updated successfully.'));
         return redirect()->route('admin.blocks');
     }
 
     public function destroy($id)
     {
         if (Unit::where('block_id', $id)->exists()) {
-            return redirect()->route('admin.blocks')->with('error', 'Block cannot be deleted because it has units.');
+            return redirect()->route('admin.blocks')->with('error', __('Block cannot be deleted because it has units.'));
         }
 
         Block::findOrFail($id)->delete();
-        return redirect()->route('admin.blocks')->with('success', 'Block deleted successfully.');
+        return redirect()->route('admin.blocks')->with('success', __('Block deleted successfully.'));
     }
 
     public function getBlocks($id)

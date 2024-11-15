@@ -6,8 +6,8 @@
 
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active" aria-current="page">My Complaints</li>
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{__('Dashboard')}}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{__('My Complaints')}}</li>
             </ol>
         </nav>
     </x-slot>
@@ -20,21 +20,21 @@
                     <x-alert-messages />
 
                     <div class="d-flex align-items-center justify-content-between">
-                        <h1 class="mb-0">Complaints List</h1>
-                        <a href="{{ route('complaints.create') }}" class="btn btn-primary">Add Complaint</a>
+                        <h1 class="mb-0">{{__('Complaints List')}}</h1>
+                        <a href="{{ route('complaints.create') }}" class="btn btn-primary">{{__('Add Complaint')}}</a>
                     </div>
                     <div class="table-responsive mt-6">
                         <table class="table table-bordered table-hover align-middle">
                             <thead class="table-light">
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Complaint Type</th>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Status</th>
-                                    <th scope="col">Attachments</th>
-                                    <th scope="col">Response</th>
-                                    <th scope="col" class="text-center">Actions</th>
+                                    <th scope="col">{{__('ID')}}</th>
+                                    <th scope="col">{{__('Complaint Type')}}</th>
+                                    <th scope="col">{{__('Title')}}</th>
+                                    <th scope="col">{{__('Description')}}</th>
+                                    <th scope="col">{{__('Status')}}</th>
+                                    <th scope="col">{{__('Attachments')}}</th>
+                                    <th scope="col">{{__('Response')}}</th>
+                                    <th scope="col" class="text-center">{{__('Actions')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,7 +62,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="7" class="text-center">No complaints available.</td>
+                                    <td colspan="7" class="text-center">{{__('No complaints available.')}}</td>
                                 </tr>
                                 @endforelse
                             </tbody>

@@ -31,10 +31,10 @@
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('home') }}" class="nav-link">Home</a>
+                    <a href="{{ route('home') }}" class="nav-link">{{__('Home')}}</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="#" class="nav-link">{{__('Contact')}}</a>
                 </li>
             </ul>
 
@@ -47,7 +47,7 @@
                     <div class="navbar-search-block">
                         <form class="form-inline" method="GET" action="{{ url('admin/search') }}">
                             <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" name="query" placeholder="Search" aria-label="Search">
+                                <input class="form-control form-control-navbar" type="search" name="query" placeholder="{{__('Search')}}" aria-label="Search">
                                 <div class="input-group-append">
                                     <button class="btn btn-navbar" type="submit">
                                         <i class="fas fa-search"></i>
@@ -55,9 +55,25 @@
                                     <button class="btn btn-navbar" type="button" data-widget="navbar-search">
                                         <i class="fas fa-times"></i>
                                     </button>
+
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </li>
+
+                <!-- Language Switcher -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa-solid fa-language"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                        @foreach (config('localization.locales') as $locale)
+
+                        <a href="{{ route('lang', $locale) }}" class="dropdown-item">
+                            {{ strtoupper(__($locale)) }}
+                        </a>
+                        @endforeach
                     </div>
                 </li>
 
@@ -67,7 +83,7 @@
                         @csrf
                     </form>
                     <a href="#" class="nav-link text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="fas fa-sign-out-alt"></i> Logout
+                        <i class="fas fa-sign-out-alt"></i> {{__('Logout')}}
                     </a>
                 </li>
             </ul>
@@ -96,14 +112,14 @@
                         <li class="nav-item">
                             <a href="{{ url('admin/dashboard') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>Dashboard</p>
+                                <p>{{__('Dashboard')}}</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-table"></i>
                                 <p>
-                                    Tables
+                                    {{__('Tables')}}
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
@@ -111,43 +127,43 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.condominiums') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Condominiums</p>
+                                        <p>{{__('Condominiums')}}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.blocks') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Blocks</p>
+                                        <p>{{__('Blocks')}}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.units') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Units</p>
+                                        <p>{{__('Units')}}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.tenants') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Tenants</p>
+                                        <p>{{__('Tenants')}}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.complaint-types') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Complaint Types</p>
+                                        <p>{{__('Complaint Types')}}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.complaints') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Complaints</p>
+                                        <p>{{__('Complaints')}}</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.users') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Users</p>
+                                        <p>{{__('Users')}}</p>
                                     </a>
                                 </li>
                             </ul>
@@ -155,7 +171,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.register') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
-                                <p>Register Admin</p>
+                                <p>{{__('Register Admin')}}</p>
                             </a>
                         </li>
                     </ul>
@@ -175,19 +191,9 @@
         </footer>
     </div>
 
-    <!-- jQuery -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- overlayScrollbars -->
-    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    <!-- DataTables -->
-    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+
     <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
