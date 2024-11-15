@@ -110,6 +110,7 @@ Route::middleware(Localization::class)->group(function () {
 
         Route::middleware(['admin'])->group(function () {
             Route::get('admin/dashboard/complaints', [ComplaintController::class, 'index_admin'])->name('admin.complaints');
+            Route::get('admin/dashboard/complaints/create', [ComplaintController::class, 'admin_create'])->name('admin.complaints.create');
             Route::get('admin/dashboard/complaints/{id}/edit', [ComplaintController::class, 'edit'])->name('admin.complaints.edit');
             Route::put('admin/dashboard/complaints/{id}', [ComplaintController::class, 'update'])->name('admin.complaints.update');
             Route::delete('admin/dashboard/complaints/{id}', [ComplaintController::class, 'destroy'])->name('admin.complaints.destroy');

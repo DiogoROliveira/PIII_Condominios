@@ -23,25 +23,24 @@ class ComplaintController extends Controller
 
     public function index_user()
     {
-        // Recupera as reclamações do usuário logado
         $complaints = Complaint::with('complaintType')
-            ->where('user_id', auth()->id()) // Filtra pelas reclamações do usuário logado
+            ->where('user_id', auth()->id())
             ->get();
 
-        // Retorna a vista específica para o usuário, passando as reclamações
         return view('user.complaints.user_index', compact('complaints'));
     }
 
     public function create()
     {
-        // Recupera todos os tipos de reclamação
+        $complaintTypes = ComplaintType::all();
+        return view('user.complaints.create', compact('complaintTypes'));
+    }
+
+    public function admin_create()
+    {
         $complaintTypes = ComplaintType::all();
 
-        // Define o caminho da rota de acordo com o tipo de user
-        $breadcrumbRoute = auth()->user()->isAdmin() ? 'admin.complaints' : 'complaints.index';
-
-        // Retorna a view para criar uma nova reclamação
-        return view('user.complaints.create', compact('complaintTypes', 'breadcrumbRoute'));
+        return view('admin.complaints.create', compact('complaintTypes'));
     }
 
     public function store(Request $request)

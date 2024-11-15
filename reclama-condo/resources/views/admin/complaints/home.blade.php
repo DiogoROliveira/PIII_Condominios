@@ -63,7 +63,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('complaints.create') }}" class="btn btn-primary">{{__('Add Complaint')}}</a>
+                        <a href="{{ route('admin.complaints.create') }}" class="btn btn-primary">{{__('Add Complaint')}}</a>
                     </div>
                 </div>
 

@@ -33,7 +33,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{{ strtoupper($user->role->name) ?? 'N/A' }}</td>
+                                    <td>{{ strtoupper($user->role->name) ?? __('N/A') }}</td>
                                     <td>{{ $user->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-warning me-1">

@@ -1,18 +1,12 @@
+@extends('layouts.admin')
+
+@section('title')
+{{ __('Create Complaint') }}
+@endsection
+
+@section('content')
+
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Complaint') }}
-        </h2>
-
-        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{__('Dashboard')}}</a></li>
-                <li class="breadcrumb-item"><a href="{{ route('complaints.index') }}">{{__('Complaints')}}</a></li>
-                <li class="breadcrumb-item active" aria-current="page">{{__('Create')}}</li>
-            </ol>
-        </nav>
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -69,6 +63,7 @@
 
                         <div class="text-end">
                             <button type="submit" class="btn btn-primary">{{__('Submit Complaint')}}</button>
+                            <a href="{{ route('admin.complaints') }}" class="btn btn-secondary">{{__('Cancel')}}</a>
                         </div>
                     </form>
                 </div>
@@ -82,30 +77,28 @@
         const fileInput = document.getElementById('attachments');
 
         function handleFileSelect(event) {
-            fileList.innerHTML = ''; // Clear previous file list
-            const files = Array.from(event.target.files); // Convert FileList to array for easier manipulation
+            fileList.innerHTML = '';
+            const files = Array.from(event.target.files);
 
             files.forEach((file, index) => {
                 const listItem = document.createElement('li');
                 listItem.classList.add('d-flex', 'align-items-center', 'mb-2', 'justify-content-between');
 
-                // Display the file name with dotted line separator
                 const fileName = document.createElement('span');
                 fileName.innerText = file.name;
                 fileName.classList.add('file-name');
 
-                // Create "X" button to remove the file
                 const removeButton = document.createElement('button');
                 removeButton.classList.add('btn', 'btn-sm', 'btn-danger', 'remove-button');
                 removeButton.innerText = 'X';
                 removeButton.onclick = function() {
-                    files.splice(index, 1); // Remove the file from the array
-                    fileInput.files = createFileList(files); // Update the input files
+                    files.splice(index, 1);
+                    fileInput.files = createFileList(files);
                     handleFileSelect({
                         target: {
                             files: fileInput.files
                         }
-                    }); // Refresh the file list display
+                    });
                 };
 
                 listItem.appendChild(fileName);
@@ -114,7 +107,6 @@
             });
         }
 
-        // Helper function to create a new FileList
         function createFileList(files) {
             const dataTransfer = new DataTransfer();
             files.forEach(file => dataTransfer.items.add(file));
@@ -135,4 +127,13 @@
             white-space: nowrap;
         }
     </style>
+
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 </x-app-layout>
+
+@endsection
