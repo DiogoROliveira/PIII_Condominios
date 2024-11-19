@@ -49,14 +49,16 @@ class TenantController extends Controller
         }
 
 
-
-        Tenant::create([
+        $tenant = Tenant::create([
             'user_id' => $request->user_id,
-            'unit_id' => $request->unit_id,
             'lease_start_date' => $request->lease_start_date,
             'lease_end_date' => $request->lease_end_date,
             'status' => $request->status,
             'notes' => $request->notes
+        ]);
+
+        $unit->update([
+            'tenant_id' => $tenant->id
         ]);
 
         return redirect()->route('admin.tenants')->with('success', __('Tenant created successfully.'));
@@ -117,7 +119,6 @@ class TenantController extends Controller
         // Atualiza os dados do tenant
         $tenant->update([
             'user_id' => $request->user_id,
-            'unit_id' => $request->unit_id,
             'lease_start_date' => $request->lease_start_date,
             'lease_end_date' => $request->lease_end_date,
             'status' => $request->status,

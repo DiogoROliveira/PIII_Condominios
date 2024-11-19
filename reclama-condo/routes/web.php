@@ -148,4 +148,9 @@ Route::middleware(Localization::class)->group(function () {
             Route::get('admin/dashboard/complaints/{id}/download', [ComplaintController::class, 'download'])->name('admin.complaints.download');
         });
     });
+
+    Route::middleware(['auth'])->group(function () {
+        // User Rent Routes
+        route::get('dashboard/rents', [RentManagementController::class, 'userIndex'])->name('rents.index');
+    });
 });

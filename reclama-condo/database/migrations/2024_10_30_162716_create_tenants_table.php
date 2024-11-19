@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tenants', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedInteger('unit_id');
             $table->date('lease_start_date');
             $table->date('lease_end_date')->nullable();
             $table->enum('status', ['active', 'inactive', 'pending', 'terminated'])->default('active');
@@ -22,7 +21,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('unit_id')->references('id')->on('units')->delete('cascade');
         });
     }
 

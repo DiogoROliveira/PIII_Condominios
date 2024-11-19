@@ -13,20 +13,24 @@ class Tenant extends Model
 
     protected $fillable = [
         'user_id',
-        'unit_id',
         'lease_start_date',
         'lease_end_date',
         'status',
         'notes',
     ];
 
-    public function unit()
+    public function units()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->hasMany(Unit::class, 'id');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function monthly_payments()
+    {
+        return $this->hasMany(MonthlyPayment::class, 'tenant_id');
     }
 }

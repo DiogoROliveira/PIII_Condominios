@@ -16,6 +16,7 @@ class Unit extends Model
         'unit_number',
         'status',
         'base_rent',
+        'tenant_id'
     ];
 
     public function block()

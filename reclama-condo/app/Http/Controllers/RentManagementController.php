@@ -18,6 +18,13 @@ class RentManagementController extends Controller
         return view('admin.manage_payments.home', compact('condominiums'));
     }
 
+    public function userIndex()
+    {
+        $tenant = Tenant::where('user_id', auth()->user()->id)->first();
+        $units = Unit::where('tenant_id', $tenant->id)->get();
+        return view('user.rents.home', compact('units'));
+    }
+
     public function details($condominium)
     {
         $condominium = Condominium::with(['blocks.units'])->findOrFail($condominium);
