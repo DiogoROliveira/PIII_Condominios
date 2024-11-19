@@ -117,6 +117,9 @@ Route::middleware(Localization::class)->group(function () {
         // Admin Register
         route::get('admin/dashboard/register-admin', [RegisteredAdminController::class, 'create'])->name('admin.register');
         route::post('admin/dashboard/register-admin', [RegisteredAdminController::class, 'store'])->name('admin.register.store');
+
+        // Admin Maps
+        Route::get('/admin/complaint-maps', [MapController::class, 'complaintMaps'])->name('admin.complaint-maps');
     });
 
     Route::middleware(['auth', 'admin'])->group(function () {
