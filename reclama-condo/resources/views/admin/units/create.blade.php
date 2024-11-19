@@ -35,8 +35,7 @@
                             <div class="col-md-6">
                                 <label for="block_id" class="form-label">{{__('Block')}}</label>
                                 <select name="block_id" id="block_id" class="form-select" disabled>
-                                    <option value="" disabled selected>{{__('Select a Block')}}</option>
-
+                                    <option value="" disabled selected>{{ __('Select a Block') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -80,7 +79,7 @@
         document.getElementById('condominium_id').addEventListener('change', function() {
             const condominiumId = this.value;
             const blockSelect = document.getElementById('block_id');
-            blockSelect.innerHTML = '<option value="" disabled selected>__("Select a Block")</option>';
+            blockSelect.innerHTML = '<option value="" disabled selected>{{ __("Select a Block") }}</option>';
 
             if (condominiumId) {
                 // if a condominium is selected, enable the block select

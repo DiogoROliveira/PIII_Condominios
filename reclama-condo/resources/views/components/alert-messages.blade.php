@@ -13,10 +13,10 @@
     <!-- Display Validation Errors -->
     @if ($errors->any())
     <div class="alert alert-danger d-flex align-items-center" role="alert">
-        <svg class="bi me-2" width="16" height="16" role="img" aria-label="Danger:">
+        <svg class="bi ml-2" width="16" height="16" role="img" aria-label="Danger:">
             <use xlink:href="#exclamation-triangle-fill" />
         </svg>
-        <div>
+        <div class="ml-2">
             {{ $errors->first() }}
         </div>
     </div>
@@ -25,10 +25,10 @@
     <!-- Success Message -->
     @if (session()->has('success'))
     <div class="alert alert-success d-flex align-items-center p-3" role="alert">
-        <svg class="bi me-2" width="16" height="16" role="img" aria-label="Success:">
+        <svg class="bi ml-2" width="16" height="16" role="img" aria-label="Success:">
             <use xlink:href="#check-circle-fill" />
         </svg>
-        <div>
+        <div class="ml-2">
             {{ session('success') }}
         </div>
     </div>
@@ -36,10 +36,10 @@
 
     @if (session()->has('error'))
     <div class="alert alert-danger d-flex align-items-center p-3" role="alert">
-        <svg class="bi me-2" width="16" height="16" role="img" aria-label="Danger:">
+        <svg class="bi ml-2" width="16" height="16" role="img" aria-label="Danger:">
             <use xlink:href="#exclamation-triangle-fill" />
         </svg>
-        <div>
+        <div class="ml-2">
             {{ session('error') }}
         </div>
     </div>

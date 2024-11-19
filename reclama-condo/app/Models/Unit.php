@@ -15,10 +15,16 @@ class Unit extends Model
         'block_id',
         'unit_number',
         'status',
+        'base_rent',
     ];
 
     public function block()
     {
         return $this->belongsTo(Block::class, 'block_id');
+    }
+
+    public function tenant()
+    {
+        return $this->hasOne(Tenant::class, 'unit_id');
     }
 }

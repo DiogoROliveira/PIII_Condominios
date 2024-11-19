@@ -1,10 +1,9 @@
 <?php
 
-
+// Controllers
 use App\Http\Controllers\CondominiumController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\ComplaintTypeController;
@@ -13,7 +12,15 @@ use App\Http\Controllers\TenantController;
 use App\Http\Controllers\Auth\RegisteredAdminController;
 use App\Http\Controllers\LocalizationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\MonthlyPaymentController;
+use App\Http\Controllers\RentManagementController;
+
+// Middlewares
 use App\Http\Middleware\Localization;
+use Carbon\Month;
+// Helpers
+use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
 Route::get('/lang/{locale}', LocalizationController::class)->name('lang');
@@ -85,6 +92,27 @@ Route::middleware(Localization::class)->group(function () {
         route::get('admin/dashboard/users/{id}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         route::put('admin/dashboard/users/{id}', [UserController::class, 'update'])->name('admin.users.update');
         route::delete('admin/dashboard/users/{id}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+
+        // Monthly Payment Routes
+        route::get('admin/dashboard/monthly-payments', [MonthlyPaymentController::class, 'adminIndex'])->name('admin.monthly-payments');
+        route::get('admin/dashboard/monthly-payments/create', [MonthlyPaymentController::class, 'create'])->name('admin.monthly-payments.create');
+        route::post('admin/dashboard/monthly-payments/create', [MonthlyPaymentController::class, 'store'])->name('admin.monthly-payments.store');
+        route::get('admin/dashboard/monthly-payments/{id}/edit', [MonthlyPaymentController::class, 'edit'])->name('admin.monthly-payments.edit');
+        route::put('admin/dashboard/monthly-payments/{id}', [MonthlyPaymentController::class, 'update'])->name('admin.monthly-payments.update');
+        route::delete('admin/dashboard/monthly-payments/{id}', [MonthlyPaymentController::class, 'destroy'])->name('admin.monthly-payments.destroy');
+
+        // Payment Routes
+        route::get('admin/dashboard/payments', [PaymentController::class, 'index'])->name('admin.payments');
+        route::get('admin/dashboard/payments/create', [PaymentController::class, 'create'])->name('admin.payments.create');
+        route::post('admin/dashboard/payments/create', [PaymentController::class, 'store'])->name('admin.payments.store');
+        route::get('admin/dashboard/payments/{id}/edit', [PaymentController::class, 'edit'])->name('admin.payments.edit');
+        route::put('admin/dashboard/payments/{id}', [PaymentController::class, 'update'])->name('admin.payments.update');
+        route::delete('admin/dashboard/payments/{id}', [PaymentController::class, 'destroy'])->name('admin.payments.destroy');
+
+        // Rent Management Routes
+        route::get('admin/dashboard/manage-rents', [RentManagementController::class, 'index'])->name('admin.manage-rents');
+        route::get('admin/dashboard/manage-rents/{condominium}', [RentManagementController::class, 'details'])->name('admin.manage-rents.blocks');
+        route::post('admin/dashboard/manage-rents/payments', [RentManagementController::class, 'storePayments'])->name('admin.manage-rents.payments');
 
         // Admin Register
         route::get('admin/dashboard/register-admin', [RegisteredAdminController::class, 'create'])->name('admin.register');

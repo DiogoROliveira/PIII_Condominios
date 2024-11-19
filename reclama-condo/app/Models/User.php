@@ -26,6 +26,11 @@ class User extends Authenticatable
         return $this->role->name === 'admin';
     }
 
+    public function condominiums()
+    {
+        return $this->hasMany(Condominium::class, 'admin_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

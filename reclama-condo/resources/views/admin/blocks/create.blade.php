@@ -46,6 +46,13 @@
         </div>
     </div>
 
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const condominiumSelect = document.getElementById('condominium_id');

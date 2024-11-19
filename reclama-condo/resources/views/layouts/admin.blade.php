@@ -161,6 +161,18 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('admin.monthly-payments') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{__('Monthly Payments')}}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.payments') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{__('Payments')}}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('admin.users') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{__('Users')}}</p>
@@ -172,6 +184,12 @@
                             <a href="{{ route('admin.register') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>{{__('Register Admin')}}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.manage-rents') }}" class="nav-link">
+                                <i class="nav-icon fas fa-receipt"></i>
+                                <p>{{__('Rent Management')}}</p>
                             </a>
                         </li>
                     </ul>

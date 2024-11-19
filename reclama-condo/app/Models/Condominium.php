@@ -33,4 +33,9 @@ class Condominium extends Model
     {
         return $this->hasMany(Block::class, 'condominium_id');
     }
+
+    public function units()
+    {
+        return $this->hasManyThrough(Unit::class, Block::class, 'condominium_id', 'block_id');
+    }
 }

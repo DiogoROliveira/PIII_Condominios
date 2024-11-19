@@ -35,4 +35,11 @@ return [
         ],
     ],
 
+    'ges_api' => [
+        'url' => env('GES_API_URL'),
+        'username' => env('GES_API_USERNAME'),
+        'password' => env('GES_API_PASSWORD'),
+        'cookie' => env('GES_API_COOKIE'),
+    ],
+
 ];
