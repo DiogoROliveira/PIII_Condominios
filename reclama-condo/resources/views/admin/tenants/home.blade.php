@@ -36,13 +36,20 @@
                             </thead>
                             <tbody>
                                 @foreach ($tenants as $index => $tenant)
+                                @foreach ($tenant->units as $unit)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $tenant->user->name }}</td>
                                     <td>{{ $tenant->user->email }}</td>
-                                    <td>{{ $tenant->unit->unit_number ?? __('N/A') }}</td>
-                                    <td>{{ $tenant->unit->block->block ?? __('N/A') }}</td>
-                                    <td>{{ $tenant->unit->block->condominium->name ?? __('N/A') }}</td>
+                                    <td>
+                                        {{ $unit->id ?? __('N/A') }}
+                                    </td>
+                                    <td>
+                                        {{ $unit->block->block ?? __('N/A') }}
+                                    </td>
+                                    <td>
+                                        {{ $unit->block->condominium->name ?? __('N/A') }}
+                                    </td>
                                     <td>{{ strtoupper($tenant->status) }}</td>
                                     <td>{{ $tenant->lease_start_date ?? __('N/A') }}</td>
                                     <td>{{ $tenant->lease_end_date ?? __('N/A') }}</td>
@@ -57,6 +64,7 @@
                                         </button>
                                     </td>
                                 </tr>
+                                @endforeach
                                 @endforeach
                             </tbody>
                         </table>

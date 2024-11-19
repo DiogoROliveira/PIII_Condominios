@@ -13,6 +13,10 @@
                     {{ __("You're logged in!") }}
                     <hr>
                     <p><a href="{{ route('complaints.index') }}" class="btn btn-primary mt-3">{{__('Complaints')}}</a></p>
+
+
+                    <p><a href="{{ route('rents.index') }}" class="btn btn-primary mt-3">{{__('My Rents')}}</a></p>
+
                 </div>
             </div>
         </div>

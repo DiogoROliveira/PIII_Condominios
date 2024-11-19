@@ -17,9 +17,11 @@ return new class extends Migration
             $table->string('unit_number');
             $table->enum('status', ['occupied', 'vacant', 'reserved', 'in repair'])->default('vacant');
             $table->decimal('base_rent', 10, 2)->default(0.00);
+            $table->unsignedInteger('tenant_id')->nullable();
             $table->timestamps();
 
             $table->foreign('block_id')->references('id')->on('blocks')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
         });
     }
 
