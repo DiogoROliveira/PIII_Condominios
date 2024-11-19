@@ -12,7 +12,8 @@ class HomeController extends Controller
     {
 
         $totalUsers = User::count();
+        $totalCondominiums = auth()->user()->condominiums->count();
 
-        return view('admin.dashboard', compact('totalUsers'));
+        return view('admin.dashboard', compact('totalUsers', 'totalCondominiums'));
     }
 }
