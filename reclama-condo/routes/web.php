@@ -149,5 +149,7 @@ Route::middleware(Localization::class)->group(function () {
     Route::middleware(['auth'])->group(function () {
         // User Rent Routes
         route::get('dashboard/rents', [RentManagementController::class, 'userIndex'])->name('rents.index');
+        route::get('dashboard/rents/{tenant}', [RentManagementController::class, 'userDetails'])->name('rents.show');
+        route::post('/dashboard/rents/pay', [RentManagementController::class, 'pay'])->name('rents.pay');
     });
 });

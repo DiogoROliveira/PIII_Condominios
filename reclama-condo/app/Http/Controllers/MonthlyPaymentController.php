@@ -12,14 +12,14 @@ class MonthlyPaymentController extends Controller
 {
     public function adminIndex(Request $request)
     {
-        $monPayments = MonthlyPayment::paginate(10);
+        $monPayments = MonthlyPayment::all();
         return view('admin.monthly_payments.home', compact('monPayments'));
     }
 
     public function create(Request $request)
     {
         $units = Unit::all();
-        $tenants = Tenant::select('id', 'unit_id', 'user_id')->get();
+        $tenants = Tenant::select('id', 'user_id')->get();
         $users = User::all();
         return view('admin.monthly_payments.create', compact('units', 'tenants', 'users'));
     }
@@ -34,7 +34,7 @@ class MonthlyPaymentController extends Controller
             'paid_at' => 'nullable|date',
         ]);
 
-        $tenant = Tenant::where('unit_id', $request->unit_id)->first();
+        $tenant = Unit::findOrFail($request->unit_id)->tenant;
 
         if (!$tenant) {
             return redirect()->route('admin.monthly-payments.create')

@@ -21,7 +21,7 @@ class Tenant extends Model
 
     public function units()
     {
-        return $this->hasMany(Unit::class, 'id');
+        return $this->hasMany(Unit::class, 'tenant_id');
     }
 
     public function user()

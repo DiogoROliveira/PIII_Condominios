@@ -42,7 +42,7 @@
                                     <td>{{ $tenant->user->name }}</td>
                                     <td>{{ $tenant->user->email }}</td>
                                     <td>
-                                        {{ $unit->id ?? __('N/A') }}
+                                        {{ $unit->unit_number ?? __('N/A') }}
                                     </td>
                                     <td>
                                         {{ $unit->block->block ?? __('N/A') }}
