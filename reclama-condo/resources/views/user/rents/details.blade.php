@@ -22,6 +22,8 @@
 
                     <hr class="mb-4">
 
+                    <x-alert-messages />
+
                     <h5>{{ __('Payment History') }}</h5>
                     <table class="table table-bordered mt-2">
                         <thead>
@@ -97,14 +99,23 @@
 
                         <!-- Mostrar checkbox se houver método de pagamento guardado -->
                         @if (isset($savedPaymentDetails))
+                        @foreach ($savedPaymentDetails as $detail)
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" name="use_saved_payment" id="use-saved-payment" checked>
-                            <label class="form-check-label" for="use-saved-payment">
-                                {{ __('Use saved payment method: ') . $savedPaymentDetails->method }}
+                            <label class="form-check-label p-3 rounded border" for="use-saved-payment" style="display: block; border-color: #ddd; background-color: #f9f9f9;">
+                                <strong>{{ __('Use saved payment method: ') . $detail->method }}</strong>
+                                <br>
+                                @php
+                                $cardNumber = $detail->card_number;
+                                $maskedCardNumber = str_repeat('*', min(strlen($cardNumber) - 4, 5)) . substr($cardNumber, -4);
+                                @endphp
+                                <span>{{ __('Card Number: ') . $maskedCardNumber }}</span>
+                                <span>{{ __('Expiration: ') . $detail->card_expiration }}</span>
                             </label>
                         </div>
+                        @endforeach
                         @else
-                        <div class="form-check">
+                        <div class=" form-check">
                             <input class="form-check-input" type="checkbox" name="use_saved_payment" id="use-saved-payment">
                             <label class="form-check-label" for="use-saved-payment">
                                 {{ __('Use saved payment method (if available)') }}
@@ -116,7 +127,7 @@
 
                         <div class="mb-3">
                             <label for="payment-method" class="form-label">{{ __('Payment Method') }}</label>
-                            <select name="payment_method" id="payment-method" class="form-select" required>
+                            <select name="payment_method" id="payment-method" class="form-select">
                                 <option value="">{{ __('Select a payment method') }}</option>
                                 @foreach ($paymentMethodsJson as $method)
                                 <option
@@ -161,6 +172,26 @@
             </div>
         </div>
     </div>
+
+    <style>
+        .form-check-label {
+            display: block;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            text-align: left;
+        }
+
+        .form-check-label strong {
+            font-weight: bold;
+        }
+
+        .form-check-label span {
+            display: block;
+            margin-top: 0.5rem;
+        }
+    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {

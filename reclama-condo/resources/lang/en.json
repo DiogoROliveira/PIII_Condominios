@@ -312,5 +312,12 @@
     "Erro ao carregar os métodos de pagamento.": "Error loading payment methods.",
     "O campo ": "Field ",
     " deve estar no formato MM/YY com um mês válido.": " must be in the format MM/YY with a valid month.",
-    "Payment cannot be processed. The payment is already completed or overdue.": "Payment cannot be processed. The payment is already completed or overdue."
+    "Payment cannot be processed. The payment is already completed or overdue.": "Payment cannot be processed. The payment is already completed or overdue.",
+    "No units rented": "No units rented",
+    "Use saved payment method: ": "Use saved payment method: ",
+    "Card Number: ": "Card Number: ",
+    "Expiration: ": "Expiration: ",
+    "Use saved payment method (if available)": "Use saved payment method (if available)",
+    "Action": "Action",
+    "Payment processed successfully. Invoice sent to account email.": "Payment processed successfully. Invoice sent to account email."
 }

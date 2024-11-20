@@ -23,14 +23,17 @@
                     </div>
 
                     <div class="d-flex flex-wrap justify-content-center">
+                        @php
+                        $hasUnits = false;
+                        @endphp
+
                         @foreach ($tenants as $tenant)
                         @php
                         $units = $tenant->units;
                         @endphp
 
-                        @if ($units->isEmpty())
-                        <h4 class="text-center text-muted w-100">No units rented</h4>
-                        @else
+                        @if (!$units->isEmpty())
+                        @php $hasUnits = true; @endphp
                         @foreach ($units as $unit)
                         <div class="card m-3" style="width: 300px;">
                             <div class="card-body">
@@ -56,6 +59,10 @@
                         @endforeach
                         @endif
                         @endforeach
+
+                        @if (!$hasUnits)
+                        <h4 class="text-center text-muted w-100">{{ __('No units rented') }}</h4>
+                        @endif
                     </div>
                 </div>
             </div>
