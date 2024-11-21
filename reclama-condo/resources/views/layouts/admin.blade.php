@@ -192,6 +192,30 @@
                                 <p>{{__('Rent Management')}}</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-map"></i>
+                                <p>
+                                    {{__('Maps')}}
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.maps.complaints') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('Complaint Map') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.maps.condominiums') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('Condominium Map') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
                     </ul>
                 </nav>
             </div>

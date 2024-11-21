@@ -330,5 +330,22 @@
     "Revenue": "Receita",
     "Count": "Contagem",
     "Month": "Mês",
-    "Monthly Revenue": "Receita Mensal"
+    "Monthly Revenue": "Receita Mensal",
+    "Maps": "Mapas",
+    "Complaint Map": "Mapa de Reclamações",
+    "Complaints Maps": "Mapas de Reclamações",
+    "All Types": "Todos os Tipos",
+    "All Statuses": "Todos os Estados",
+    "Has Attachment": "Tem Anexo",
+    "Both": "Ambos",
+    "Yes": "Sim",
+    "No": "Não",
+    "All Users": "Todos os Utilizadores",
+    "Export to PDF": "Exportar para PDF",
+    "Export to Excel": "Exportar para Excel",
+    "Condominium Map": "Mapa de Condomínios",
+    "All Cities": "Todas as Cidades",
+    "All States": "Todos os Estados",
+    "All Postal Codes": "Todos os Códigos Postal",
+    "All Block Counts": "Todos os Blocos"
 }
