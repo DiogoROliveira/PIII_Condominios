@@ -26,6 +26,6 @@ class Unit extends Model
 
     public function tenant()
     {
-        return $this->hasOne(Tenant::class, 'unit_id');
+        return $this->belongsTo(Tenant::class);
     }
 }

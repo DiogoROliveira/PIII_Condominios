@@ -5,70 +5,73 @@
 @endsection
 
 @section('content')
-<div class="container">
+<x-app-layout>
+    <div class="container">
 
-    <x-alert-messages />
+        <x-alert-messages />
 
-    <h1>{{ $condominium->name }} - {{__('Blocks & Units')}}</h1>
+        <h1>{{ $condominium->name }} - {{__('Blocks & Units')}}</h1>
 
-    @foreach($condominium->blocks as $block)
-    <h3>{{__('Block')}} {{ $block->block }}</h3>
-    <table class="table table-striped mb-2">
-        <thead>
-            <tr>
-                <th></th>
-                <th>{{__('Unit')}}</th>
-                <th>{{__('Tenant')}}</th>
-                <th>{{__('Status')}}</th>
-                <th>{{__('Base Rent')}}</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($block->units as $unit)
-            <tr>
-                <td>
-                    <input type="checkbox" name="units[]" value="{{ $unit->id }}" class="unit-checkbox">
-                </td>
-                <td>{{ $unit->unit_number }}</td>
-                <td>{{ $unit->tenant->user->name ?? __('N/A') }}</td>
-                <td>{{ strtoupper($unit->status) }}</td>
-                <td>{{ $unit->base_rent ?? __('N/A') }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-    <button type="button" class="btn btn-primary mb-4" id="open-modal">{{__('Post Rents')}}</button>
-    @endforeach
-</div>
+        @foreach($condominium->blocks as $block)
+        <h3 class="mt-4">{{__('Block')}} {{ $block->block }}</h3>
+        <table class="table table-striped mb-2">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>{{__('Unit')}}</th>
+                    <th>{{__('Tenant')}}</th>
+                    <th>{{__('Status')}}</th>
+                    <th>{{__('Base Rent')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($block->units as $unit)
+                <tr>
+                    <td>
+                        <input type="checkbox" name="units[]" value="{{ $unit->id }}" class="unit-checkbox">
+                    </td>
+                    <td>{{ $unit->unit_number }}</td>
+                    <td>{{ $unit->tenant->user->name ?? __('N/A') }}</td>
+                    <td>{{ strtoupper($unit->status) }}</td>
+                    <td>{{ $unit->base_rent ?? __('N/A') }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @endforeach
+        <button type="button" class="btn btn-primary mb-4 mt-2 toastsDefaultDanger" id="open-modal">{{__('Post Rents')}}</button>
+    </div>
 
-<!-- Modal -->
-<div class="modal fade" id="rentModal" tabindex="-1" role="dialog" aria-labelledby="rentModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="{{ route('admin.manage-rents.payments') }}" method="POST" id="rent-form">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="rentModalLabel">{{__('Rent Details')}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div id="rent-details"></div>
-                    <div>
-                        <label for="due-date">{{__('Due Date')}}</label>
-                        <input type="date" id="due-date" name="due_date" class="form-control" required>
+    <!-- Modal -->
+    <div class="modal fade" id="rentModal" tabindex="-1" role="dialog" aria-labelledby="rentModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ route('admin.manage-rents.payments') }}" method="POST" id="rent-form">
+                    @csrf
+                    <input type="hidden" name="condominium_id" value="{{ $condominium->id }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="rentModalLabel">{{ __('Rent Details') }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{__('Cancel')}}</button>
-                    <button type="submit" class="btn btn-success">{{__('Confirm Launch')}}</button>
-                </div>
-            </form>
+                    <div class="modal-body">
+                        <div id="rent-details"></div>
+                        <div>
+                            <label for="due-date">{{ __('Due Date') }}</label>
+                            <input type="date" id="due-date" name="due_date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Cancel') }}</button>
+                        <button type="submit" class="btn btn-success">{{ __('Confirm Launch') }}</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
-</div>
-
+</x-app-layout>
 
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -76,12 +79,17 @@
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<!-- Toastr CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+<!-- Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 <script>
     document.getElementById('open-modal').addEventListener('click', function() {
         const selectedUnits = document.querySelectorAll('.unit-checkbox:checked');
         if (selectedUnits.length === 0) {
-            alert("{{ __('Select at least one unit.') }}");
+            toastr.error('{{ __("Please select at least one unit to post rents.") }}');
             return;
         }
 
@@ -102,6 +110,10 @@
                     <hr>
                 </div>
             `;
+        });
+
+        $(document).on('click', '[data-dismiss="modal"]', function() {
+            $(this).closest('.modal').modal('hide');
         });
 
         document.getElementById('rent-details').innerHTML = rentDetailsHtml;

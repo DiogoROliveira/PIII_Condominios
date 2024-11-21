@@ -36,7 +36,7 @@
                                 <tr>
                                     <td>{{ $monPayment->id }}</td>
                                     <td>{{ $monPayment->unit->unit_number }} - {{ $monPayment->unit->block->block }} - {{ $monPayment->unit->block->condominium->name }}</td>
-                                    <td>{{ $monPayment->tenant_id }} - {{ $monPayment->tenant->user->name }}</td>
+                                    <td>{{ $monPayment->tenant->user_id }} - {{ $monPayment->tenant->user->name }}</td>
                                     <td>{{ $monPayment->due_date }}</td>
                                     <td>{{ $monPayment->amount }}</td>
                                     <td>{{ strtoupper($monPayment->status) }}</td>

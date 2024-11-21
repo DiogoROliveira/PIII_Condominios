@@ -12,16 +12,15 @@ class PaymentDetails extends Model
     protected $table = 'payment_details';
 
     protected $fillable = [
-        'tenant_id',
+        'user_id',
         'method',
         'name',
         'card_number',
         'card_expiration',
-        'card_cvv',
     ];
 
-    public function tenant()
+    public function user()
     {
-        return $this->belongsTo(Tenant::class, 'tenant_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

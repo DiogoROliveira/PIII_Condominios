@@ -41,7 +41,7 @@
                                     <option value="" disabled selected>{{ __('Select Unit') }}</option>
                                     @foreach ($units as $unit)
                                     <option value="{{ $unit->id }}" {{ old('unit_id') == $unit->id ? 'selected' : '' }}>
-                                        {{ $unit->unit_number }} - Block {{ $unit->block->block ?? __('N/A') }} ({{ $unit->block->condominium->name ?? __('N/A') }})
+                                        {{ $unit->unit_number }} - Block {{ $unit->block->block ?? __('N/A') }} ({{ $unit->block->condominium->name ?? __('N/A') }}) - {{ $unit->status }}
                                     </option>
                                     @endforeach
                                 </select>

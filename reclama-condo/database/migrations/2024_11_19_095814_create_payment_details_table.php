@@ -13,15 +13,14 @@ return new class extends Migration
     {
         Schema::create('payment_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('tenant_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('method');
             $table->string('name')->nullable();
             $table->string('card_number')->nullable();
             $table->string('card_expiration')->nullable();
-            $table->string('card_cvv')->nullable();
             $table->timestamps();
 
-            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
