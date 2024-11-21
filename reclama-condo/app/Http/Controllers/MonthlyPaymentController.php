@@ -7,6 +7,7 @@ use App\Models\Unit;
 use App\Models\User;
 use App\Models\Tenant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class MonthlyPaymentController extends Controller
 {
@@ -21,6 +22,9 @@ class MonthlyPaymentController extends Controller
         $units = Unit::all();
         $tenants = Tenant::select('id', 'user_id')->get();
         $users = User::all();
+        foreach ($users as $user) {
+            $user->decrypted_email = Crypt::decrypt($user->email);
+        }
         return view('admin.monthly_payments.create', compact('units', 'tenants', 'users'));
     }
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Block;
 use Exception;
+use Illuminate\Support\Facades\Crypt;
 
 class RentManagementController extends Controller
 {
@@ -177,7 +178,7 @@ class RentManagementController extends Controller
 
             try {
 
-                $emailExists = collect($clientData)->contains('email', $user->email);
+                $emailExists = collect($clientData)->contains('email', Crypt::decrypt($user->email));
 
                 $service->authenticate();
                 if (!$emailExists) {
@@ -190,7 +191,7 @@ class RentManagementController extends Controller
 
             try {
                 $service->authenticate();
-                $clientId = collect($clientData)->firstWhere('email', $user->email)['id'];
+                $clientId = collect($clientData)->firstWhere('email', Crypt::decrypt($user->email))['id'];
                 $invoice = $service->postInvoiceData($monthlyPayment, $payment, $clientId);
 
                 if (!$invoice || $invoice['errors'] === true) {

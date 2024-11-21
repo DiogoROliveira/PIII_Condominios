@@ -30,9 +30,12 @@
                             <tbody>
                                 @foreach ($users as $index => $user)
                                 <tr>
+                                    @php
+                                    $decryptedEmail = Crypt::decrypt($user->email);
+                                    @endphp
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
-                                    <td>{{ $user->email }}</td>
+                                    <td>{{ $decryptedEmail }}</td>
                                     <td>{{ strtoupper($user->role->name) ?? __('N/A') }}</td>
                                     <td>{{ $user->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">

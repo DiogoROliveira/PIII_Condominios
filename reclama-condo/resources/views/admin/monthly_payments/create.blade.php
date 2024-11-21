@@ -81,7 +81,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const units = @json($units);
             const tenants = @json($tenants);
-            const users = @json($users);
+            const users = @json($users); // Usando os e-mails já desencriptados
 
             const unitSelect = document.getElementById('unit_id');
             const tenantInfo = document.getElementById('tenant_info');
@@ -99,7 +99,7 @@
                     if (user) {
                         const listItem = document.createElement('li');
                         listItem.className = 'list-group-item';
-                        listItem.textContent = `${user.name} - ${user.email}`;
+                        listItem.textContent = `${user.name} - ${user.decrypted_email}`; // Usando o e-mail desencriptado
                         tenantInfo.appendChild(listItem);
                         return;
                     }

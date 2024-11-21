@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
@@ -23,7 +24,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->text('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedInteger('role_id')->default(2);
@@ -54,8 +55,8 @@ return new class extends Migration
         ]);
 
         DB::table('users')->insert([
-            ['name' => 'Admin', 'email' => 'admin@example.com', 'password' => '$2y$12$MT/QJ5bIf1hODwqAWbh/GuG/adIofFteSMvoSNI3y8eUc5MTnqAzW', 'role_id' => 1,  'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'User', 'email' => 'user@example.com', 'password' => '$2y$12$hCN/YF3RSfZy6kGQTdJZLuJi4x2BiD220xx0KnJUu/lF5JhaDcD3m', 'role_id' => 2, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Admin', 'email' => Crypt::encrypt('admin@example.com'), 'password' => '$2y$12$MT/QJ5bIf1hODwqAWbh/GuG/adIofFteSMvoSNI3y8eUc5MTnqAzW', 'role_id' => 1,  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'User', 'email' => Crypt::encrypt('user@example.com'), 'password' => '$2y$12$hCN/YF3RSfZy6kGQTdJZLuJi4x2BiD220xx0KnJUu/lF5JhaDcD3m', 'role_id' => 2, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

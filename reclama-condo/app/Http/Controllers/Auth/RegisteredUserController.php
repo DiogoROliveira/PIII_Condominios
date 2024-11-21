@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Crypt;
 
 class RegisteredUserController extends Controller
 {
@@ -37,7 +38,7 @@ class RegisteredUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => Crypt::encrypt($request->email),
             'password' => Hash::make($request->password),
         ]);
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Tenant;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -35,7 +36,7 @@ class UserController extends Controller
 
         User::create([
             'name' => $request->name,
-            'email' => $request->email,
+            'email' => Crypt::encrypt($request->email),
             'role_id' => $request->role_id,
             'password' => Hash::make($request->password),
         ]);
@@ -62,7 +63,7 @@ class UserController extends Controller
         ]);
 
         $user->name = $request->name;
-        $user->email = $request->email;
+        $user->email = Crypt::encrypt($request->email);
         $user->role_id = $request->role_id;
 
         if ($request->filled('password')) {

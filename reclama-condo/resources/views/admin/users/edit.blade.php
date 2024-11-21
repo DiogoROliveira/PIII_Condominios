@@ -29,8 +29,11 @@
                         </div>
 
                         <div class="mb-4">
+                            @php
+                            $decryptedEmail = Crypt::decrypt($user->email);
+                            @endphp
                             <label for="email" class="form-label">{{__('Email')}}</label>
-                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}" required>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $decryptedEmail) }}" required>
                             @error('email')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror

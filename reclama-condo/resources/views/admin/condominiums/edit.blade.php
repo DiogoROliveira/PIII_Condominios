@@ -77,9 +77,12 @@
                                 <select name="admin_id" id="admin_id" class="form-select">
                                     <option value="" disabled>{{__('Select an Admin')}}</option>
                                     @foreach ($users as $user)
+                                    @php
+                                    $decryptedEmail = Crypt::decrypt($user->email);
+                                    @endphp
                                     <option value="{{ $user->id }}"
                                         {{ old('admin_id', $condominium->admin_id) == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }} ({{ $user->email }})
+                                        {{ $user->name }} ({{ $decryptedEmail }})
                                     </option>
                                     @endforeach
                                 </select>

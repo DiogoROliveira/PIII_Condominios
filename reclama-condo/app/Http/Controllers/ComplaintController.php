@@ -14,10 +14,7 @@ class ComplaintController extends Controller
 {
     public function index_admin()
     {
-        // Recupera todas as reclamações, incluindo os dados do usuário e do tipo de reclamação, para exibição detalhada
         $complaints = Complaint::with(['user', 'complaintType'])->get();
-
-        // Retorna a vista específica para o admin, passando as reclamações
         return view('admin.complaints.home', compact('complaints'));
     }
 
@@ -81,24 +78,18 @@ class ComplaintController extends Controller
 
     public function edit($id)
     {
-        // Recupera a reclamação pelo ID
         $complaint = Complaint::findOrFail($id);
-
-        // Lista de status disponíveis
         $statuses = ['Pending', 'In Progress', 'Solved'];
 
-        // Retorna a view de edição, passando a reclamação e os status
         return view('admin.complaints.edit', compact('complaint', 'statuses'));
     }
 
     public function update(Request $request, $id)
     {
-        // Valida a solicitação
         $request->validate([
             'status' => 'required|string|in:Pending,In Progress,Solved',
         ]);
 
-        // Atualiza a reclamação
         $complaint = Complaint::findOrFail($id);
         $complaint->update([
             'status' => $request->status,

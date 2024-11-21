@@ -40,7 +40,10 @@
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $tenant->user->name }}</td>
-                                    <td>{{ $tenant->user->email }}</td>
+                                    @php
+                                    $decrypedEmail = Crypt::decrypt($tenant->user->email);
+                                    @endphp
+                                    <td>{{ $decrypedEmail }}</td>
                                     <td>
                                         {{ $unit->unit_number ?? __('N/A') }}
                                     </td>
