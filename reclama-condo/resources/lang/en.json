@@ -286,7 +286,22 @@
     "Confirm Launch": "Confirm Launch",
     "Rent Amount": "Rent Amount",
     "Select at least one unit.": "Select at least one unit.",
+    "My Rents": "My Rents",
     "Maps": "Maps",
-    "Complaints Maps": "Complaints Maps",
-    "My Rents": "My Rents"
+    "Complaint Map": "Complaint Map",
+    "All Types": "All Types",
+    "All Statuses": "All Statuses",
+    "Has Attachment": "Has Attachment",
+    "Both": "Both",
+    "Yes": "Yes",
+    "No": "No",
+    "All Users": "All Users",
+    "Export to PDF": "Export to PDF",
+    "Export to Excel": "Export to Excel",
+    "Condominium Map": "Condominium Map",
+    "All Cities": "All Cities",
+    "All States": "All States",
+    "All Postal Codes": "All Postal Codes",
+    "All Block Counts": "All Block Counts"
+    
 }

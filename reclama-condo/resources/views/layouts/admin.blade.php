@@ -202,13 +202,19 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('admin.complaint-maps') }}" class="nav-link">
+                                    <a href="{{ route('admin.maps.complaints') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>{{__('Complaint Maps')}}</p>
+                                        <p>{{ __('Complaint Map') }}</p>
                                     </a>
                                 </li>
-                                <!-- Adicione mais mapas aqui conforme necessário -->
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.maps.condominiums') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('Condominium Map') }}</p>
+                                    </a>
+                                </li>
                             </ul>
+
                         </li>
                     </ul>
                 </nav>
