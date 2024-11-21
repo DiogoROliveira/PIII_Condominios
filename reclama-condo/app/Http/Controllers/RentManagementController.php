@@ -209,7 +209,6 @@ class RentManagementController extends Controller
             try {
 
                 $invoiceData = Invoice::where('reference', $invoice['referencia'])->first();
-
                 $service->authenticate();
                 $service->sendInvoiceMail($invoiceData, $user);
             } catch (\Exception $e) {

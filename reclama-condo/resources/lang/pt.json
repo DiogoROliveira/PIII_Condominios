@@ -324,5 +324,11 @@
     "Expiration: ": "Validade: ",
     "Use saved payment method (if available)": "Usar método de pagamento salvo (se disponível)",
     "Action": "Ação",
-    "Payment processed successfully. Invoice sent to account email.": "Pagamento processado com sucesso. Fatura enviada para o email da conta."
+    "Payment processed successfully. Invoice sent to account email.": "Pagamento processado com sucesso. Fatura enviada para o email da conta.",
+    "Units Status": "Status das Unidades",
+    "Payments Status": "Status dos Pagamentos",
+    "Revenue": "Receita",
+    "Count": "Contagem",
+    "Month": "Mês",
+    "Monthly Revenue": "Receita Mensal"
 }
