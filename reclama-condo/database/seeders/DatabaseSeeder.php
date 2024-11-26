@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             TenantSeeder::class,
             UnitSeeder::class,
             MonthlyPaymentSeeder::class,
-            ComplaintSeeder::class
+            // ComplaintSeeder::class
         ]);
     }
 }

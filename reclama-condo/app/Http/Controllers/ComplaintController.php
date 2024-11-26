@@ -7,6 +7,7 @@ use App\Models\Complaint;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
 use App\Models\Unit;
+use App\Models\Condominium;
 use App\Notifications\ComplaintCreatedNotification;
 use App\Notifications\ComplaintUpdatedNotification;
 
@@ -14,8 +15,11 @@ class ComplaintController extends Controller
 {
     public function index_admin()
     {
-        $complaints = Complaint::with(['user', 'complaintType', 'unit.block.condominium', 'attachments'])->get();
-        return view('admin.complaints.home', compact('complaints'));
+        $complaints = Complaint::with(['user', 'unit.block.condominium', 'complaintType', 'attachments'])->get();
+        $condominiums = Condominium::all();
+        $complaintTypes = ComplaintType::all();
+
+        return view('admin.complaints.home', compact('complaints', 'condominiums', 'complaintTypes'));
     }
 
     public function index_user()

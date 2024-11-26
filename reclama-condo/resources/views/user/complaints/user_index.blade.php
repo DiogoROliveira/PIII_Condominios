@@ -24,7 +24,7 @@
                         <a href="{{ route('complaints.create') }}" class="btn btn-primary">{{__('Add Complaint')}}</a>
                     </div>
                     <div class="table-responsive mt-6">
-                        <table class="table table-bordered table-hover align-middle">
+                        <table id="complaintsTable" class="table table-bordered table-hover align-middle">
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col">{{__('ID')}}</th>
@@ -72,4 +72,26 @@
             </div>
         </div>
     </div>
+
+
+    <!-- DataTables and JavaScript -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            const table = $('#complaintsTable').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "dom": '<lf<t>ip>',
+            });
+        });
+    </script>
 </x-app-layout>
