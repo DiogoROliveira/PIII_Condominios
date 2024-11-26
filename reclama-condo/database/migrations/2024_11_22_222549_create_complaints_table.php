@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('complaint_type_id')->constrained('complaint_types')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedInteger('unit_id');
+            $table->unsignedBigInteger('complaint_type_id');
             $table->string('title');
             $table->text('description');
             $table->string('status')->default('Pending');
             $table->string('response')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('unit_id')->references('id')->on('units')->onDelete('cascade');
+            $table->foreign('complaint_type_id')->references('id')->on('complaint_types')->onDelete('cascade');
         });
     }
 

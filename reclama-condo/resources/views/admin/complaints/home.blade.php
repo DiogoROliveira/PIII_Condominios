@@ -22,6 +22,7 @@
                                 <tr>
                                     <th>{{__('ID')}}</th>
                                     <th>{{__('User')}}</th>
+                                    <th>{{__('Unit')}}</th>
                                     <th>{{__('Complaint Type')}}</th>
                                     <th>{{__('Title')}}</th>
                                     <th>{{__('Description')}}</th>
@@ -35,7 +36,8 @@
                                 @foreach ($complaints as $complaint)
                                 <tr>
                                     <td>{{ $complaint->id }}</td>
-                                    <td>{{ $complaint->user->name }}</td>
+                                    <td>{{ $complaint->user->name ?? __('N/A') }}</td>
+                                    <td>{{ $complaint->unit->unit_number ?? __('N/A') }} - {{ $complaint->unit->block->block ?? '' }} - {{ $complaint->unit->block->condominium->name ?? '' }}</td>
                                     <td>{{ $complaint->complaintType->name }}</td>
                                     <td>{{ $complaint->title }}</td>
                                     <td>{{ $complaint->description }}</td>

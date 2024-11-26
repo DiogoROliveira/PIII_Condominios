@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ComplaintType;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\Tenant;
+use App\Models\Unit;
 use App\Notifications\ComplaintCreatedNotification;
 use App\Notifications\ComplaintUpdatedNotification;
 
@@ -14,7 +14,7 @@ class ComplaintController extends Controller
 {
     public function index_admin()
     {
-        $complaints = Complaint::with(['user', 'complaintType'])->get();
+        $complaints = Complaint::with(['user', 'complaintType', 'unit.block.condominium', 'attachments'])->get();
         return view('admin.complaints.home', compact('complaints'));
     }
 
@@ -29,20 +29,28 @@ class ComplaintController extends Controller
 
     public function create()
     {
+        $user = auth()->user();
         $complaintTypes = ComplaintType::all();
-        return view('user.complaints.create', compact('complaintTypes'));
+        $units = Unit::whereHas('tenant', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+        $tenants = Tenant::where('user_id', $user->id)->get();
+
+        return view('user.complaints.create', compact('complaintTypes', 'units', 'tenants'));
     }
+
 
     public function admin_create()
     {
         $complaintTypes = ComplaintType::all();
-
-        return view('admin.complaints.create', compact('complaintTypes'));
+        $units = Unit::with(['block.condominium'])->get();
+        return view('admin.complaints.create', compact('complaintTypes', 'units'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'unit_id' => 'required|exists:units,id',
             'complaint_type_id' => 'required|exists:complaint_types,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:500',
@@ -51,6 +59,7 @@ class ComplaintController extends Controller
 
         $complaint = Complaint::create([
             'user_id' => auth()->id(),
+            'unit_id' => $request->unit_id,
             'complaint_type_id' => $request->complaint_type_id,
             'title' => $request->title,
             'description' => $request->description,

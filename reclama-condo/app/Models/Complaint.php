@@ -11,6 +11,7 @@ class Complaint extends Model
 
     protected $fillable = [
         'user_id',
+        'unit_id',
         'title',
         'description',
         'complaint_type_id',
@@ -21,17 +22,22 @@ class Complaint extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
 
     public function complaintType()
     {
-        return $this->belongsTo(ComplaintType::class);
+        return $this->belongsTo(ComplaintType::class, 'complaint_type_id');
     }
 
     public function attachments()
     {
-        return $this->hasMany(Attachment::class);
+        return $this->hasMany(Attachment::class, 'complaint_id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'unit_id');
     }
 }
