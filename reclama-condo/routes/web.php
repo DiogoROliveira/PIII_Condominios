@@ -17,6 +17,8 @@ use App\Http\Controllers\MonthlyPaymentController;
 use App\Http\Controllers\RentManagementController;
 use App\Http\Controllers\Maps\ComplaintMapController;
 use App\Http\Controllers\Maps\CondominiumMapController;
+use App\Http\Controllers\Maps\UnitMapController;
+use App\Http\Controllers\Maps\RentMapController;
 
 // Middlewares
 use App\Http\Middleware\Localization;
@@ -129,6 +131,13 @@ Route::middleware(Localization::class)->group(function () {
         Route::get('admin/maps/condominiums/export/pdf', [CondominiumMapController::class, 'exportPdf'])->name('admin.maps.condominiums.export.pdf');
         Route::get('admin/maps/condominiums/export/excel', [CondominiumMapController::class, 'exportExcel'])->name('admin.maps.condominiums.export.excel');
 
+        Route::get('admin/dashboard/maps/units', [UnitMapController::class, 'index'])->name('admin.maps.units');
+        Route::get('admin/maps/units/export/pdf', [UnitMapController::class, 'exportPdf'])->name('admin.maps.units.export.pdf');
+        Route::get('admin/maps/units/export/excel', [UnitMapController::class, 'exportExcel'])->name('admin.maps.units.export.excel');
+
+        Route::get('admin/dashboard/maps/rents', [RentMapController::class, 'index'])->name('admin.maps.rents');
+        Route::get('admin/maps/rents/export/pdf', [RentMapController::class, 'exportPdf'])->name('admin.maps.rents.export.pdf');
+        Route::get('admin/maps/rents/export/excel', [RentMapController::class, 'exportExcel'])->name('admin.maps.rents.export.excel');
 
     });
 
