@@ -213,8 +213,19 @@
                                         <p>{{ __('Condominium Map') }}</p>
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.maps.units') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('Unit Map') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.maps.rents') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('Rent Map') }}</p>
+                                    </a>
+                                </li>
                             </ul>
-
                         </li>
                     </ul>
                 </nav>

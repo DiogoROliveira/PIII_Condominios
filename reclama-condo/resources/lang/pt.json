@@ -347,5 +347,11 @@
     "All Cities": "Todas as Cidades",
     "All States": "Todos os Estados",
     "All Postal Codes": "Todos os Códigos Postal",
-    "All Block Counts": "Todos os Blocos"
+    "All Block Counts": "Todos os Blocos",
+    "Unit Map": "Mapa de Unidades",
+    "Base Rent Range": "Intervalo de Aluguer Base",
+    "Rent Map": "Mapa de Aluguer",
+    "Rents Map": "Mapa de Aluguer",
+    "Rent Range": "Intervalo de Valor de Aluguer",
+    "Date Range": "Intervalo de Data"
 }

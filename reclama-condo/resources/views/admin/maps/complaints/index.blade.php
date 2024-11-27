@@ -61,8 +61,8 @@
 
                     <!-- Botões de Exportação -->
                     <div class="text-end">
-                        <button id="export-pdf" class="btn btn-danger me-2">{{ __('Export to PDF') }}</button>
-                        <button id="export-excel" class="btn btn-success">{{ __('Export to Excel') }}</button>
+                        <button id="export-pdf" class="btn btn-danger me-2"><i class="mr-2 fa-regular fa-file-pdf"></i>{{ __('Export to PDF') }}</button>
+                        <button id="export-excel" class="btn btn-success"><i class="mr-2 fa-regular fa-file-excel"></i>{{ __('Export to Excel') }}</button>
                     </div>
                 </div>
             </div>

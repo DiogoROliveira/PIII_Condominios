@@ -341,5 +341,11 @@
     "All Cities": "All Cities",
     "All States": "All States",
     "All Postal Codes": "All Postal Codes",
-    "All Block Counts": "All Block Counts"
+    "All Block Counts": "All Block Counts",
+    "Unit Map": "Unit Map",
+    "Base Rent Range": "Base Rent Range",
+    "Rent Map": "Rent Map",
+    "Rents Map": "Rents Map",
+    "Rent Range": "Rent Range",
+    "Date Range": "Date Range"
 }
