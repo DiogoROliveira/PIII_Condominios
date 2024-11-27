@@ -19,14 +19,14 @@ class HomeController extends Controller
             ->groupBy('status')
             ->pluck('count', 'status')
             ->map(function ($count, $status) {
-                return [ucfirst($status), $count];
+                return [__(ucfirst($status)), $count];
             })->prepend([__('Status'), __('Count')])->values();
 
         $paymentsStatus = MonthlyPayment::selectRaw('status, COUNT(*) as count')
             ->groupBy('status')
             ->pluck('count', 'status')
             ->map(function ($count, $status) {
-                return [ucfirst($status), $count];
+                return [__(ucfirst($status)), $count];
             })->prepend([__('Status'), __('Count')])->values();
 
 

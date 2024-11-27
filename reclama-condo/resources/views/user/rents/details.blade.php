@@ -25,7 +25,7 @@
                     <x-alert-messages />
 
                     <h5>{{ __('Payment History') }}</h5>
-                    <table class="table table-bordered mt-2">
+                    <table id="paymentHistoryTable" class="table table-bordered mt-2">
                         <thead>
                             <tr>
                                 <th>{{ __('Date Paid') }}</th>
@@ -51,7 +51,7 @@
                     <hr class="mt-5 mb-4">
 
                     <h5>{{ __('Pending Monthly Payments') }}</h5>
-                    <table class="table table-bordered mt-2">
+                    <table id="pendignPaymentsTable" class="table table-bordered mt-2">
                         <thead>
                             <tr>
                                 <th>{{ __('Due Date') }}</th>
@@ -193,6 +193,17 @@
         }
     </style>
 
+
+    <!-- DataTables and JavaScript -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const payNowButtons = document.querySelectorAll('.pay-now-btn');
@@ -220,6 +231,22 @@
                 } else {
                     bankDetails.classList.add('d-none');
                 }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            const table1 = $('#paymentHistoryTable').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+            });
+
+            const table2 = $('#pendignPaymentsTable').DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
             });
         });
     </script>

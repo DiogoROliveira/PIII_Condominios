@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Crypt;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -23,7 +23,19 @@ class ProfileUpdateRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id),
+                function ($attribute, $value, $fail) {
+                    $existingUser = User::all()->first(function ($user) use ($value) {
+                        try {
+                            return Crypt::decrypt($user->email) === $value;
+                        } catch (\Exception $e) {
+                            return false;
+                        }
+                    });
+
+                    if ($existingUser && $existingUser->id !== $this->user()->id) {
+                        $fail(__('O :attribute já está em uso.', ['attribute' => $attribute]));
+                    }
+                },
             ],
         ];
     }

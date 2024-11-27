@@ -18,11 +18,11 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CondominiumSeeder::class,
             ComplaintTypesSeeder::class,
-            ComplaintSeeder::class,
             BlockSeeder::class,
             TenantSeeder::class,
             UnitSeeder::class,
-            MonthlyPaymentSeeder::class
+            MonthlyPaymentSeeder::class,
+            // ComplaintSeeder::class
         ]);
     }
 }

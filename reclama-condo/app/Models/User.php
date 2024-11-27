@@ -31,6 +31,12 @@ class User extends Authenticatable
         return $this->hasMany(Condominium::class, 'admin_id');
     }
 
+    public function setEmailForNotification($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

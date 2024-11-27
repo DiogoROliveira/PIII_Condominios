@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\ComplaintType;
 use App\Models\Complaint;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
+use App\Models\Tenant;
+use App\Models\Unit;
+use App\Models\Condominium;
 use App\Notifications\ComplaintCreatedNotification;
 use App\Notifications\ComplaintUpdatedNotification;
 
@@ -14,11 +15,11 @@ class ComplaintController extends Controller
 {
     public function index_admin()
     {
-        // Recupera todas as reclamações, incluindo os dados do usuário e do tipo de reclamação, para exibição detalhada
-        $complaints = Complaint::with(['user', 'complaintType'])->get();
+        $complaints = Complaint::with(['user', 'unit.block.condominium', 'complaintType', 'attachments'])->get();
+        $condominiums = Condominium::all();
+        $complaintTypes = ComplaintType::all();
 
-        // Retorna a vista específica para o admin, passando as reclamações
-        return view('admin.complaints.home', compact('complaints'));
+        return view('admin.complaints.home', compact('complaints', 'condominiums', 'complaintTypes'));
     }
 
     public function index_user()
@@ -32,20 +33,28 @@ class ComplaintController extends Controller
 
     public function create()
     {
+        $user = auth()->user();
         $complaintTypes = ComplaintType::all();
-        return view('user.complaints.create', compact('complaintTypes'));
+        $units = Unit::whereHas('tenant', function ($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+        $tenants = Tenant::where('user_id', $user->id)->get();
+
+        return view('user.complaints.create', compact('complaintTypes', 'units', 'tenants'));
     }
+
 
     public function admin_create()
     {
         $complaintTypes = ComplaintType::all();
-
-        return view('admin.complaints.create', compact('complaintTypes'));
+        $units = Unit::with(['block.condominium'])->get();
+        return view('admin.complaints.create', compact('complaintTypes', 'units'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
+            'unit_id' => 'required|exists:units,id',
             'complaint_type_id' => 'required|exists:complaint_types,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string|max:500',
@@ -54,6 +63,7 @@ class ComplaintController extends Controller
 
         $complaint = Complaint::create([
             'user_id' => auth()->id(),
+            'unit_id' => $request->unit_id,
             'complaint_type_id' => $request->complaint_type_id,
             'title' => $request->title,
             'description' => $request->description,
@@ -81,24 +91,18 @@ class ComplaintController extends Controller
 
     public function edit($id)
     {
-        // Recupera a reclamação pelo ID
         $complaint = Complaint::findOrFail($id);
-
-        // Lista de status disponíveis
         $statuses = ['Pending', 'In Progress', 'Solved'];
 
-        // Retorna a view de edição, passando a reclamação e os status
         return view('admin.complaints.edit', compact('complaint', 'statuses'));
     }
 
     public function update(Request $request, $id)
     {
-        // Valida a solicitação
         $request->validate([
             'status' => 'required|string|in:Pending,In Progress,Solved',
         ]);
 
-        // Atualiza a reclamação
         $complaint = Complaint::findOrFail($id);
         $complaint->update([
             'status' => $request->status,

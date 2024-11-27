@@ -7,6 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Complaint;
+use Illuminate\Support\Facades\Crypt;
 
 class ComplaintUpdatedNotification extends Notification
 {
@@ -26,21 +27,23 @@ class ComplaintUpdatedNotification extends Notification
 
     public function toMail($notifiable)
     {
-        $mailMessage = (new MailMessage)
-                        ->subject('Complaint Update')
-                        ->greeting('Hello, ' . $notifiable->name)
-                        ->line('Your complaint has been updated.')
 
-                        ->line('Current Status: ' . $this->complaint->status);
+        $notifiable->email = Crypt::decrypt($notifiable->email);
+
+        $mailMessage = (new MailMessage)
+            ->subject('Complaint Update')
+            ->greeting('Hello, ' . $notifiable->name)
+            ->line('Your complaint has been updated.')
+
+            ->line('Current Status: ' . $this->complaint->status);
 
         if ($this->complaint->response) {
             $mailMessage->line('Administrator’s Response: ' . $this->complaint->response);
         }
 
         $mailMessage->action('View Complaint', url('dashboard/complaints/' . $this->complaint->id))
-                    ->line('Thank you for using our complaint management system.');
+            ->line('Thank you for using our complaint management system.');
 
         return $mailMessage;
     }
-
 }

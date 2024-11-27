@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 
 class GesApiService
 {
@@ -100,6 +101,8 @@ class GesApiService
             throw new \Exception('Token de autenticação não configurado.');
         }
 
+        $decryptedEmail = Crypt::decrypt($user->email);
+
         try {
             $response = Http::withHeaders([
                 'Content-Type' => 'application/x-www-form-urlencoded',
@@ -113,7 +116,7 @@ class GesApiService
                 'postalCode' => $condo->postal_code,
                 'region' => $condo->state,
                 'city' => $condo->city,
-                'email' => $user->email,
+                'email' => $decryptedEmail,
                 'website' => '',
                 'mobile' => '000000000',
                 'telephone' => '',
@@ -149,11 +152,17 @@ class GesApiService
             throw new \Exception('Token de autenticação não configurado.');
         }
 
-        // Formatação de datas
         $date = Carbon::parse($monthlyPayment->paid_at)->format('d/m/Y');
         $expiration = Carbon::parse($monthlyPayment->due_date)->format('d/m/Y');
 
-        // Preparação do payload
+        if ($date < Carbon::now()->format('d/m/Y')) {
+            $date = Carbon::now()->format('d/m/Y');
+        }
+
+        if ($expiration < Carbon::now()->format('d/m/Y')) {
+            $expiration = Carbon::now()->format('d/m/Y');
+        }
+
         $lines = [
             [
                 'id' => $monthlyPayment->id,
@@ -184,19 +193,22 @@ class GesApiService
             'doc_origin' => '9'
         ];
 
-        // Envio do pedido
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded',
             'Authorization' => $this->token,
             'Cookie' => $this->cookie
         ])->asForm()->post("{$this->baseUrl}/invoices", $payload);
 
-        // Verificação de resposta
         if ($response->successful()) {
-            return $response->json();
+            $responseData = $response->json();
+            if (isset($responseData['fatura'])) {
+                return $responseData;
+            } else {
+                Log::error('Invoice creation failed', ['response' => $responseData]);
+                throw new \Exception('Fatura criada sem a chave "invoice" na resposta.');
+            }
         }
 
-        // Log de erro para depuração
         Log::error('API Error', [
             'status' => $response->status(),
             'body' => $response->body()
@@ -207,26 +219,30 @@ class GesApiService
 
     public function sendInvoiceMail($invoice, $user)
     {
-
         if (!$this->token) {
             throw new \Exception('Token de autenticação não configurado.');
         }
 
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/x-www-form-urlencoded',
-            'Authorization' => $this->token,
-            'Cookie' => $this->cookie
-        ])->asForm()->post($this->baseUrl . '/send-email', [
-            'email' => $user->email,
-            'type' => 'FT',
-            'document' => $invoice->invoice
-        ]);
+        $decryptedEmail = Crypt::decrypt($user->email);
 
-        if ($response->successful()) {
-            $responseData = $response->json();
-            return $responseData;
+        if (isset($invoice->invoice)) {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => $this->token,
+                'Cookie' => $this->cookie
+            ])->asForm()->post($this->baseUrl . '/send-email', [
+                'email' => $decryptedEmail,
+                'type' => 'FT',
+                'document' => $invoice->invoice
+            ]);
+
+            if ($response->successful()) {
+                return $response->json();
+            } else {
+                echo $response->status();
+            }
         } else {
-            echo $response->status();
+            throw new \Exception('Invoice data not found or incomplete.');
         }
     }
 }

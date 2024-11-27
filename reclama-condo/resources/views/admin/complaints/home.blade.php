@@ -20,22 +20,63 @@
                         <table id="complaintsTable" class="table table-bordered table-striped">
                             <thead class="table-light">
                                 <tr>
-                                    <th>{{__('ID')}}</th>
-                                    <th>{{__('User')}}</th>
-                                    <th>{{__('Complaint Type')}}</th>
-                                    <th>{{__('Title')}}</th>
-                                    <th>{{__('Description')}}</th>
-                                    <th>{{__('Status')}}</th>
-                                    <th>{{__('Attachments')}}</th>
-                                    <th>{{__('Response')}}</th>
-                                    <th class="text-center">{{__('Actions')}}</th>
+                                    <th>{{ __('ID') }}</th>
+                                    <th>{{ __('User') }}</th>
+                                    <th>{{ __('Condominium') }}</th>
+                                    <th>{{ __('Block') }}</th>
+                                    <th>{{ __('Unit') }}</th>
+                                    <th>{{ __('Complaint Type') }}</th>
+                                    <th>{{ __('Title') }}</th>
+                                    <th>{{ __('Description') }}</th>
+                                    <th>{{ __('Status') }}</th>
+                                    <th>{{ __('Attachments') }}</th>
+                                    <th>{{ __('Response') }}</th>
+                                    <th class="text-center">{{ __('Actions') }}</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>
+                                        <select id="filter-condominium" class="form-control">
+                                            <option value="">{{ __('All Condominiums') }}</option>
+                                            @foreach($condominiums as $condominium)
+                                            <option value="{{ $condominium->name }}">{{ $condominium->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>
+                                        <select id="filter-type" class="form-control">
+                                            <option value="">{{ __('All Types') }}</option>
+                                            @foreach($complaintTypes as $type)
+                                            <option value="{{ $type->name }}">{{ __($type->name) }}</option>
+                                            @endforeach
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>
+                                        <select id="filter-status" class="form-control">
+                                            <option value="">{{ __('All Statuses') }}</option>
+                                            <option value="Pending">{{ __('Pending') }}</option>
+                                            <option value="Resolved">{{ __('In Progress') }}</option>
+                                            <option value="Closed">{{ __('Solved') }}</option>
+                                        </select>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($complaints as $complaint)
                                 <tr>
                                     <td>{{ $complaint->id }}</td>
-                                    <td>{{ $complaint->user->name }}</td>
+                                    <td>{{ $complaint->user->name ?? __('N/A') }}</td>
+                                    <td>{{ $complaint->unit->block->condominium->name ?? '' }}</td>
+                                    <td>{{ $complaint->unit->block->block ?? '' }}</td>
+                                    <td>{{ $complaint->unit->unit_number ?? '' }}</td>
                                     <td>{{ $complaint->complaintType->name }}</td>
                                     <td>{{ $complaint->title }}</td>
                                     <td>{{ $complaint->description }}</td>
@@ -108,18 +149,35 @@
 
 <script>
     $(document).ready(function() {
-        $('#complaintsTable').DataTable({
+        const table = $('#complaintsTable').DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#complaintsTable_wrapper .col-md-6:eq(0)');
+        });
+
+        $('#filter-condominium').on('change', function() {
+            const value = $(this).val();
+            table.column(2).search(value).draw();
+        });
+
+        $('#filter-type').on('change', function() {
+            const value = $(this).val();
+            table.column(5).search(value).draw();
+        });
+
+        $('#filter-status').on('change', function() {
+            const value = $(this).val();
+            table.column(8).search(value).draw();
+        });
 
         $('#deleteModal').on('show.bs.modal', function(event) {
             const button = $(event.relatedTarget);
             const complaintId = button.data('complaint-id');
             $('#deleteForm').attr('action', `/admin/dashboard/complaints/${complaintId}`);
         });
+
+        table.buttons().container().appendTo('#complaintsTable_wrapper .col-md-6:eq(0)');
     });
 </script>
 @endsection

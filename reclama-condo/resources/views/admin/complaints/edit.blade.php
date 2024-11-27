@@ -39,6 +39,12 @@
                                 <input type="text" id="user" class="form-control" value="{{ $complaint->user->name ?? 'N/A' }}" readonly>
                             </div>
 
+                            <!-- Unit -->
+                            <div class="col-md-6">
+                                <label for="unit" class="form-label">{{__('Unit')}}</label>
+                                <input type="text" id="unit" class="form-control" value="{{ $complaint->unit->unit_number ?? 'N/A' }} - {{ $complaint->unit->block->block ?? 'N/A' }} - {{ $complaint->unit->block->condominium->name ?? 'N/A' }}" readonly>
+                            </div>
+
                             <!-- Complaint Type -->
                             <div class="col-md-6">
                                 <label for="complaint_type" class="form-label">{{__('Complaint Type')}}</label>

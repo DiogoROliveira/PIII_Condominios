@@ -28,7 +28,10 @@
                                     <option value="" disabled selected>{{ __('Select Tenant') }}</option>
                                     @foreach ($users as $user)
                                     <option value="{{ $user->id }}" {{ old('user_id') == $user->id ? 'selected' : '' }}>
-                                        {{ $user->name }} ({{ $user->email }})
+                                        @php
+                                        $decryptedEmail = Crypt::decrypt($user->email);
+                                        @endphp
+                                        {{ $user->name }} ({{ $decryptedEmail }})
                                     </option>
                                     @endforeach
                                 </select>

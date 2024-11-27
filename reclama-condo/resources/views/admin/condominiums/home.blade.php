@@ -34,13 +34,16 @@
                             <tbody>
                                 @foreach ($condominiums as $index => $condominium)
                                 <tr>
+                                    @php
+                                    $decryptedEmail = Crypt::decrypt($condominium->admin->email);
+                                    @endphp
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $condominium->name }}</td>
                                     <td>{{ $condominium->address }}</td>
                                     <td>{{ $condominium->city ?? __('N/A') }}</td>
                                     <td>{{ $condominium->state ?? __('N/A') }}</td>
                                     <td>{{ $condominium->postal_code ?? __('N/A') }}</td>
-                                    <td>{{ $condominium->admin->name }} ({{ $condominium->admin->email }})</td>
+                                    <td>{{ $condominium->admin->name }} ({{ $decryptedEmail }})</td>
                                     <td>{{ $condominium->number_of_blocks }}</td>
                                     <td>{{ $condominium->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">

@@ -14,14 +14,14 @@
 
         @foreach($condominium->blocks as $block)
         <h3 class="mt-4">{{__('Block')}} {{ $block->block }}</h3>
-        <table class="table table-striped mb-2">
+        <table class="table table-striped mb-2" id="rents-table">
             <thead>
                 <tr>
                     <th></th>
-                    <th>{{__('Unit')}}</th>
-                    <th>{{__('Tenant')}}</th>
-                    <th>{{__('Status')}}</th>
-                    <th>{{__('Base Rent')}}</th>
+                    <th class="w-10">{{__('Unit')}}</th>
+                    <th class="w-25">{{__('Tenant')}}</th>
+                    <th class="w-10">{{__('Status')}}</th>
+                    <th class="w-10">{{__('Base Rent')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,6 +83,12 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
 <!-- Toastr JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
 
 
 <script>
@@ -118,6 +124,15 @@
 
         document.getElementById('rent-details').innerHTML = rentDetailsHtml;
         $('#rentModal').modal('show');
+    });
+
+
+    $(document).ready(function() {
+        $('table').DataTable({
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+        });
     });
 </script>
 @endsection

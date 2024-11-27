@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 
 class UserSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class UserSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
             User::create([
                 'name' => $faker->name,
-                'email' => $faker->email,
+                'email' => Crypt::encrypt($faker->email),
                 'password' => bcrypt('password'),
                 'role_id' => 2,
                 'created_at' => now(),

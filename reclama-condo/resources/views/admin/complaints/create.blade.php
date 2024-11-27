@@ -20,6 +20,21 @@
                         @csrf
 
                         <div class="mb-4">
+                            <label for="unit_id" class="form-label">{{__('Unit')}}</label>
+                            <select name="unit_id" id="unit_id" class="form-select" required>
+                                <option value="">{{__('Select a unit')}}</option>
+                                @foreach ($units as $unit)
+                                <option value="{{ $unit->id }}">
+                                    {{ $unit->unit_number }} - {{ $unit->block->block ?? '' }} - {{ $unit->block->condominium->name ?? '' }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('unit_id')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
                             <label for="complaint_type_id" class="form-label">{{__('Complaint Type')}}</label>
                             <select name="complaint_type_id" id="complaint_type_id" class="form-select" required>
                                 <option value="">{{__('Select a complaint type')}}</option>

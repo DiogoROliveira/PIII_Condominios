@@ -71,7 +71,10 @@
                                 <select name="admin_id" id="admin_id" class="form-select">
                                     <option value="" disabled selected>{{__('Select an Admin')}}</option>
                                     @foreach ($users as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                                    @php
+                                    $decryptedEmail = Crypt::decrypt($user->email);
+                                    @endphp
+                                    <option value="{{ $user->id }}">{{ $user->name }} ({{ $decryptedEmail }})</option>
                                     @endforeach
                                 </select>
                             </div>
