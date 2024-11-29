@@ -14,6 +14,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Monthly Payments DataTable')}}</h1>
+                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary" style="transform: translate(517px, 4px);">{{__('Add Payment')}}</a>
                     </div>
 
                     <div class="card-body">
@@ -54,7 +55,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary ms-auto">{{__('Add Payment')}}</a>
                     </div>
                 </div>
 
@@ -103,7 +103,7 @@
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "buttons": ["excel", "pdf"]
         }).buttons().container().appendTo('#monthlyPaymentsTable_wrapper .col-md-6:eq(0)');
 
         $('#deleteModal').on('show.bs.modal', function(event) {

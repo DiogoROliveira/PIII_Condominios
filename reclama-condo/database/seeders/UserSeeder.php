@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
             User::create([
                 'name' => $faker->name,
                 'email' => Crypt::encrypt($faker->email),
+                'phone' => $faker->phoneNumber,
                 'password' => bcrypt('password'),
                 'role_id' => 2,
                 'created_at' => now(),

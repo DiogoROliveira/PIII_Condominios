@@ -22,6 +22,7 @@
                                     <th>#</th>
                                     <th>{{__('Name')}}</th>
                                     <th>{{__('Email')}}</th>
+                                    <th>{{__('Phone')}}</th>
                                     <th>{{__('Role')}}</th>
                                     <th>{{__('Created At')}}</th>
                                     <th class="text-center">{{__('Actions')}}</th>
@@ -36,6 +37,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $decryptedEmail }}</td>
+                                    <td>{{ $user->phone }}</td>
                                     <td>{{ strtoupper($user->role->name) ?? __('N/A') }}</td>
                                     <td>{{ $user->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">
@@ -99,7 +101,7 @@
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "buttons": ["excel", "pdf"]
         }).buttons().container().appendTo('#usersTable_wrapper .col-md-6:eq(0)');
 
         $('#deleteModal').on('show.bs.modal', function(event) {

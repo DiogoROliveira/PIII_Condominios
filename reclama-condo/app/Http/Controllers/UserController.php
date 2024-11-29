@@ -29,6 +29,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
+            'phone' => 'nullable|string|max:255|unique:users,phone',
             'role_id' => 'required|exists:roles,id',
             'password' => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required|same:password|min:8',
@@ -37,6 +38,7 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'email' => Crypt::encrypt($request->email),
+            'phone' => $request->phone,
             'role_id' => $request->role_id,
             'password' => Hash::make($request->password),
         ]);
@@ -58,6 +60,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
+            'phone' => 'nullable|string|max:255|unique:users,phone,' . $user->id,
             'role_id' => 'required|exists:roles,id',
             'password' => 'nullable|string|min:8|confirmed',
         ]);

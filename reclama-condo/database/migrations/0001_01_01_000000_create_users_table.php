@@ -25,6 +25,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('email')->unique();
+            $table->string('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->unsignedInteger('role_id')->default(2);
@@ -55,8 +56,8 @@ return new class extends Migration
         ]);
 
         DB::table('users')->insert([
-            ['name' => 'Admin', 'email' => Crypt::encrypt('admin@example.com'), 'password' => '$2y$12$MT/QJ5bIf1hODwqAWbh/GuG/adIofFteSMvoSNI3y8eUc5MTnqAzW', 'role_id' => 1,  'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'User', 'email' => Crypt::encrypt('user@example.com'), 'password' => '$2y$12$hCN/YF3RSfZy6kGQTdJZLuJi4x2BiD220xx0KnJUu/lF5JhaDcD3m', 'role_id' => 2, 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Admin', 'email' => Crypt::encrypt('admin@example.com'), 'phone' => '1234567890',  'password' => '$2y$12$MT/QJ5bIf1hODwqAWbh/GuG/adIofFteSMvoSNI3y8eUc5MTnqAzW', 'role_id' => 1,  'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'User', 'email' => Crypt::encrypt('user@example.com'), 'phone' => '1234567891', 'password' => '$2y$12$hCN/YF3RSfZy6kGQTdJZLuJi4x2BiD220xx0KnJUu/lF5JhaDcD3m', 'role_id' => 2, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

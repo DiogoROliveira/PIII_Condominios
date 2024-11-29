@@ -19,6 +19,7 @@ use App\Http\Controllers\Maps\ComplaintMapController;
 use App\Http\Controllers\Maps\CondominiumMapController;
 use App\Http\Controllers\Maps\UnitMapController;
 use App\Http\Controllers\Maps\RentMapController;
+use App\Http\Controllers\SendSmsController;
 
 // Middlewares
 use App\Http\Middleware\Localization;
@@ -139,6 +140,7 @@ Route::middleware(Localization::class)->group(function () {
         Route::get('admin/maps/rents/export/pdf', [RentMapController::class, 'exportPdf'])->name('admin.maps.rents.export.pdf');
         Route::get('admin/maps/rents/export/excel', [RentMapController::class, 'exportExcel'])->name('admin.maps.rents.export.excel');
 
+        Route::get('admin/dashboard/send-sms', [SendSmsController::class, 'index'])->name('admin.send-sms');
     });
 
     Route::middleware(['auth', 'admin'])->group(function () {

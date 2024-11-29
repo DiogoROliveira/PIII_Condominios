@@ -61,7 +61,6 @@
         <!-- Gráficos -->
         <h1 class="mt-4">{{ __('Statistics') }}</h1>
 
-
         <div class="card mt-3">
             <div class="card-header">
                 <h3 class="card-title">{{ __('Graphs') }}</h3>
@@ -89,8 +88,6 @@
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-
-
 <!-- Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
