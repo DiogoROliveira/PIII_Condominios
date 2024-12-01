@@ -20,6 +20,8 @@ use App\Http\Controllers\Maps\CondominiumMapController;
 use App\Http\Controllers\Maps\UnitMapController;
 use App\Http\Controllers\Maps\RentMapController;
 use App\Http\Controllers\SendSmsController;
+use App\Http\Controllers\EmailInvoiceController;
+use App\Http\Controllers\InvoiceController;
 
 // Middlewares
 use App\Http\Middleware\Localization;
@@ -51,7 +53,6 @@ Route::middleware(Localization::class)->group(function () {
     require __DIR__ . '/auth.php';
 
     // Admin Routes
-
     Route::middleware(['auth', 'admin'])->group(function () {
 
         route::get('admin/dashboard', [HomeController::class, 'index'])->name('admin.dashboard');
@@ -114,16 +115,19 @@ Route::middleware(Localization::class)->group(function () {
         route::put('admin/dashboard/payments/{id}', [PaymentController::class, 'update'])->name('admin.payments.update');
         route::delete('admin/dashboard/payments/{id}', [PaymentController::class, 'destroy'])->name('admin.payments.destroy');
 
+        // Invoice Routes
+        route::get('admin/dashboard/invoices', [InvoiceController::class, 'index'])->name('admin.invoices');
+
         // Rent Management Routes
         route::get('admin/dashboard/manage-rents', [RentManagementController::class, 'index'])->name('admin.manage-rents');
         route::get('admin/dashboard/manage-rents/{condominium}', [RentManagementController::class, 'details'])->name('admin.manage-rents.blocks');
         route::post('admin/dashboard/manage-rents/payments', [RentManagementController::class, 'storePayments'])->name('admin.manage-rents.payments');
 
-        // Admin Register
+        // Admin Register Routes
         route::get('admin/dashboard/register-admin', [RegisteredAdminController::class, 'create'])->name('admin.register');
         route::post('admin/dashboard/register-admin', [RegisteredAdminController::class, 'store'])->name('admin.register.store');
 
-        // Admin Maps
+        // Maps Routes
         Route::get('admin/dashboard/maps/complaints', [ComplaintMapController::class, 'index'])->name('admin.maps.complaints');
         Route::get('admin/maps/complaints/export/pdf', [ComplaintMapController::class, 'exportPdf'])->name('admin.maps.complaints.export.pdf');
         Route::get('admin/maps/complaints/export/excel', [ComplaintMapController::class, 'exportExcel'])->name('admin.maps.complaints.export.excel');
@@ -140,6 +144,12 @@ Route::middleware(Localization::class)->group(function () {
         Route::get('admin/maps/rents/export/pdf', [RentMapController::class, 'exportPdf'])->name('admin.maps.rents.export.pdf');
         Route::get('admin/maps/rents/export/excel', [RentMapController::class, 'exportExcel'])->name('admin.maps.rents.export.excel');
 
+        // Email Routes
+        Route::get('admin/dashboard/email-invoices', [EmailInvoiceController::class, 'index'])->name('admin.email-invoices');
+        Route::post('admin/dashboard/email-invoices', [EmailInvoiceController::class, 'send'])->name('admin.email-invoices.send');
+
+
+        // Test Routes
         Route::get('admin/dashboard/send-sms', [SendSmsController::class, 'index'])->name('admin.send-sms');
     });
 

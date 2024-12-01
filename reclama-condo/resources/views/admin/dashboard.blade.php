@@ -54,6 +54,38 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Total de Reclamações -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ $totalComplaints }}</h3>
+                        <p>{{ __('Complaints') }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <a href="{{ route('admin.complaints') }}" class="small-box-footer">
+                        {{ __('More info') }} <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Total de Pagamentos -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ $totalPayments }}</h3>
+                        <p>{{ __('Total Payments (€)') }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-money-bill"></i>
+                    </div>
+                    <a href="{{ route('admin.payments') }}" class="small-box-footer">
+                        {{ __('More info') }} <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <hr class="my-4">

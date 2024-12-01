@@ -205,6 +205,8 @@ class RentManagementController extends Controller
                 Invoice::create([
                     'invoice' => $invoice['fatura'],
                     'reference' => $invoice['referencia'],
+                    'payment_id' => $payment->id,
+                    'tenant_id' => $monthlyPayment->tenant_id,
                 ]);
             } catch (Exception $e) {
                 Log::error('Invoice creation error: ' . $e->getMessage());

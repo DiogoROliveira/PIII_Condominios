@@ -1,4 +1,9 @@
 <x-guest-layout>
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+
     <!-- Language Switcher -->
     <div class="relative inline-block group mb-4 text-center" style="left: 9.75rem;">
         <button class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
@@ -36,11 +41,25 @@
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Phone Number -->
-        <div class="mt-4">
-            <x-input-label for="phone_number" :value="__('Phone Number')" />
-            <x-text-input id="phone_number" class="block mt-1 w-full" type="tel" name="phone_number" :value="old('phone_number')" autocomplete="tel" />
-            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+        <x-input-label class="mt-4" for="phone_number" :value="__('Phone Number')" />
+        <div class="mt-1 flex items-center gap-2">
+
+            <!-- Select Country Code -->
+            <div class="w-1/3 relative" style="width: 80%;">
+                <select id="country_code" name="country_code" class="block w-full bg-gray-50 border border-gray-300 rounded-md py-2 pl-3 pr-3 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    @foreach ($countries as $country)
+                    <option value="{{ $country['code'] }}" class="d-flex align-items-center">
+                        <span class="fi fi-gr"></span>
+                        &nbsp;{{ $country['name'] }} ({{ $country['code'] }})
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <!-- Input Phone Number -->
+            <div class="w-2/3">
+                <x-text-input id="phone_number" class="block w-full" type="tel" name="phone_number" :value="old('phone_number')" autocomplete="tel" placeholder="123-456-789" />
+                <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+            </div>
         </div>
 
         <!-- Password -->
@@ -77,6 +96,22 @@
         </div>
     </form>
 
+
+    <script>
+        $(document).ready(function() {
+            $('#country_code').select2({
+                templateResult: function(state) {
+                    if (!state.id) {
+                        return state.text;
+                    }
+                    const flagClass = $(state.element).data('flag');
+                    return $('<span><i class="' + flagClass + '"></i> ' + state.text + '</span>');
+                }
+            });
+        });
+    </script>
+
+
     <style>
         .group:hover ul,
         .group:focus-within ul {
@@ -109,6 +144,16 @@
             background-color: #edf2f7;
             color: #2d3748;
             border-radius: 0.25rem;
+        }
+
+        #country_code {
+            appearance: none;
+            padding-left: 1rem;
+            text-align: left;
+        }
+
+        #country_code option {
+            text-align: left;
         }
     </style>
 </x-guest-layout>

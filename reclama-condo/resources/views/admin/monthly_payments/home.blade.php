@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Monthly Payments DataTable')}}</h1>
-                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary" style="transform: translate(517px, 4px);">{{__('Add Payment')}}</a>
+                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary ms-auto" style="transform: translate(517px, 4px);">{{__('Add Payment')}}</a>
                     </div>
 
                     <div class="card-body">
@@ -99,11 +99,25 @@
 
 <script>
     $(document).ready(function() {
+
+        var translations = {
+            en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+            pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+        };
+
+        var locale = "{{ app()->getLocale() }}";
+
         $('#monthlyPaymentsTable').DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["excel", "pdf"]
+            "language": {
+                "url": translations[locale] || translations['en']
+            },
+            "buttons": ["excel", "pdf"],
+            "dom": "<'row'<'col-md-6'Bl><'col-md-6'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
         }).buttons().container().appendTo('#monthlyPaymentsTable_wrapper .col-md-6:eq(0)');
 
         $('#deleteModal').on('show.bs.modal', function(event) {

@@ -67,6 +67,7 @@ class UserController extends Controller
 
         $user->name = $request->name;
         $user->email = Crypt::encrypt($request->email);
+        $user->phone = $request->phone;
         $user->role_id = $request->role_id;
 
         if ($request->filled('password')) {

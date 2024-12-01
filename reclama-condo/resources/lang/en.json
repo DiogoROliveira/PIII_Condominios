@@ -355,5 +355,19 @@
     "Manage your rented properties and payments.": "Manage your rented properties and payments.",
     "Go to Complaints": "Go to Complaints",
     "View and manage your complaints.": "View and manage your complaints",
-    "Welcome back!": "Welcome back!"
+    "Welcome back!": "Welcome back!",
+    "Phone Number": "Phone Number",
+    "Total Payments (€)": "Total Payments (€)",
+    "Email Invoices": "Email Invoices",
+    "Date": "Date",
+    "Invoice Number": "Invoice Number",
+    "Reference": "Reference",
+    "Paid Amount": "Paid Amount",
+    "Invoices DataTable": "Invoices DataTable",
+    "Invoices": "Invoices",
+    "Send Invoices": "Send Invoices",
+    "Recipient Email": "Recipient Email",
+    "Enter recipient email": "Enter recipient email",
+    "Selected Invoices": "Selected Invoices",
+    "Send Email": "Send Email"
 }

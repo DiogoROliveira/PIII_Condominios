@@ -4,30 +4,24 @@
 
 namespace App\Notifications;
 
-use FontLib\Table\Type\name;
 use Twilio\Rest\Client;
 
+$dir = __DIR__;
+require_once $dir . '/../../vendor/autoload.php';
 
 
 class MonthlyPaymentPhoneNotif
 {
     public static function sendSMS($sms, $phone)
     {
-
-        $pattern = "^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
-
-        if (empty($phone) || !preg_match($pattern, $phone)) {
-            return;
-        }
-
-        $sid    = "ACfa28bd8d1ea48b00076ec977f2580247";
-        $token  = "506f8dc5f4579cdad8d33b4968af6379";
+        $sid    = config('services.twilio.account_sid');
+        $token  = config('services.twilio.auth_token');
         $twilio = new Client($sid, $token);
         $message = $twilio->messages
             ->create(
-                $phone, // to
+                "+351934436741", // to
                 array(
-                    "messagingServiceSid" => "MG3ee5e383d1d4433954a7acaf7c158d9e",
+                    "from" => "+17753106715",
                     "body" => $sms
                 )
             );
@@ -36,11 +30,12 @@ class MonthlyPaymentPhoneNotif
 
     public static function paymentCreated($user)
     {
-        // $phone = $user->phone;
+        $phone = $user->phone;
         $name = $user->name;
         $month = date('F');
-        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) está disponível para pagamento. Para mais detalhes, aceda à sua àrea de alugueres através do link: https://reclama-condo.000.pe/dashboard/complaints .";
-        self::sendSMS($sms, "+351934436741");
+        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) está disponível para pagamento.";
+        $sms2 = "Para mais detalhes, aceda à sua àrea de alugueres através do link: https://reclama-condo.000.pe/dashboard/rents.";
+        self::sendSMS($sms, $phone);
     }
 
     public static function paymentUpdated($user)
@@ -48,7 +43,7 @@ class MonthlyPaymentPhoneNotif
         $phone = $user->phone;
         $name = $user->name;
         $month = date('F');
-        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) foi atualizado. Para mais detalhes, aceda à sua àrea de alugueres através do link: https://reclama-condo.000.pe/dashboard/complaints .";
+        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) foi atualizado. Para mais detalhes, aceda à sua àrea de alugueres.";
         self::sendSMS($sms, $phone);
     }
 
@@ -66,7 +61,7 @@ class MonthlyPaymentPhoneNotif
         $phone = $user->phone;
         $name = $user->name;
         $month = date('F');
-        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) foi completado.";
+        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) foi completado. Para mais detalhes, aceda à sua àrea de alugueres.";
         self::sendSMS($sms, $phone);
     }
 }
