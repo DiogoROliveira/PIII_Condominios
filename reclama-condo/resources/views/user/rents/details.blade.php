@@ -25,7 +25,7 @@
                     <x-alert-messages />
 
                     <h5>{{ __('Payment History') }}</h5>
-                    <table id="paymentHistoryTable" class="table table-bordered mt-2">
+                    <table class="table table-bordered mt-2">
                         <thead>
                             <tr>
                                 <th>{{ __('Date Paid') }}</th>
@@ -51,7 +51,7 @@
                     <hr class="mt-5 mb-4">
 
                     <h5>{{ __('Pending Monthly Payments') }}</h5>
-                    <table id="pendignPaymentsTable" class="table table-bordered mt-2">
+                    <table class="table table-bordered mt-2">
                         <thead>
                             <tr>
                                 <th>{{ __('Due Date') }}</th>
@@ -231,22 +231,6 @@
                 } else {
                     bankDetails.classList.add('d-none');
                 }
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            const table1 = $('#paymentHistoryTable').DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
-            });
-
-            const table2 = $('#pendignPaymentsTable').DataTable({
-                "responsive": true,
-                "lengthChange": false,
-                "autoWidth": false,
             });
         });
     </script>

@@ -200,6 +200,16 @@
         .phone-input-container input {
             flex: 1;
         }
+
+        #country_code {
+            appearance: none;
+            padding-left: 1rem;
+            text-align: left;
+        }
+
+        #country_code option {
+            text-align: left;
+        }
     </style>
 
     <!-- jQuery and Select2 -->

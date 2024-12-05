@@ -67,7 +67,6 @@
                         <button type="submit" class="btn btn-success">{{ __('Confirm Launch') }}</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>

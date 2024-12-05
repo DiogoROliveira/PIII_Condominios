@@ -14,5 +14,17 @@ class Invoice extends Model
     protected $fillable = [
         'invoice',
         'reference',
+        'payment_id',
+        'tenant_id',
     ];
+
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class, 'tenant_id');
+    }
+
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class, 'payment_id');
+    }
 }

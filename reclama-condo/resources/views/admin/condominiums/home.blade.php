@@ -12,8 +12,9 @@
                 <x-alert-messages />
 
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title" style="font-size: 2rem">{{ __('Condominiums DataTable') }}</h1>
+                        <a href="{{ route('admin.condominiums.create') }}" class="btn btn-primary" style="transform: translate(570px, 4px)">{{ __('Add Condominium') }}</a>
                     </div>
                     <div class="card-body">
                         <table id="condominiumsTable" class="table table-bordered table-striped">
@@ -59,7 +60,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.condominiums.create') }}" class="btn btn-primary ms-auto">{{ __('Add Condominium') }}</a>
                     </div>
                 </div>
 
@@ -107,11 +107,25 @@
 
 <script>
     $(document).ready(function() {
+
+        var translations = {
+            en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+            pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+        };
+
+        var locale = "{{ app()->getLocale() }}";
+
         $('#condominiumsTable').DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "language": {
+                "url": translations[locale] || translations['en']
+            },
+            "buttons": ["excel", "pdf"],
+            "dom": "<'row'<'col-md-6'Bl><'col-md-6'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
         }).buttons().container().appendTo('#condominiumsTable_wrapper .col-md-6:eq(0)');
 
         $('#deleteModal').on('show.bs.modal', function(event) {

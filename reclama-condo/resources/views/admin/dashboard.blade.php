@@ -54,13 +54,44 @@
                     </a>
                 </div>
             </div>
+
+            <!-- Total de Reclamações -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ $totalComplaints }}</h3>
+                        <p>{{ __('Complaints') }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <a href="{{ route('admin.complaints') }}" class="small-box-footer">
+                        {{ __('More info') }} <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Total de Pagamentos -->
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ $totalPayments }}</h3>
+                        <p>{{ __('Total Payments (€)') }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-money-bill"></i>
+                    </div>
+                    <a href="{{ route('admin.payments') }}" class="small-box-footer">
+                        {{ __('More info') }} <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <hr class="my-4">
 
         <!-- Gráficos -->
         <h1 class="mt-4">{{ __('Statistics') }}</h1>
-
 
         <div class="card mt-3">
             <div class="card-header">
@@ -89,8 +120,6 @@
 <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-
-
 <!-- Google Charts -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 

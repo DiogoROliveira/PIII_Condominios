@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\File;
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +21,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $countries = json_decode(File::get(storage_path('app/country-phones.json')), true)['countries'];
+        return view('auth.register', compact('countries'));
     }
 
     /**
@@ -33,11 +35,16 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'phone_number' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+
+        $phone = $request->country_code . $request->phone_number;
+
         $user = User::create([
             'name' => $request->name,
+            'phone' => $phone,
             'email' => Crypt::encrypt($request->email),
             'password' => Hash::make($request->password),
         ]);

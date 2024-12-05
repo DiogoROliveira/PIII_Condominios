@@ -1,22 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-
+// Models
 use App\Models\Condominium;
 use App\Models\Invoice;
 use App\Models\MonthlyPayment;
 use App\Models\Tenant;
 use App\Models\Unit;
 use App\Models\Payment;
-use App\Services\GesApiService;
 use App\Models\PaymentDetails;
+use App\Models\Block;
+
+// Services
+use App\Services\GesApiService;
+use App\Notifications\MonthlyPaymentPhoneNotif;
+
+// Helpers
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Block;
-use Exception;
 use Illuminate\Support\Facades\Crypt;
+use Exception;
 
 class RentManagementController extends Controller
 {
@@ -67,7 +72,6 @@ class RentManagementController extends Controller
         return view('user.rents.details', compact('tenant', 'paymentHistory', 'pendingMonthlyPayments', 'paymentMethodsJson', 'unit', 'savedPaymentDetails'));
     }
 
-    // TODO: make invoice with api call and send it via email
     public function pay(GesApiService $service, Request $request)
     {
 
@@ -131,7 +135,7 @@ class RentManagementController extends Controller
                     ]);
                 }
 
-                // Criar pagamento
+                // Create payment
                 $payment = Payment::create([
                     'monthly_payment_id' => $monthlyPayment->id,
                     'amount' => $monthlyPayment->amount,
@@ -139,7 +143,7 @@ class RentManagementController extends Controller
                     'method' => $request->payment_method,
                 ]);
 
-                // Salvar os detalhes de pagamento, se solicitado
+                // Save payment details
                 if ($savePaymentDetails && $request->save_payment_details) {
                     PaymentDetails::create([
                         'user_id' => $monthlyPayment->tenant->user_id,
@@ -152,7 +156,7 @@ class RentManagementController extends Controller
                 }
             }
 
-            // Atualizar o status da mensalidade
+            // Update payment status
             $monthlyPayment->update([
                 'status' => 'paid',
                 'paid_at' => now(),
@@ -201,6 +205,8 @@ class RentManagementController extends Controller
                 Invoice::create([
                     'invoice' => $invoice['fatura'],
                     'reference' => $invoice['referencia'],
+                    'payment_id' => $payment->id,
+                    'tenant_id' => $monthlyPayment->tenant_id,
                 ]);
             } catch (Exception $e) {
                 Log::error('Invoice creation error: ' . $e->getMessage());
@@ -216,6 +222,7 @@ class RentManagementController extends Controller
                 return redirect()->back()->withErrors([__('An error occurred while sending the invoice email.')]);
             }
 
+            MonthlyPaymentPhoneNotif::paymentCompleted($user);
             return redirect()->back()->with('success', __('Payment processed successfully. Invoice sent to account email.'));
         } catch (\Exception $e) {
             DB::rollBack();
@@ -256,6 +263,9 @@ class RentManagementController extends Controller
                     'status' => 'pending',
                     'due_date' => $dueDate,
                 ]);
+
+                // Notify via SMS the tenant
+                MonthlyPaymentPhoneNotif::paymentCreated($unit->tenant->user);
 
                 // Update unit base rent
                 $unit->update(['base_rent' => $amount]);

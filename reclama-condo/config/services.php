@@ -42,4 +42,8 @@ return [
         'cookie' => env('GES_API_COOKIE'),
     ],
 
+    'twilio' => [
+        'account_sid' => env('TWILIO_ACCOUNT_SID'),
+        'auth_token' => env('TWILIO_AUTH_TOKEN'),
+    ],
 ];

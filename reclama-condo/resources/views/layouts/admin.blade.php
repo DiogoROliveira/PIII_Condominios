@@ -173,6 +173,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('admin.invoices') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{__('Invoices')}}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('admin.users') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>{{__('Users')}}</p>
@@ -227,6 +233,12 @@
                                 </li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.email-invoices') }}" class="nav-link">
+                                <i class="nav-icon fas fa-envelope"></i>
+                                <p>{{__('Email Invoices')}}</p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -236,12 +248,6 @@
             @yield('content')
         </div>
 
-        <footer class="main-footer">
-            <div class="float-right d-none d-sm-block">
-                <b>Version</b> 3.2.0
-            </div>
-            <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-        </footer>
     </div>
 
     <!-- AdminLTE App -->
@@ -253,8 +259,7 @@
     <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
     <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
     <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+
 </body>
 
 </html>

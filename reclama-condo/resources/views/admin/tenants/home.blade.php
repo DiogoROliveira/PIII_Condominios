@@ -15,6 +15,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Tenants DataTable')}}</h1>
+                        <a href="{{ route('admin.tenants.create') }}" class="btn btn-primary" style="transform: translate(597px, 4px)">{{__('Add Tenant')}}</a>
                     </div>
                     <div class="card-body">
                         <table id="tenantsTable" class="table table-bordered table-striped">
@@ -71,7 +72,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.tenants.create') }}" class="btn btn-primary">{{__('Add Tenant')}}</a>
                     </div>
                 </div>
 
@@ -116,11 +116,25 @@
 
 <script>
     $(document).ready(function() {
+
+        var translations = {
+            en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+            pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+        };
+
+        var locale = "{{ app()->getLocale() }}";
+
         $('#tenantsTable').DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "language": {
+                "url": translations[locale] || translations['en']
+            },
+            "buttons": ["excel", "pdf"],
+            "dom": "<'row'<'col-md-6'Bl><'col-md-6'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
         }).buttons().container().appendTo('#tenantsTable_wrapper .col-md-6:eq(0)');
 
         $('#deleteModal').on('show.bs.modal', function(event) {

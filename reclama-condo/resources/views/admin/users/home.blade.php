@@ -14,6 +14,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Users DataTable')}}</h1>
+                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary" style="transform: translate(582px, 4px)">{{__('Add User')}}</a>
                     </div>
                     <div class="card-body">
                         <table id="usersTable" class="table table-bordered table-striped">
@@ -22,6 +23,7 @@
                                     <th>#</th>
                                     <th>{{__('Name')}}</th>
                                     <th>{{__('Email')}}</th>
+                                    <th>{{__('Phone')}}</th>
                                     <th>{{__('Role')}}</th>
                                     <th>{{__('Created At')}}</th>
                                     <th class="text-center">{{__('Actions')}}</th>
@@ -36,6 +38,7 @@
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $decryptedEmail }}</td>
+                                    <td>{{ $user->phone }}</td>
                                     <td>{{ strtoupper($user->role->name) ?? __('N/A') }}</td>
                                     <td>{{ $user->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">
@@ -50,7 +53,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.users.create') }}" class="btn btn-primary">{{__('Add User')}}</a>
                     </div>
                 </div>
 
@@ -95,11 +97,25 @@
 
 <script>
     $(document).ready(function() {
+
+        var translations = {
+            en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+            pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+        };
+
+        var locale = "{{ app()->getLocale() }}";
+
         $('#usersTable').DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "language": {
+                "url": translations[locale] || translations['en']
+            },
+            "buttons": ["excel", "pdf"],
+            "dom": "<'row'<'col-md-6'Bl><'col-md-6'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
         }).buttons().container().appendTo('#usersTable_wrapper .col-md-6:eq(0)');
 
         $('#deleteModal').on('show.bs.modal', function(event) {
