@@ -194,11 +194,41 @@
         .phone-input-container {
             display: flex;
             gap: 10px;
+            align-items: center;
         }
 
-        .phone-input-container select,
+        .phone-input-container select {
+            width: 35%;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            appearance: none; /* Removes default browser styling */
+            position: relative;
+        }
+
         .phone-input-container input {
-            flex: 1;
+            width: 65%;
+            padding: 12px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .phone-input-container select:focus,
+        .phone-input-container input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+        }
+
+        /* Custom dropdown arrow */
+        .phone-input-container select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1 4l5 5 5-5z' fill='%23ffffff'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
         }
 
         #country_code {
@@ -281,9 +311,9 @@
                 <div class="phone-input-container">
                     <select id="country_code" name="country_code" class="form-control">
                         @foreach ($countries as $country)
-                            <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}">
-                                {{ $country['name'] }} ({{ $country['code'] }})
-                            </option>
+                        <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] ?? '' }}">
+                            {{ $country['name'] }} ({{ $country['code'] }})
+                        </option>   
                         @endforeach
                     </select>
                     <input 

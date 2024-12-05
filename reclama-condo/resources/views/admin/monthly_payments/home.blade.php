@@ -12,9 +12,9 @@
                 <x-alert-messages />
 
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header position-relative">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Monthly Payments DataTable')}}</h1>
-                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary ms-auto" style="transform: translate(517px, 4px);">{{__('Add Payment')}}</a>
+                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%);">{{__('Add Payment')}}</a>
                     </div>
 
                     <div class="card-body">
