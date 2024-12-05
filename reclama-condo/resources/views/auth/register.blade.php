@@ -247,6 +247,33 @@
                 @enderror
             </div>
 
+            <!-- Phone Number Input -->
+            <div class="form-group">
+                <label for="country_code">{{ __('Phone Number') }}</label>
+                <div class="phone-input-container">
+                    <select id="country_code" name="country_code" class="form-control" style="width: 30%; display: inline-block; margin-right: 10px;">
+                        @foreach ($countries as $country)
+                            <option value="{{ $country['code'] }}">
+                                {{ $country['name'] }} ({{ $country['code'] }})
+                            </option>
+                        @endforeach
+                    </select>
+                    <input 
+                        id="phone_number" 
+                        type="tel" 
+                        name="phone_number" 
+                        class="form-control" 
+                        style="width: 65%; display: inline-block;"
+                        value="{{ old('phone_number') }}" 
+                        placeholder="123-456-789"
+                        autocomplete="tel"
+                    >
+                </div>
+                @error('phone_number')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
             <!-- Password Input -->
             <div class="form-group">
                 <label for="password">{{ __('Password') }}</label>
