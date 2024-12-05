@@ -11,6 +11,10 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
+    <!-- Select2 and Flag Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+
     <style>
         :root {
             --primary-color: #4a90e2;
@@ -186,7 +190,21 @@
             max-height: 150px;
             object-fit: contain;
         }
+
+        .phone-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .phone-input-container select,
+        .phone-input-container input {
+            flex: 1;
+        }
     </style>
+
+    <!-- jQuery and Select2 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
     <div class="login-container">
@@ -249,11 +267,11 @@
 
             <!-- Phone Number Input -->
             <div class="form-group">
-                <label for="country_code">{{ __('Phone Number') }}</label>
+                <label for="phone_number">{{ __('Phone Number') }}</label>
                 <div class="phone-input-container">
-                    <select id="country_code" name="country_code" class="form-control" style="width: 30%; display: inline-block; margin-right: 10px;">
+                    <select id="country_code" name="country_code" class="form-control">
                         @foreach ($countries as $country)
-                            <option value="{{ $country['code'] }}">
+                            <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] }}">
                                 {{ $country['name'] }} ({{ $country['code'] }})
                             </option>
                         @endforeach
@@ -262,8 +280,7 @@
                         id="phone_number" 
                         type="tel" 
                         name="phone_number" 
-                        class="form-control" 
-                        style="width: 65%; display: inline-block;"
+                        class="form-control"
                         value="{{ old('phone_number') }}" 
                         placeholder="123-456-789"
                         autocomplete="tel"
@@ -318,5 +335,19 @@
             </div>
         </form>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#country_code').select2({
+                templateResult: function(state) {
+                    if (!state.id) {
+                        return state.text;
+                    }
+                    const flagClass = $(state.element).data('flag');
+                    return $('<span><i class="' + flagClass + '"></i> ' + state.text + '</span>');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
