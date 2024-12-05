@@ -78,7 +78,7 @@ class ComplaintMapController extends Controller
               ->setOption('isHtml5ParserEnabled', true) // Permite usar o HTML5 e CSS
               ->setOption('isPhpEnabled', true); // Permite usar PHP no HTML
 
-        return $pdf->download('complaints.pdf');
+        return $pdf->stream('complaints.pdf');
     }
 
     public function exportExcel(Request $request)

@@ -81,7 +81,7 @@ class CondominiumMapController extends Controller
             ->setOption('isHtml5ParserEnabled', true)
             ->setOption('isPhpEnabled', true);
 
-        return $pdf->download('condominiums.pdf');
+        return $pdf->stream('condominiums.pdf');
     }
 
     public function exportExcel(Request $request)

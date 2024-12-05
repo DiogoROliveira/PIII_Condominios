@@ -46,6 +46,15 @@
                                            value="{{ request('due_date_to') }}">
                                 </div>
                             </div>
+
+                        <div class="row">
+                            <!-- Paid At -->
+                            <div class="col-md-3 mb-3">
+                                <label for="paid_at" class="form-label">{{ __('Paid At') }}</label>
+                                <input type="date" name="paid_at" id="paid_at" class="form-control" value="{{ request('paid_at') }}">
+                            </div>
+                        </div>
+
                         </div>
                     </form>
 
@@ -66,6 +75,7 @@
     document.getElementById('export-pdf').addEventListener('click', function() {
         const form = document.getElementById('filter-form');
         form.action = "{{ route('admin.maps.rents.export.pdf') }}";
+        form.target = "_blank"; 
         form.submit();
     });
 

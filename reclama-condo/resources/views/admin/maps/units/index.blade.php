@@ -57,6 +57,7 @@
     document.getElementById('export-pdf').addEventListener('click', function() {
         const form = document.getElementById('filter-form');
         form.action = "{{ route('admin.maps.units.export.pdf') }}";
+        form.target = "_blank";
         form.submit();
     });
 

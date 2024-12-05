@@ -73,7 +73,7 @@
                     <td>{{ $monPayment->due_date ? \Carbon\Carbon::parse($monPayment->due_date)->format('d/m/Y') : 'N/A' }}</td>
                     <td>{{ number_format($monPayment->amount, 2, ',', '.') }}</td>
                     <td>{{ strtoupper($monPayment->status) }}</td>
-                    <td>{{ $monPayment->paid_at ? $monPayment->paid_at->format('d/m/Y') : 'N/A' }}</td>
+                    <td>{{ $monPayment->paid_at ? \Carbon\Carbon::parse($monPayment->paid_at)->format('d/m/Y') : 'N/A' }}</td>
                     <td>{{ $monPayment->created_at->format('d/m/Y H:i') }}</td>
                 </tr>
             @endforeach

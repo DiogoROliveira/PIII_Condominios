@@ -73,14 +73,15 @@
 <!-- JavaScript -->
 <script>
     document.getElementById('export-pdf').addEventListener('click', function() {
-        document.getElementById('filter-form').action = "{{ route('admin.maps.complaints.export.pdf') }}";
-        document.getElementById('filter-form').method = 'GET';  // Mudando para GET
-        document.getElementById('filter-form').submit();
+        const form = document.getElementById('filter-form');
+        form.action = "{{ route('admin.maps.complaints.export.pdf') }}";
+        form.target = "_blank"; 
+        form.submit();
     });
 
     document.getElementById('export-excel').addEventListener('click', function() {
         document.getElementById('filter-form').action = "{{ route('admin.maps.complaints.export.excel') }}";
-        document.getElementById('filter-form').method = 'GET';  // Mudando para GET
+        document.getElementById('filter-form').method = 'GET'; 
         document.getElementById('filter-form').submit();
     });
 </script>

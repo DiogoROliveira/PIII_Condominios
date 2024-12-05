@@ -1,107 +1,295 @@
-<x-guest-layout>
-    <!-- Language Switcher -->
-    <div class="relative inline-block group mb-4 text-center" style="left: 9.75rem;">
-        <button class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            <i class="fa-solid fa-language mr-2"></i> {{ strtoupper(app()->getLocale()) }}
-            <svg class="fill-current h-4 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-            </svg>
-        </button>
-        <ul class="absolute hidden group-hover:block bg-white text-gray-700 rounded shadow-md mt-1 w-32">
-            @foreach (config('localization.locales') as $locale)
-            <li class="block px-4 py-1 hover:bg-gray-100">
-                <a href="{{ route('lang', $locale) }}">
-                    {{ strtoupper(__($locale)) }}
-                </a>
-            </li>
-            @endforeach
-        </ul>
-    </div>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ __('Register - Reclama Condo') }}</title>
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                type="password"
-                name="password"
-                autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                type="password"
-                name="password_confirmation" autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        .group:hover ul,
-        .group:focus-within ul {
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #6c757d;
+            --text-color: rgba(255, 255, 255, 0.9);
+            --bg-overlay: rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-overlay);
+            z-index: 1;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .language-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 120px;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .language-dropdown:hover .language-dropdown-content {
             display: block;
         }
 
-        .group ul {
-            display: none;
+        .language-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .group button {
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
-            transition: background-color 0.3s ease;
-        }
-
-        .group button:hover {
-            background-color: #e5e7eb;
-        }
-
-        /* Melhora o estilo do dropdown */
-        .group ul li a {
-            color: #4a5568;
+        .language-dropdown-content a {
+            color: white;
+            padding: 10px;
             text-decoration: none;
             display: block;
-            padding: 0.5rem 1rem;
         }
 
-        .group ul li a:hover {
-            background-color: #edf2f7;
-            color: #2d3748;
-            border-radius: 0.25rem;
+        .language-dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 13px;
+        }
+
+        .btn-primary:hover {
+            background-color: #3a7bd5;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-color);
+        }
+
+        .login-link a {
+            color: skyblue;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 7px;
+        }
+
+        .logo-image {
+            max-width: 300px;
+            max-height: 150px;
+            object-fit: contain;
         }
     </style>
-</x-guest-layout>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Language Dropdown -->
+        <div class="language-dropdown">
+            <button class="language-btn">
+                {{ strtoupper(app()->getLocale()) }}
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="language-dropdown-content">
+                @foreach (config('localization.locales') as $locale)
+                    <a href="{{ route('lang', $locale) }}">{{ strtoupper(__($locale)) }}</a>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="logo">
+            <img src="/images/logo.png" alt="{{ __('Reclama Condo Logo') }}" class="logo-image">
+        </div>
+
+        <h1>{{ __('Register') }}</h1>
+
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
+
+            <!-- Name Input -->
+            <div class="form-group">
+                <label for="name">{{ __('Name') }}</label>
+                <input 
+                    id="name" 
+                    type="text" 
+                    name="name" 
+                    class="form-control" 
+                    value="{{ old('name') }}" 
+                    required 
+                    autofocus 
+                    autocomplete="name"
+                >
+                @error('name')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Email Input -->
+            <div class="form-group">
+                <label for="email">{{ __('Email') }}</label>
+                <input 
+                    id="email" 
+                    type="email" 
+                    name="email" 
+                    class="form-control" 
+                    value="{{ old('email') }}" 
+                    required 
+                    autocomplete="username"
+                >
+                @error('email')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Password Input -->
+            <div class="form-group">
+                <label for="password">{{ __('Password') }}</label>
+                <input 
+                    id="password" 
+                    type="password" 
+                    name="password" 
+                    class="form-control" 
+                    required 
+                    autocomplete="new-password"
+                >
+                @error('password')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Confirm Password Input -->
+            <div class="form-group">
+                <label for="password_confirmation">{{ __('Confirm Password') }}</label>
+                <input 
+                    id="password_confirmation" 
+                    type="password" 
+                    name="password_confirmation" 
+                    class="form-control" 
+                    required 
+                    autocomplete="new-password"
+                >
+                @error('password_confirmation')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Register Button -->
+            <button type="submit" class="btn-primary">
+                {{ __('Register') }}
+            </button>
+
+            <!-- Login Link -->
+            <div class="login-link">
+                {{ __('Already have an account?') }} 
+                <a href="{{ route('login') }}">{{ __('Log in') }}</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
