@@ -6,14 +6,39 @@ use App\Models\MonthlyPayment;
 use App\Models\Unit;
 use App\Models\User;
 use App\Models\Tenant;
+use App\Notifications\MonthlyPaymentPhoneNotif;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
 class MonthlyPaymentController extends Controller
 {
+
+
     public function adminIndex(Request $request)
     {
         $monPayments = MonthlyPayment::all();
+
+        $currentDate = now();
+
+        foreach ($monPayments as $monPayment) {
+            $originalStatus = $monPayment->status;
+
+            if ($monPayment->paid_at === null) {
+                if ($monPayment->due_date >= $currentDate) {
+                    $monPayment->status = 'pending';
+                } elseif ($monPayment->due_date < $currentDate) {
+                    $monPayment->status = 'overdue';
+                }
+            } else {
+                $monPayment->status = 'paid';
+            }
+
+
+            if ($monPayment->status !== $originalStatus) {
+                $monPayment->save();
+            }
+        }
+
         return view('admin.monthly_payments.home', compact('monPayments'));
     }
 
@@ -53,6 +78,8 @@ class MonthlyPaymentController extends Controller
             'status' => $request->status,
             'paid_at' => $request->paid_at,
         ]);
+
+        MonthlyPaymentPhoneNotif::paymentCreated($tenant->user);
 
         return redirect()->route('admin.monthly-payments')
             ->with('success', __('Monthly Payment created successfully!'));

@@ -15,7 +15,12 @@ return new class extends Migration
             $table->increments('id');
             $table->string('invoice');
             $table->string('reference');
+            $table->unsignedInteger('payment_id');
+            $table->unsignedInteger('tenant_id');
             $table->timestamps();
+
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
+            $table->foreign('tenant_id')->references('id')->on('tenants')->onDelete('cascade');
         });
     }
 

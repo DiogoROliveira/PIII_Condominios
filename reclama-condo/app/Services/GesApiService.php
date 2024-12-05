@@ -155,8 +155,10 @@ class GesApiService
         $date = Carbon::parse($monthlyPayment->paid_at)->format('d/m/Y');
         $expiration = Carbon::parse($monthlyPayment->due_date)->format('d/m/Y');
 
-        if ($date < Carbon::now()->format('d/m/Y')) {
-            $date = Carbon::now()->format('d/m/Y');
+        $fixedDate = Carbon::createFromFormat('d/m/Y', '11/12/2024');
+
+        if (Carbon::createFromFormat('d/m/Y', $date)->lessThan($fixedDate)) {
+            $date = $fixedDate->format('d/m/Y');
         }
 
         if ($expiration < Carbon::now()->format('d/m/Y')) {
@@ -232,6 +234,34 @@ class GesApiService
                 'Cookie' => $this->cookie
             ])->asForm()->post($this->baseUrl . '/send-email', [
                 'email' => $decryptedEmail,
+                'type' => 'FT',
+                'document' => $invoice->invoice
+            ]);
+
+            if ($response->successful()) {
+                return $response->json();
+            } else {
+                echo $response->status();
+            }
+        } else {
+            throw new \Exception('Invoice data not found or incomplete.');
+        }
+    }
+
+    public function sendInvoiceWithMail($invoice, $email)
+    {
+
+        if (!$this->token) {
+            throw new \Exception('Token de autenticação não configurado.');
+        }
+
+        if (isset($invoice->invoice)) {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => $this->token,
+                'Cookie' => $this->cookie
+            ])->asForm()->post($this->baseUrl . '/send-email', [
+                'email' => $email,
                 'type' => 'FT',
                 'document' => $invoice->invoice
             ]);

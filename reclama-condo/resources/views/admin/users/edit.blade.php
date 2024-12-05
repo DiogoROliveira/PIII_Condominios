@@ -40,6 +40,14 @@
                         </div>
 
                         <div class="mb-4">
+                            <label for="phone" class="form-label">{{__('Phone Number')}}</label>
+                            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $user->phone) }}" required>
+                            @error('phone')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="mb-4">
                             <label for="role_id" class="form-label">{{__('Role')}}</label>
                             <select class="form-select" id="role_id" name="role_id" required>
                                 <option value="">{{__('Select Role')}}</option>

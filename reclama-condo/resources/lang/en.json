@@ -367,6 +367,20 @@
     "Contact us": "Contact us",
     "Already have an account?": "Already have an account?",
     "Don't have an account?": "Don't have an account?",
-    "Sign up": "Sign up"
+    "Sign up": "Sign up",
+    "Phone Number": "Phone Number",
+    "Total Payments (€)": "Total Payments (€)",
+    "Email Invoices": "Email Invoices",
+    "Date": "Date",
+    "Invoice Number": "Invoice Number",
+    "Reference": "Reference",
+    "Paid Amount": "Paid Amount",
+    "Invoices DataTable": "Invoices DataTable",
+    "Invoices": "Invoices",
+    "Send Invoices": "Send Invoices",
+    "Recipient Email": "Recipient Email",
+    "Enter recipient email": "Enter recipient email",
+    "Selected Invoices": "Selected Invoices",
+    "Send Email": "Send Email"
 
 }

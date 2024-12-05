@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Complaint;
 use App\Models\User;
 use App\Models\Unit;
 use App\Models\MonthlyPayment;
+use App\Models\Payment;
 use Illuminate\Support\Carbon;
+
 
 class HomeController extends Controller
 {
@@ -13,6 +16,13 @@ class HomeController extends Controller
     {
         $totalUsers = User::count();
         $totalCondominiums = auth()->user()->condominiums->count();
+        $totalComplaints = Complaint::count();
+        $totalPayments = 0;
+
+        foreach (Payment::all() as $payment) {
+            $totalPayments += $payment->amount;
+        }
+
 
         // Processar os dados para os gráficos no controlador
         $unitsStatus = Unit::selectRaw('status, COUNT(*) as count')
@@ -60,6 +70,8 @@ class HomeController extends Controller
         return view('admin.dashboard', compact(
             'totalUsers',
             'totalCondominiums',
+            'totalComplaints',
+            'totalPayments',
             'unitsStatus',
             'paymentsStatus',
             'monthlyRevenue'

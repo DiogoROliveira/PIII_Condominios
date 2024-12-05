@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Complaint Types List')}}</h1>
-
+                        <a href="{{ route('admin.complaint-types.create') }}" class="btn btn-primary" style="transform: translate(508px, 4px)">{{__('Add Complaint Type')}}</a>
                     </div>
 
                     <div class="card-body">
@@ -30,7 +30,7 @@
                                 @forelse ($complaint_types as $complaintType)
                                 <tr>
                                     <td>{{ $complaintType->id }}</td>
-                                    <td>{{ $complaintType->name }}</td>
+                                    <td>{{ __($complaintType->name) }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.complaint-types.edit', $complaintType->id) }}" class="btn btn-sm btn-warning me-1">
                                             <i class="fas fa-edit"></i> {{__('Edit')}}
@@ -47,7 +47,7 @@
                                 @endforelse
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.complaint-types.create') }}" class="btn btn-primary">{{__('Add Complaint Type')}}</a>
+
                     </div>
                 </div>
 
@@ -92,11 +92,25 @@
 
 <script>
     $(document).ready(function() {
+
+        var translations = {
+            en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+            pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+        };
+
+        var locale = "{{ app()->getLocale() }}";
+
         $('#complaintTypesTable').DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "language": {
+                "url": translations[locale] || translations['en']
+            },
+            "buttons": ["excel", "pdf"],
+            "dom": "<'row'<'col-md-6'Bl><'col-md-6'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
         }).buttons().container().appendTo('#complaintTypesTable_wrapper .col-md-6:eq(0)');
 
         $('#deleteModal').on('show.bs.modal', function(event) {

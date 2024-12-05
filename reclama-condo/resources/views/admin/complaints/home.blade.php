@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Complaints DataTable')}}</h1>
-
+                        <a href="{{ route('admin.complaints.create') }}" class="btn btn-primary" style="transform: translate(575px, 4px)">{{__('Add Complaint')}}</a>
                     </div>
                     <div class="card-body">
                         <table id="complaintsTable" class="table table-bordered table-striped">
@@ -104,7 +104,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <a href="{{ route('admin.complaints.create') }}" class="btn btn-primary">{{__('Add Complaint')}}</a>
                     </div>
                 </div>
 
@@ -149,11 +148,25 @@
 
 <script>
     $(document).ready(function() {
+
+        var translations = {
+            en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+            pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+        };
+
+        var locale = "{{ app()->getLocale() }}";
+
         const table = $('#complaintsTable').DataTable({
             "responsive": true,
             "lengthChange": false,
             "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            "language": {
+                "url": translations[locale] || translations['en']
+            },
+            "buttons": ["excel", "pdf"],
+            "dom": "<'row'<'col-md-6'Bl><'col-md-6'f>>" +
+                "<'row'<'col-md-12'tr>>" +
+                "<'row'<'col-md-6'i><'col-md-6'p>>",
         });
 
         $('#filter-condominium').on('change', function() {
