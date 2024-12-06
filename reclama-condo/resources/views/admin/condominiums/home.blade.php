@@ -13,8 +13,8 @@
 
                 <div class="card">
                     <div class="card-header position-relative">
-                        <h1 class="card-title" style="font-size: 2rem">{{ __('Condominiums DataTable') }}</h1>
-                        <a href="{{ route('admin.condominiums.create') }}" class="btn btn-primary position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%);">{{ __('Add Condominium') }}</a>
+                        <h1 class="card-title" style="font-size: 2rem">{{__('Condominiums DataTable')}}</h1>
+                        <a href="{{ route('admin.condominiums.create') }}" class="btn btn-primary position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%);">{{__('Add Condominium')}}</a>
                     </div>
                     <div class="card-body">
                         <table id="condominiumsTable" class="table table-bordered table-striped">

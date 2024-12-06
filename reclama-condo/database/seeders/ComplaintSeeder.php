@@ -19,6 +19,7 @@ class ComplaintSeeder extends Seeder
         $users = User::all();
         $units = Unit::all();
         $complaintTypes = ComplaintType::all();
+        $status = ['Pending', 'In Progress', 'Solved'];
 
         if ($users->isEmpty() || $units->isEmpty() || $complaintTypes->isEmpty()) {
             $this->command->error('Certifique-se de que há usuários, unidades e tipos de reclamação na base de dados antes de executar este seeder.');
@@ -32,7 +33,7 @@ class ComplaintSeeder extends Seeder
                 'complaint_type_id' => $complaintTypes->random()->id,
                 'title' => "Título da Reclamação {$index}",
                 'description' => "Descrição detalhada da Reclamação {$index}.",
-                'status' => 'Pending',
+                'status' => $status[array_rand($status)],
                 'response' => null,
             ]);
         }

@@ -126,12 +126,25 @@
     });
 
 
-    $(document).ready(function() {
-        $('table').DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-        });
+
+
+    var translations = {
+        en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+        pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+    };
+
+    var locale = "{{ app()->getLocale() }}";
+
+    $('table').DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "language": {
+            "url": translations[locale] || translations['en']
+        },
+        "dom": "<'row'<'col-md-6'l><'col-md-6'f>>" +
+            "<'row'<'col-md-12'tr>>" +
+            "<'row'<'col-md-6'i><'col-md-6'p>>",
     });
 </script>
 @endsection
