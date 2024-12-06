@@ -1,89 +1,304 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ __('Login - Reclama Condo') }}</title>
 
-    <!-- Language Switcher -->
-    <div class="relative inline-block group mb-3 text-center" style="left: 9.75rem;">
-        <button class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded inline-flex items-center focus:outline-none focus:ring-2 focus:ring-indigo-500">
-            {{ strtoupper(app()->getLocale()) }}
-            <svg class="fill-current h-4 w-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-            </svg>
-        </button>
-        <ul class="absolute hidden group-hover:block bg-white text-gray-700 rounded shadow-md mt-2 w-full">
-            @foreach (config('localization.locales') as $locale)
-            <li class="block px-4 py-2 hover:bg-gray-100">
-                <a href="{{ route('lang', $locale) }}">
-                    {{ strtoupper(__($locale)) }}
-                </a>
-            </li>
-            @endforeach
-        </ul>
-    </div>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Login Form -->
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                type="password"
-                name="password"
-                autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                {{ __('Forgot your password?') }}
-            </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        .group:hover ul,
-        .group:focus-within ul {
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #6c757d;
+            --text-color: rgba(255, 255, 255, 0.9);
+            --bg-overlay: rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-overlay);
+            z-index: 1;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .language-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            min-width: 120px;
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .language-dropdown:hover .language-dropdown-content {
             display: block;
         }
 
-        .group ul {
-            display: none;
+        .language-dropdown-content a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
         }
 
-        .group button {
-            background-color: #f9fafb;
-            border: 1px solid #e5e7eb;
+        .language-dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.633);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+        }
+
+        .remember-me input {
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
             transition: background-color 0.3s ease;
         }
 
-        .group button:hover {
-            background-color: #e5e7eb;
+        .btn-primary:hover {
+            background-color: #3a7bd5;
+        }
+
+        .forgot-password {
+            color: skyblue;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: var(--text-color);
+        }
+
+        .signup-link a {
+            color: skyblue;
+            text-decoration: none;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-image {
+            max-width: 300px;
+            max-height: 150px;
+            object-fit: contain;
         }
     </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Language Dropdown -->
+        <div class="language-dropdown">
+            <button class="language-btn">
+                {{ strtoupper(app()->getLocale()) }}
+                <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="language-dropdown-content">
+                @foreach (config('localization.locales') as $locale)
+                    <a href="{{ route('lang', $locale) }}">{{ strtoupper(__($locale)) }}</a>
+                @endforeach
+            </div>
+        </div>
 
-</x-guest-layout>
+        <div class="logo">
+            <img src="/images/logo.png" alt="{{ __('Reclama Condo Logo') }}" class="logo-image">
+        </div>
+
+        <h1>{{ __('Login') }}</h1>
+
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            <!-- Email Input -->
+            <div class="form-group">
+                <label for="email">{{ __('Email') }}</label>
+                <input 
+                    id="email" 
+                    type="email" 
+                    name="email" 
+                    class="form-control" 
+                    value="{{ old('email') }}" 
+                    required 
+                    autofocus 
+                    autocomplete="username"
+                >
+                @error('email')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Password Input -->
+            <div class="form-group">
+                <label for="password">{{ __('Password') }}</label>
+                <input 
+                    id="password" 
+                    type="password" 
+                    name="password" 
+                    class="form-control" 
+                    required 
+                    autocomplete="current-password"
+                >
+                @error('password')
+                    <div class="error-message">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input 
+                        type="checkbox" 
+                        id="remember_me" 
+                        name="remember"
+                    >
+                    <label for="remember_me">{{ __('Remember me') }}</label>
+                </div>
+                @if (Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" class="forgot-password">
+                        {{ __('Forgot your password?') }}
+                    </a>
+                @endif
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="btn-primary">
+                {{ __('Log in') }}
+            </button>
+
+            <!-- Signup Link -->
+            <div class="signup-link">
+                {{ __('Don\'t have an account?') }} 
+                <a href="{{ route('register') }}">{{ __('Sign up') }}</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

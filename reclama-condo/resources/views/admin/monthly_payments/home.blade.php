@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-header position-relative">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Monthly Payments DataTable')}}</h1>
-                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%);">{{__('Add Monthly Payment')}}</a>
+                        <a href="{{ route('admin.monthly-payments.create') }}" class="btn btn-primary position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%);">{{__('Add Payment')}}</a>
                     </div>
 
                     <div class="card-body">

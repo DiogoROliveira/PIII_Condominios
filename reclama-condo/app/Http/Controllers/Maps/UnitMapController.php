@@ -58,7 +58,7 @@ class UnitMapController extends Controller
             ->setOption('isHtml5ParserEnabled', true)
             ->setOption('isPhpEnabled', true);
 
-        return $pdf->download('units.pdf');
+        return $pdf->stream('units.pdf');
     }
 
     public function exportExcel(Request $request)

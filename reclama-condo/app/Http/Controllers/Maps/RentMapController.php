@@ -21,19 +21,20 @@ class RentMapController extends Controller
         if ($request->filled('status') && in_array($request->status, ['pending', 'paid', 'overdue'])) {
             $monPayments->where('status', $request->status);
         }
-
         if ($request->filled('due_date_from')) {
             $monPayments->whereDate('due_date', '>=', $request->due_date_from);
         }
         if ($request->filled('due_date_to')) {
             $monPayments->whereDate('due_date', '<=', $request->due_date_to);
         }
-
         if ($request->filled('amount_min')) {
             $monPayments->where('amount', '>=', $request->amount_min);
         }
         if ($request->filled('amount_max')) {
             $monPayments->where('amount', '<=', $request->amount_max);
+        }
+        if ($request->filled('paid_at')) {
+            $monPayments->whereDate('paid_at', '=', $request->paid_at);
         }
 
         $monPayments = $monPayments->with(['unit.block.condominium', 'tenant.user'])->get();
@@ -50,8 +51,6 @@ class RentMapController extends Controller
         $minAmount = MonthlyPayment::min('amount');
         $maxAmount = MonthlyPayment::max('amount');
 
-
-        // Retorna a view com os dados
         return view('admin.maps.rents.index', compact(
             'monPayments', 'units', 'blocks', 'condominiums', 'statuses', 'minAmount', 'maxAmount'
         ));
@@ -77,6 +76,9 @@ class RentMapController extends Controller
         if ($request->filled('amount_max')) {
             $monPayments->where('amount', '<=', $request->amount_max);
         }
+        if ($request->filled('paid_at')) {
+            $monPayments->whereDate('paid_at', '=', $request->paid_at);
+        }
 
         $monPayments = $monPayments->get();
 
@@ -85,7 +87,7 @@ class RentMapController extends Controller
             ->setOption('isHtml5ParserEnabled', true)
             ->setOption('isPhpEnabled', true);
 
-        return $pdf->download('monthly_payments.pdf');
+        return $pdf->stream('monthly_payments.pdf');
     }
 
     public function exportExcel(Request $request)
@@ -106,6 +108,9 @@ class RentMapController extends Controller
         }
         if ($request->filled('amount_max')) {
             $monPayments->where('amount', '<=', $request->amount_max);
+        }
+        if ($request->filled('paid_at')) {
+            $monPayments->whereDate('paid_at', '=', $request->paid_at);
         }
 
         $monPayments = $monPayments->get();
