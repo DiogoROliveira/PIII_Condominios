@@ -13,9 +13,9 @@
                 <x-alert-messages />
 
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header position-relative">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Tenants DataTable')}}</h1>
-                        <a href="{{ route('admin.tenants.create') }}" class="btn btn-primary" style="transform: translate(597px, 4px)">{{__('Add Tenant')}}</a>
+                        <a href="{{ route('admin.tenants.create') }}" class="btn btn-primary position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%);">{{__('Add Tenant')}}</a>
                     </div>
                     <div class="card-body">
                         <table id="tenantsTable" class="table table-bordered table-striped">

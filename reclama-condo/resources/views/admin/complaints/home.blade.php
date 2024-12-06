@@ -12,9 +12,9 @@
                 <x-alert-messages />
 
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between align-items-center">
+                    <div class="card-header position-relative">
                         <h1 class="card-title" style="font-size: 2rem">{{__('Complaints DataTable')}}</h1>
-                        <a href="{{ route('admin.complaints.create') }}" class="btn btn-primary" style="transform: translate(575px, 4px)">{{__('Add Complaint')}}</a>
+                        <a href="{{ route('admin.complaints.create') }}" class="btn btn-primary position-absolute" style="right: 15px; top: 50%; transform: translateY(-50%);">{{__('Add Complaint')}}</a>
                     </div>
                     <div class="card-body">
                         <table id="complaintsTable" class="table table-bordered table-striped">
@@ -60,8 +60,8 @@
                                         <select id="filter-status" class="form-control">
                                             <option value="">{{ __('All Statuses') }}</option>
                                             <option value="Pending">{{ __('Pending') }}</option>
-                                            <option value="Resolved">{{ __('In Progress') }}</option>
-                                            <option value="Closed">{{ __('Solved') }}</option>
+                                            <option value="In Progress">{{ __('In Progress') }}</option>
+                                            <option value="Solved">{{ __('Solved') }}</option>
                                         </select>
                                     </th>
                                     <th></th>
@@ -77,10 +77,10 @@
                                     <td>{{ $complaint->unit->block->condominium->name ?? '' }}</td>
                                     <td>{{ $complaint->unit->block->block ?? '' }}</td>
                                     <td>{{ $complaint->unit->unit_number ?? '' }}</td>
-                                    <td>{{ $complaint->complaintType->name }}</td>
+                                    <td>{{ __($complaint->complaintType->name) }}</td>
                                     <td>{{ $complaint->title }}</td>
                                     <td>{{ $complaint->description }}</td>
-                                    <td>{{ $complaint->status }}</td>
+                                    <td>{{ __($complaint->status) }}</td>
                                     <td class="text-center">
                                         @if ($complaint->attachments->isNotEmpty())
                                         {{ $complaint->attachments->count() }}
@@ -148,6 +148,12 @@
 
 <script>
     $(document).ready(function() {
+        window.__ = function(key) {
+            return translationsP[key] || key;
+        };
+
+        window.translationsP = @json(__('*'));
+
 
         var translations = {
             en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
@@ -175,12 +181,13 @@
         });
 
         $('#filter-type').on('change', function() {
-            const value = $(this).val();
+
+            const value = __($(this).val());
             table.column(5).search(value).draw();
         });
 
         $('#filter-status').on('change', function() {
-            const value = $(this).val();
+            const value = __($(this).val());
             table.column(8).search(value).draw();
         });
 

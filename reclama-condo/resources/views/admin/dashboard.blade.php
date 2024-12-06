@@ -180,7 +180,7 @@
             width: '100%',
             height: 400,
             legend: {
-                position: 'bottom'
+                position: 'none'
             },
             hAxis: {
                 title: '{{ __("Month") }}',
