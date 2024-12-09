@@ -19,7 +19,7 @@ class MonthlyPaymentPhoneNotif
         $twilio = new Client($sid, $token);
         $message = $twilio->messages
             ->create(
-                "+351934436741", // to
+                $phone, // to
                 array(
                     "from" => "+17753106715",
                     "body" => $sms
@@ -34,7 +34,6 @@ class MonthlyPaymentPhoneNotif
         $name = $user->name;
         $month = date('F');
         $sms = "Olá $name, o pagamento do aluguer deste mês ($month) está disponível para pagamento.";
-        $sms2 = "Para mais detalhes, aceda à sua àrea de alugueres através do link: https://reclama-condo.000.pe/dashboard/rents.";
         self::sendSMS($sms, $phone);
     }
 
