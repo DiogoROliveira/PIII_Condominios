@@ -387,5 +387,12 @@
     "Recipient Email": "Email do Destinatário",
     "Enter recipient email": "Insira o email do destinatário",
     "Selected Invoices": "Faturas Selecionadas",
-    "Send Email": "Enviar Email"
+    "Send Email": "Enviar Email",
+    "Your Account Statement": "Extrato da Conta",
+    "Unit %s in Block %s": "Unidade %s no Bloco %s",
+    "No units assigned": "Nenhuma unidade atribuida",
+    "Email Accounts": "Enviar Estratos",
+    "Mail Accounts": "Enviar Estratos",
+    "Total Payments": "Total Pagamentos",
+    "Overdue/Pending Payments": "Pagamentos Vencidos/Pendentes"
 }

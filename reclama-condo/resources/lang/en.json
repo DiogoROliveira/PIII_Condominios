@@ -381,6 +381,11 @@
     "Recipient Email": "Recipient Email",
     "Enter recipient email": "Enter recipient email",
     "Selected Invoices": "Selected Invoices",
-    "Send Email": "Send Email"
-
+    "Send Email": "Send Email",
+    "Unit %s in Block %s": "Unit %s in Block %s",
+    "No units assigned": "No units assigned",
+    "Email Accounts": "Email Accounts",
+    "Mail Account": "Mail Account",
+    "Total Payments": "Total Payments",
+    "Overdue/Pending Payments": "Overdue/Pending Payments"
 }

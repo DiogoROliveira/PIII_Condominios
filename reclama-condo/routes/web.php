@@ -22,6 +22,7 @@ use App\Http\Controllers\Maps\RentMapController;
 use App\Http\Controllers\SendSmsController;
 use App\Http\Controllers\EmailInvoiceController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\EmailAccountController;
 
 // Middlewares
 use App\Http\Middleware\Localization;
@@ -147,8 +148,8 @@ Route::middleware(Localization::class)->group(function () {
         // Email Routes
         Route::get('admin/dashboard/email-invoices', [EmailInvoiceController::class, 'index'])->name('admin.email-invoices');
         Route::post('admin/dashboard/email-invoices', [EmailInvoiceController::class, 'send'])->name('admin.email-invoices.send');
-
-
+        Route::get('admin/dashboard/email-accounts', [EmailAccountController::class, 'index'])->name('admin.email-accounts');
+        Route::post('admin/dashboard/email-accounts', [EmailAccountController::class, 'send'])->name('admin.email-accounts.send');
         // Test Routes
         Route::get('admin/dashboard/send-sms', [SendSmsController::class, 'index'])->name('admin.send-sms');
     });

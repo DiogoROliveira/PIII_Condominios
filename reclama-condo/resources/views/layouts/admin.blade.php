@@ -234,10 +234,27 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.email-invoices') }}" class="nav-link">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-envelope"></i>
-                                <p>{{__('Email Invoices')}}</p>
+                                <p>
+                                    {{__('Emails')}}
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.email-invoices') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('Email Invoices') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.email-accounts') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ __('Email Accounts') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </nav>
