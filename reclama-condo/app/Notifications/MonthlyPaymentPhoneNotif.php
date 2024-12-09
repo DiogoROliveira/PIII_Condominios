@@ -33,7 +33,7 @@ class MonthlyPaymentPhoneNotif
         $phone = $user->phone;
         $name = $user->name;
         $month = date('F');
-        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) está disponível para pagamento.";
+        $sms = "Olá $name, o pagamento do aluguer deste mês ($month) está disponível para pagamento. Para mais detalhes, aceda à sua àrea de alugueres.";
         self::sendSMS($sms, $phone);
     }
 
