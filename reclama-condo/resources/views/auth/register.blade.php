@@ -21,6 +21,7 @@
             --secondary-color: #6c757d;
             --text-color: rgba(255, 255, 255, 0.9);
             --bg-overlay: rgba(0, 0, 0, 0.6);
+            --placeholder-color: rgba(255, 255, 255, 0.5);
         }
 
         * {
@@ -131,9 +132,13 @@
             padding: 12px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             background-color: rgba(255, 255, 255, 0.1);
-            color: white;
+            color: rgba(255, 255, 255, 0.7);
             border-radius: 5px;
             transition: all 0.3s ease;
+        }
+
+        .form-control::placeholder {
+            color: var(--placeholder-color);
         }
 
         .form-control:focus {
@@ -197,54 +202,132 @@
             align-items: center;
         }
 
-        .phone-input-container select {
-            width: 35%;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            appearance: none; /* Removes default browser styling */
+        .country-code-wrapper {
             position: relative;
+            width: 35%;
+        }
+
+        .country-code-select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            padding: 12px 35px 12px 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .country-code-select option{
+            background: rgb(24, 24, 24);
+        }
+
+        .country-code-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: white;
         }
 
         .phone-input-container input {
             width: 65%;
             padding: 12px;
-            border-radius: 5px;
             background-color: rgba(255, 255, 255, 0.1);
-            color: white;
+            color: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
         }
 
-        .phone-input-container select:focus,
-        .phone-input-container input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.3);
+        .phone-input-container input::placeholder {
+            color: var(--placeholder-color);
         }
 
-        /* Custom dropdown arrow */
-        .phone-input-container select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M1 4l5 5 5-5z' fill='%23ffffff'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px top 50%;
+        /* Custom radio button styling for country code selector */
+        .country-code-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 10;
         }
 
-        #country_code {
+        .country-code-dropdown label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .country-code-dropdown label:hover {
+            background-color: rgba(248, 28, 28, 0.1);
+        }
+
+        .country-code-dropdown input[type="radio"] {
             appearance: none;
-            padding-left: 1rem;
-            text-align: left;
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-radius: 50%;
+            margin-right: 10px;
+            outline: none;
         }
 
-        #country_code option {
-            text-align: left;
+        .country-code-dropdown input[type="radio"]:checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
         }
+
+        .country-code-dropdown input[type="radio"]:checked::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .country-code-wrapper:hover .country-code-dropdown {
+            display: block;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link i {
+            font-size: 1.2rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        
     </style>
-
-    <!-- jQuery and Select2 -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 <body>
     <div class="login-container">
@@ -282,6 +365,7 @@
                     required 
                     autofocus 
                     autocomplete="name"
+                    placeholder="{{ __('Enter your full name') }}"
                 >
                 @error('name')
                     <div class="error-message">{{ $message }}</div>
@@ -299,6 +383,7 @@
                     value="{{ old('email') }}" 
                     required 
                     autocomplete="username"
+                    placeholder="{{ __('Enter your email address') }}"
                 >
                 @error('email')
                     <div class="error-message">{{ $message }}</div>
@@ -309,20 +394,23 @@
             <div class="form-group">
                 <label for="phone_number">{{ __('Phone Number') }}</label>
                 <div class="phone-input-container">
-                    <select id="country_code" name="country_code" class="form-control">
-                        @foreach ($countries as $country)
-                        <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] ?? '' }}">
-                            {{ $country['name'] }} ({{ $country['code'] }})
-                        </option>   
-                        @endforeach
-                    </select>
+                    <div class="country-code-wrapper">
+                        <select id="country_code" name="country_code" class="country-code-select">
+                            @foreach ($countries as $country)
+                            <option value="{{ $country['code'] }}" data-flag="{{ $country['flag'] ?? '' }}">
+                                {{ $country['name'] }} ({{ $country['code'] }})
+                            </option>   
+                            @endforeach
+                        </select>
+                        <i class="fas fa-chevron-down country-code-icon"></i>
+                    </div>
                     <input 
                         id="phone_number" 
                         type="tel" 
                         name="phone_number" 
                         class="form-control"
                         value="{{ old('phone_number') }}" 
-                        placeholder="123-456-789"
+                        placeholder="{{ __('Enter your phone number') }}"
                         autocomplete="tel"
                     >
                 </div>
@@ -341,6 +429,7 @@
                     class="form-control" 
                     required 
                     autocomplete="new-password"
+                    placeholder="{{ __('Create a strong password') }}"
                 >
                 @error('password')
                     <div class="error-message">{{ $message }}</div>
@@ -357,6 +446,7 @@
                     class="form-control" 
                     required 
                     autocomplete="new-password"
+                    placeholder="{{ __('Repeat your password') }}"
                 >
                 @error('password_confirmation')
                     <div class="error-message">{{ $message }}</div>
@@ -373,19 +463,26 @@
                 {{ __('Already have an account?') }} 
                 <a href="{{ route('login') }}">{{ __('Log in') }}</a>
             </div>
+
+            <!-- Back Button -->
+            <div class="back-button">
+                <a href="{{ route('home') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i> {{ __('Back') }}
+                </a>
+            </div>
         </form>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#country_code').select2({
-                templateResult: function(state) {
-                    if (!state.id) {
-                        return state.text;
-                    }
-                    const flagClass = $(state.element).data('flag');
-                    return $('<span><i class="' + flagClass + '"></i> ' + state.text + '</span>');
-                }
+            // Custom country code selection
+            $('.country-code-select').on('change', function() {
+                const selectedOption = $(this).find('option:selected');
+                const flagClass = selectedOption.data('flag');
+                
+                // Update country code display if needed
+                console.log('Selected country:', selectedOption.text());
             });
         });
     </script>
