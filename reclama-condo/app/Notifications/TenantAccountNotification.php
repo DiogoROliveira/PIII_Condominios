@@ -99,7 +99,7 @@ class TenantAccountNotification extends Notification
         $monthlyPayments = $this->tenant->monthly_payments;
 
         return [
-            'units' => $unitsInfo ?: 'No units assigned',
+            'units' => $unitsInfo ?: __('No units assigned'),
             'totalPayments' => $monthlyPayments->sum('amount'),
             'pendingPayments' => $monthlyPayments->where('status', 'pending')->sum('amount'),
             'overduePayments' => $monthlyPayments->where('status', 'overdue')->sum('amount'),
