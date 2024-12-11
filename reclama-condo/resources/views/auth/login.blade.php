@@ -211,6 +211,31 @@
             max-height: 150px;
             object-fit: contain;
         }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link i {
+            font-size: 1.2rem;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
     </style>
 </head>
 <body>
@@ -297,6 +322,13 @@
             <div class="signup-link">
                 {{ __('Don\'t have an account?') }} 
                 <a href="{{ route('register') }}">{{ __('Sign up') }}</a>
+            </div>
+
+            <!-- Back Button -->
+            <div class="back-button">
+                <a href="{{ route('home') }}" class="back-link">
+                    <i class="fas fa-arrow-left"></i> {{ __('Back') }}
+                </a>
             </div>
         </form>
     </div>
