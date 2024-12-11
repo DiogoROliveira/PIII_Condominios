@@ -41,10 +41,10 @@
                                 @forelse ($complaints as $complaint)
                                 <tr>
                                     <td>{{ $complaint->id }}</td>
-                                    <td>{{ $complaint->complaintType->name }}</td>
+                                    <td>{{ __($complaint->complaintType->name) }}</td>
                                     <td>{{ $complaint->title }}</td>
                                     <td>{{ $complaint->description }}</td>
-                                    <td>{{ $complaint->status }}</td>
+                                    <td>{{ __($complaint->status) }}</td>
                                     <td class="text-center">
                                         @if ($complaint->attachments->isNotEmpty())
                                         {{ $complaint->attachments->count() }}
@@ -86,11 +86,24 @@
 
     <script>
         $(document).ready(function() {
+            var translations = {
+                en: '//cdn.datatables.net/plug-ins/2.1.8/i18n/en-GB.json',
+                pt: '//cdn.datatables.net/plug-ins/2.1.8/i18n/pt-PT.json',
+            };
+
+            var locale = "{{ app()->getLocale() }}";
+
             const table = $('#complaintsTable').DataTable({
                 "responsive": true,
                 "lengthChange": false,
                 "autoWidth": false,
-                "dom": '<lf<t>ip>',
+                "language": {
+                    "url": translations[locale] || translations['en']
+                },
+                "buttons": ["excel", "pdf"],
+                "dom": "<'row'<'col-md-6'Bl><'col-md-12'f>>" +
+                    "<'row'<'col-md-12'tr>>" +
+                    "<'row'<'col-md-6'i><'col-md-12'p>>",
             });
         });
     </script>

@@ -1,6 +1,4 @@
 <?php
-// Update the path below to your autoload.php,
-// see https://getcomposer.org/doc/01-basic-usage.md
 
 namespace App\Notifications;
 
@@ -19,7 +17,7 @@ class MonthlyPaymentPhoneNotif
         $twilio = new Client($sid, $token);
         $message = $twilio->messages
             ->create(
-                $phone, // to
+                "+351934436741", // to
                 array(
                     "from" => "+17753106715",
                     "body" => $sms
