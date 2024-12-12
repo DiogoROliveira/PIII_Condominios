@@ -37,7 +37,7 @@ class RentManagementController extends Controller
         $tenants = Tenant::where('user_id', auth()->user()->id)->get();
 
         if (!$tenants) {
-            return redirect()->route('user.dashboard')->with('error', 'No tenant found for the authenticated user.');
+            return redirect()->route('user.dashboard')->with('error', __('No tenant found for the authenticated user.'));
         }
 
         return view('user.rents.home', compact('tenants'));
@@ -52,7 +52,7 @@ class RentManagementController extends Controller
         } catch (\Exception $e) {
 
             Log::error('Erro ao carregar os métodos de pagamento: ' . $e->getMessage());
-            return redirect()->back()->withErrors('Erro ao carregar os métodos de pagamento.');
+            return redirect()->back()->withErrors(__('Erro ao carregar os métodos de pagamento.'));
         }
 
         $tenant = Tenant::findOrFail($tenantId);

@@ -20,7 +20,7 @@ class EmailAccountController extends Controller
 
         try {
             $tenant->user->notify(new TenantAccountNotification($tenant));
-            return redirect()->back()->with('success', 'Email sent successfully!', $tenant->user->email);
+            return redirect()->back()->with('success', __('Email sent successfully!'), $tenant->user->email);
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage(), $e->getTraceAsString());
         }

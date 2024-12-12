@@ -36,7 +36,7 @@
                                     <td>{{ $unit->block->condominium->name }}</td>
                                     <td>{{ $unit->block->block }}</td>
                                     <td>{{ $unit->unit_number }}</td>
-                                    <td>{{ strtoupper($unit->status) }}</td>
+                                    <td>{{ strtoupper(__($unit->status)) }}</td>
                                     <td>{{ $unit->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">
                                         <a href="{{ route('admin.units.edit', $unit->id) }}" class="btn btn-sm btn-warning me-1">

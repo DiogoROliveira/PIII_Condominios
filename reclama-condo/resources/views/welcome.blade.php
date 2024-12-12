@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -226,7 +227,8 @@
         /* Responsive Design */
         @media screen and (max-width: 768px) {
             .nav-links {
-                display: none; /* Placeholder for mobile menu */
+                display: none;
+                /* Placeholder for mobile menu */
             }
 
             .hero h1 {
@@ -240,6 +242,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -250,16 +253,21 @@
             <a href="#home">{{ __('Home') }}</a>
             <a href="#about">{{ __('About') }}</a>
             <a href="#contact">{{ __('Contact') }}</a>
+            @if (!Auth::check())
             <a href="{{ route('login') }}">{{ __('Log in') }}</a>
             <a href="{{ route('register') }}">{{ __('Sign up') }}</a>
-            
+            @else
+            <a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a>
+            @endif
+
+
             <div class="language-dropdown">
                 <a href="#" class="language-switch">
                     <i class="fas fa-globe"></i>
                 </a>
                 <div class="language-dropdown-content">
                     @foreach (config('localization.locales') as $locale)
-                        <a href="{{ route('lang', $locale) }}">{{ strtoupper(__($locale)) }}</a>
+                    <a href="{{ route('lang', $locale) }}">{{ strtoupper(__($locale)) }}</a>
                     @endforeach
                 </div>
             </div>
@@ -291,11 +299,11 @@
             <p>{{ __('If you have any questions or need further assistance, please don\'t hesitate to contact us.') }}</p>
             <div class="contact-info">
                 <p>
-                    <i class="fas fa-envelope"></i> 
+                    <i class="fas fa-envelope"></i>
                     <a class="email" href="mailto:reisdavid@ipvc.pt">reisdavid@ipvc.pt</a>
                 </p>
                 <p>
-                    <i class="fas fa-envelope"></i> 
+                    <i class="fas fa-envelope"></i>
                     <a class="email" href="mailto:diogo.rosas.oliveira@ipvc.pt">diogo.rosas.oliveira@ipvc.pt</a>
                 </p>
             </div>
@@ -319,4 +327,5 @@
         });
     </script>
 </body>
+
 </html>

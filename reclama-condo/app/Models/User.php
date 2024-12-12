@@ -23,7 +23,12 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->role->name === 'admin';
+        return $this->role && $this->role->name === 'admin';
+    }
+
+    public function getRoleName()
+    {
+        return $this->role ? $this->role->name : null;
     }
 
     public function condominiums()

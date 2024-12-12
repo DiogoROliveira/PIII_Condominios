@@ -54,7 +54,7 @@
                                     <td>
                                         {{ $unit->block->condominium->name ?? __('N/A') }}
                                     </td>
-                                    <td>{{ strtoupper($tenant->status) }}</td>
+                                    <td>{{ strtoupper(__($tenant->status)) }}</td>
                                     <td>{{ $tenant->lease_start_date ?? __('N/A') }}</td>
                                     <td>{{ $tenant->lease_end_date ?? __('N/A') }}</td>
                                     <td>{{ $tenant->created_at->format('d/m/Y') }}</td>

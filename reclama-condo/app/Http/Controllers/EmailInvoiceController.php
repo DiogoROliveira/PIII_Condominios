@@ -19,19 +19,17 @@ class EmailInvoiceController extends Controller
         try {
             $service->authenticate();
 
-            // Decode the JSON string of invoices
             $invoices = json_decode($request->input('selected_invoices'), true);
 
             if (empty($invoices)) {
-                return redirect()->back()->with('error', 'No invoices selected.');
+                return redirect()->back()->with('error', __('No invoices selected.'));
             }
 
             foreach ($invoices as $invoiceData) {
-                // Parse the invoice data as needed
                 $invoice = Invoice::find(json_decode($invoiceData, true)['id']);
                 $service->sendInvoiceWithMail($invoice, $request->email);
             }
-            return redirect()->back()->with('success', 'Invoices sent successfully.');
+            return redirect()->back()->with('success', __('Invoices sent successfully.'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }

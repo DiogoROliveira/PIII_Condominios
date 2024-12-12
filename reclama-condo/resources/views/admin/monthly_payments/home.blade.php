@@ -40,7 +40,16 @@
                                     <td>{{ $monPayment->tenant->user_id }} - {{ $monPayment->tenant->user->name }}</td>
                                     <td>{{ $monPayment->due_date }}</td>
                                     <td>{{ $monPayment->amount }}</td>
-                                    <td>{{ strtoupper($monPayment->status) }}</td>
+                                    <td>
+                                        <span class="status-text
+                                            @if($monPayment->status === 'paid') text-white border-success bg-success
+                                            @elseif($monPayment->status === 'pending') text-black border-warning bg-warning
+                                            @elseif($monPayment->status === 'overdue') text-white border-danger bg-danger
+                                            @endif
+                                        ">
+                                            {{ strtoupper(__($monPayment->status)) }}
+                                        </span>
+                                    </td>
                                     <td>{{ $monPayment->paid_at ?? __('N/A') }}</td>
                                     <td>{{ $monPayment->created_at }}</td>
                                     <td class="text-center">
@@ -127,5 +136,16 @@
         });
     });
 </script>
+
+<style>
+    .status-text {
+        display: inline-block;
+        padding: 0.2rem 0.5rem;
+        border: 1px solid;
+        border-radius: 1rem;
+        /* Arredonda as bordas */
+        font-weight: bold;
+    }
+</style>
 
 @endsection

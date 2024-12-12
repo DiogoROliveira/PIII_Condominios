@@ -18,7 +18,7 @@ class Admin
     {
 
         if (!Auth::check() || Auth::user()->role->name !== 'admin') {
-            return redirect()->route('home')->with('eror', __('Access denied. You must be an admin to access this page.'));
+            return redirect()->route('dashboard')->with('eror', __('Access denied. You must be an admin to access this page.'));
         }
 
 
