@@ -155,7 +155,7 @@ class GesApiService
         $date = Carbon::parse($monthlyPayment->paid_at)->format('d/m/Y');
         $expiration = Carbon::parse($monthlyPayment->due_date)->format('d/m/Y');
 
-        $fixedDate = Carbon::createFromFormat('d/m/Y', '18/12/2024');
+        $fixedDate = Carbon::createFromFormat('d/m/Y', '31/12/2024');
 
         if (Carbon::createFromFormat('d/m/Y', $date)->lessThan($fixedDate)) {
             $date = $fixedDate->format('d/m/Y');

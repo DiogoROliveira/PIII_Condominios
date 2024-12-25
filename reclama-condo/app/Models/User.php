@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this;
     }
 
+    public function tenants()
+    {
+        return $this->hasMany(Tenant::class, 'user_id');
+    }
+
     /**
      * The attributes that are mass assignable.
      *

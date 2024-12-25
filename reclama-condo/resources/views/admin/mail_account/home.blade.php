@@ -31,25 +31,40 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($tenants as $index => $tenant)
+                                @foreach ($users as $index => $user)
                                 <tr>
                                     @php
-                                    $decryptedEmail = Crypt::decrypt($tenant->user->email);
-                                    $units = $tenant->units;
-                                    $unitNumbers = $units->pluck('unit_number')->implode('; ');
+                                    $decryptedEmail = Crypt::decrypt($user->email);
+
+                                    // Coletar todas as unidades de todos os tenants do user
+                                    $units = collect();
+                                    $totalPayments = 0;
+                                    $overduePayments = 0;
+
+                                    foreach ($user->tenants as $tenant) {
+                                    $units = $units->concat($tenant->units);
+                                    $totalPayments += $tenant->monthly_payments->sum('amount');
+                                    $overduePayments += $tenant->monthly_payments->where('status', 'overdue')->sum('amount');
+                                    $overduePayments += $tenant->monthly_payments->where('status', 'pending')->sum('amount');
+                                    }
+
+                                    // Agora podemos pegar todas as informações únicas
+                                    $unitNumbers = $units->pluck('unit_number')->unique()->implode('; ');
                                     $blocks = $units->pluck('block.block')->unique()->implode('; ');
                                     $condominiums = $units->pluck('block.condominium.name')->unique()->implode('; ');
                                     @endphp
+
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $tenant->user->name }}</td>
+                                    <td>{{ $user->name }}</td>
                                     <td>{{ $decryptedEmail }}</td>
-                                    <td>{{ $unitNumbers ?? __('N/A') }}</td>
-                                    <td>{{ $blocks ?? __('N/A') }}</td>
-                                    <td>{{ $condominiums ?? __('N/A') }}</td>
-                                    <td>{{ $tenant->monthly_payments->sum('amount') ?? 0 }}</td>
-                                    <td>{{ $tenant->monthly_payments->where('status', 'overdue')->sum('amount') ?? 0 }}</td>
+                                    <td>{{ $unitNumbers ?: __('N/A') }}</td>
+                                    <td>{{ $blocks ?: __('N/A') }}</td>
+                                    <td>{{ $condominiums ?: __('N/A') }}</td>
+                                    <td>{{ $totalPayments ?: 0 }}</td>
+                                    <td>{{ $overduePayments ?: 0 }}</td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-primary btn-sm" onclick="sendEmail('{{ $decryptedEmail }}', '{{ $tenant->id }}')">
+                                        <button type="button" class="btn btn-primary btn-sm"
+                                            onclick="sendEmail('{{ $decryptedEmail }}', '{{ $user->id }}')">
                                             {{ __('Send Email') }}
                                         </button>
                                     </td>
@@ -103,9 +118,9 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
 
 <script>
-    function sendEmail(decriptedEmail, tenantId) {
+    function sendEmail(decriptedEmail, userId) {
         $('#email').val(decriptedEmail);
-        $('#selected-tenant-id').val(tenantId);
+        $('#selected-tenant-id').attr('name', 'user_id').val(userId);
         $('#emailModal').modal('show');
     }
 

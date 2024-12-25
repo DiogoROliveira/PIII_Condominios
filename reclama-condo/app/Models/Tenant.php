@@ -19,6 +19,8 @@ class Tenant extends Model
         'notes',
     ];
 
+    protected $with = ['user', 'units.block.condominium'];
+
     public function units()
     {
         return $this->hasMany(Unit::class, 'tenant_id');
