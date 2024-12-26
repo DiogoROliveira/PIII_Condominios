@@ -11,8 +11,10 @@ Este projeto foi desenvolvido no âmbito da Unidade Curricular de **Projeto III*
 - Eng. Miguel Guerra
 
 ## Tecnologias Utilizadas
-- **PHP** (Framework Laravel)
-- **MySQL** (Base de dados relacional)
+- **PHP**
+- **Laravel**
+- **MySQL**
+- **JavaScript**
 
 ## Como dar Deploy
 
