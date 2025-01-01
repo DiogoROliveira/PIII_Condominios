@@ -2,6 +2,11 @@
 /node_modules
 /public/build
 /public/hot
+/public/pages
+/public/docs
+/public/dist
+/public/index.html
+/public/plugins
 /public/storage
 /storage/*.key
 /storage/pail
