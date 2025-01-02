@@ -74,8 +74,8 @@ Isso iniciará o servidor embutido do Laravel. A aplicação ficará disponível
 ## Contribuidores
   
 Projeto desenvolvido por David Reis e Diogo Oliveira, em parceria com **IPVC** e **FTKode**.
-
-<img src="https://github.com/user-attachments/assets/bc2cc843-52e0-4904-a5bb-85d31b412aee" width="300" margin="50" />
-<img src="https://github.com/user-attachments/assets/0d636f69-69ad-4d3e-b8c8-2d9f778f5a41" width="300" margin="50" />
-
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/bc2cc843-52e0-4904-a5bb-85d31b412aee" width="300"/>
+   <img src="https://github.com/user-attachments/assets/0d636f69-69ad-4d3e-b8c8-2d9f778f5a41" width="300"/>
+</div>
 
