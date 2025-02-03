@@ -17,9 +17,9 @@ class MonthlyPaymentPhoneNotif
         $twilio = new Client($sid, $token);
         $message = $twilio->messages
             ->create(
-                "+351934436741", // to
+                "", // to
                 array(
-                    "from" => "+17753106715",
+                    "from" => "",
                     "body" => $sms
                 )
             );
